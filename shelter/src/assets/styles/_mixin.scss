@@ -31,7 +31,7 @@
   letter-spacing: $letter;
 }
 
-@mixin button ($width: 205px, $height: 50px, $border: 0, $color: $color-dark-3xl, 
+@mixin button ($width: 207px, $height: 50px, $border: 0, $color: $color-dark-3xl, 
               $color-bg: $color-primary) {
   @include size($width, $height);
   
