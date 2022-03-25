@@ -94,9 +94,10 @@ body {
         transition: color 0.2s linear;
 
         &::after {
-          @include size($height: 3px);
-
           opacity: 1;
+          animation: line 0.5s;
+          animation-fill-mode: forwards;
+          animation-direction: normal;
         }
       }
   
@@ -116,15 +117,7 @@ body {
   
       &:hover {
         color: $color-light-s;
-      }
-  
-      &:hover::after {
-        opacity: 1;
-        animation: line 0.5s;
-        animation-fill-mode: forwards;
-        animation-direction: normal;
-      }  
-
+      } 
     }
 
   }
@@ -168,6 +161,13 @@ body {
 
     &-button {
       @include button(); 
+      text-decoration: none;
+
+      &:hover {
+        cursor: pointer;
+
+        background-color: $color-primary-light;
+      }
     }
   }
 
