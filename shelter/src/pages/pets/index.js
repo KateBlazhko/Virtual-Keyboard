@@ -1,1 +1,0 @@
-import petsStyle from "./style.css";

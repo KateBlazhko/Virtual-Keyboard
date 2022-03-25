@@ -1,5 +1,3 @@
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
-
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -7,17 +5,19 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const isProduction = process.env.NODE_ENV == 'production';
 
 
-const stylesHandler = MiniCssExtractPlugin.loader;
-
+const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
 
 
 const config = {
     entry: {
-        main: './src/pages/main/index.js',
-        pets: './src/pages/pets/index.js',
+        'main/index': './src/main/index.js',
+        'pets/pets': './src/pets/pets.js',
     },
+    devtool: 'source-map',
     output: {
+        filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
+        clean: true,
     },
     devServer: {
         open: true,
@@ -25,21 +25,26 @@ const config = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/pages/main/index.html',
-            filename: 'main.html',
-            chunks: ['main']
+            template: './src/main/index.html',
+            filename: 'index.html',
+            inject:'body',
+            minify: false,
+            chunks: ['main/index']
         }),
 
         new HtmlWebpackPlugin({
-            template: './src/pages/pets/index.html',
+            template: './src/pets/pets.html',
             filename: 'pets.html',
-            chunks: ['pets'],
+            inject:'body',
+            minify: false,
+            chunks: ['pets/pets'],
         }),
 
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].css'
+        }),
 
-        // Add your plugins here
-        // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+    
     ],
     module: {
         rules: [
@@ -47,6 +52,10 @@ const config = {
                 test: /\.(js|jsx)$/i,
                 loader: 'babel-loader',
             },
+            {
+                test: /\.html$/i,
+                loader: "html-loader",
+              },
             {
                 test: /\.s[ac]ss$/i,
                 use: [stylesHandler, 'css-loader', 'postcss-loader', 'sass-loader'],
@@ -56,12 +65,27 @@ const config = {
                 use: [stylesHandler, 'css-loader', 'postcss-loader'],
             },
             {
-                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-                type: 'asset',
+                test: /\.(png|jpg)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/img/[name][ext]',
+                  }
             },
+            {
+                test: /\.svg$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/icon/[name][ext]',
+                  }
+            },
+            {
+                test: /\.(woff(2)?|eot|ttf|otf)$/i,
+                type: 'asset/resource',
+                generator: {
+                  filename: 'assets/fonts/[name][ext]',
+                },
+              },
 
-            // Add your rules for custom modules here
-            // Learn more about loaders from https://webpack.js.org/loaders/
         ],
     },
 };
@@ -69,10 +93,9 @@ const config = {
 module.exports = () => {
     if (isProduction) {
         config.mode = 'production';
-        
-        
     } else {
         config.mode = 'development';
+        config.target = 'web';
     }
     return config;
 };
