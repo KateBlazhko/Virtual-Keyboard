@@ -31,13 +31,15 @@
   letter-spacing: $letter;
 }
 
-@mixin button ($width: 207px, $height: 50px, $border: 0, $color: $color-dark-3xl, 
+@mixin button ($width: 207px, $height: 52px, $border: 2px solid $color-dark-3xl, $color: $color-dark-3xl, 
               $color-bg: $color-primary) {
+  @include flex($justify: center);
+
   @include size($width, $height);
   
-  padding: 15px 40px;
   border: $border;
   border-radius: 100px;
+  border-color: $color-primary;
 
   @include font($family: 'georgia', $size: 17px, $line: 130%, $letter: 0.06em);
   color: $color;

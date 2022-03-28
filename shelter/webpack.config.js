@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -22,6 +23,7 @@ const config = {
     devServer: {
         open: true,
         host: 'localhost',
+        hot: true,
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -43,6 +45,16 @@ const config = {
         new MiniCssExtractPlugin({
             filename: '[name].css'
         }),
+
+        new CopyPlugin({
+            patterns: [
+                { from: './src/assets/img',
+                  to: path.resolve(__dirname, 'dist/assets/img')},
+            ],
+            options: {
+              concurrency: 100,
+            },
+          }),
 
     
     ],
@@ -75,7 +87,7 @@ const config = {
                 test: /\.svg$/i,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'assets/icon/[name][ext]',
+                    filename: 'assets/icons/[name][ext]',
                   }
             },
             {

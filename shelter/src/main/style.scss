@@ -102,7 +102,7 @@ body {
       }
   
       &::after {
-        @include absolute ($top: 20px, $z-index: 2);
+        @include absolute ($top: 18px, $z-index: 2);
 
         display: block;
         @include size($width: 0, $height: 3px);
@@ -187,13 +187,18 @@ body {
     }
   }
 }
+
 /* About */
+.about {
+  background-color: $color-light-xl;
+}
+
 .about-inner {
   @include flex($justify: center);
   gap: 120px;
   @include size();
 
-  padding-top: 80px;
+  padding: 80px 0 100px 0;
 
   .about-img {
     position: relative;
@@ -217,7 +222,6 @@ body {
     @include flex ($aling: flex-start, $direction: column);
     gap: 25px;
     width: 36%;
-    padding: 14px 0 70px 0;
 
     &-title {
       width: 80%;
@@ -230,6 +234,148 @@ body {
       @include font ($line: 160%);
       color: $color-dark-xl;
     }
+
   }
 
 }
+
+/* Pets */
+.pets-content {
+  @include flex($direction: column);
+  gap: 60px;
+  @include size();
+
+  padding: 80px 0 100px 0;
+
+  background-color: $color-light-l;
+
+  &-title {
+    @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
+    text-align: center;
+    color: $color-dark-l;
+  }
+
+  &-slider {
+    position: relative;
+
+    &-button {
+      @include absolute ($top: 50%);
+      @include button ($width: 52px, $border: 2px solid $color-primary,
+                      $color-bg: $color-light-xl, $color: $color-dark-3xl); 
+
+      @include font ($weight: bold, $size: 15px);               
+      text-decoration: none;
+
+      background-color: $color-light-s;
+
+      transform: translateY(-50%);
+  
+      &:hover {
+        cursor: pointer;
+  
+        background-color: $color-primary-light;
+      }
+
+      &.right {
+        left: 100%;
+
+        transform: translatex(-100%) translateY(-50%);
+      }
+    }
+
+    &-main {
+      @include flex();
+      gap: 90px;
+      padding: 0 105px;
+    }
+    
+  }
+  
+  &-button {
+    @include button($width: 261px); 
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+
+      background-color: $color-primary-light;
+    }
+  }
+  
+}
+
+.card {
+  @include flex($direction: column);
+  
+  gap: 30px;
+  padding-bottom: 30px;
+  border-radius: 9px;
+
+  background-color: $color-light-s;
+
+  &-name {
+    @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
+  }
+
+  &-button {
+    @include button($width: 187px, $border: 2px solid $color-primary, $color-bg: $color-light-s); 
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+
+      background-color: $color-primary-light;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    background-color: $color-light-xl;
+  }
+}
+
+/* Help */
+.help {
+  background-color: $color-light-xl;
+}
+.help-content {
+  @include flex($direction: column);
+  gap: 60px;
+  @include size();
+
+  padding: 80px 0 100px 0;
+
+
+  &-title {
+    @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
+    text-align: center;
+    color: $color-dark-l;
+  }
+
+  &-ways {
+    @include flex ($justify: center);
+    column-gap: 120px;
+    row-gap: 55px;
+    flex-wrap: wrap;
+    width: 86%;
+
+    &-item {
+      @include flex ($direction: column);
+      gap: 30px;
+
+      .item-icon {
+        display: block;
+        @include size($width: 60px, $height: 60px);
+      
+        fill: $color-primary;
+      }
+
+      .item-title {
+        @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
+      }
+
+    }
+  }
+}
+
