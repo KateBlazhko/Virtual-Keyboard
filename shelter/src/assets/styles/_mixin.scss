@@ -43,6 +43,15 @@
 
   @include font($family: 'georgia', $size: 17px, $line: 130%, $letter: 0.06em);
   color: $color;
+  text-decoration: none;
 
   background-color: $color-bg;
+
+  &:hover {
+    cursor: pointer;
+
+    border: 2px solid $color-primary-light;
+
+    background-color: $color-primary-light;
+  }
 }

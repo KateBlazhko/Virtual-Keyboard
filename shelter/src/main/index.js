@@ -1,4 +1,4 @@
 import mainStyle from './style.scss';
-import {slider} from '../assets/js/page-element.js';
+import {sliderMain} from '../assets/js/page-element.js';
 
-slider.createCards();
+sliderMain.createCards(3);

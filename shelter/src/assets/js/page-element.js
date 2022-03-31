@@ -30,8 +30,8 @@ class Slider extends PageElement {
       this.cardList = [];
     }
   
-    createCards() {
-      this.cardQuantity = 3;
+    createCards(cardQuantity) {
+      this.cardQuantity = cardQuantity;
       for (let i = 1; i <= this.cardQuantity; i++) {
         this.cardList.push(new Card(this.node, 'card', i))
       }
@@ -51,5 +51,7 @@ class Card extends PageElement {
 }
 
 const contentSlider = document.querySelector('.pets-content-slider');
-const petNames = ['Katrine', 'Jennifer', 'Woody'];
-export const slider = new Slider(contentSlider, 'pets-content-slider-main')
+const petNames = ['Katrine', 'Jennifer', 'Woody', 'Sophia', 'Timmy', 'Charly', 'Scarlett', 'Freddie'];
+export const sliderMain = new Slider(contentSlider, 'pets-content-slider-main');
+export const sliderPets = new Slider(contentSlider, 'pets-content-slider-pets');
+
