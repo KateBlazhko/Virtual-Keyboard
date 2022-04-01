@@ -9,6 +9,6 @@ $color-dark-l: #545454;
 $color-dark-m: #B2B2B2;
 $color-dark-s: #CDCDCD;
 
-$container-width: 1280px;
-$dif-width: calc(100% - $container-width) / 2;
-$sum-width: calc($dif-width + $container-width);
+$desctop: 1280px;
+$laptop: 1024px;
+$tablet: 768px;

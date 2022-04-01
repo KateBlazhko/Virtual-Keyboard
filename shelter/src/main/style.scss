@@ -1,9 +1,10 @@
 @import '~normalize.css'; 
-@import '../assets/styles/_variables';
-@import '../assets/styles/_fonts';
-@import '../assets/styles/_mixin';
-@import '../assets/styles/_keyframes';
-@import '../assets/styles/_footer';
+@import '../assets/styles/variables';
+@import '../assets/styles/function';
+@import '../assets/styles/fonts';
+@import '../assets/styles/mixin';
+@import '../assets/styles/keyframes';
+@import '../assets/styles/footer';
 
 
 
@@ -46,22 +47,31 @@ body {
 
 /* Container */
 .container {
-  max-width: 1280px;
+  max-width: $desctop;
+  padding: 0 40px;
   margin: 0 auto;
-  padding: 0 40px; 
+
+  @media (max-width: ($desctop - 1px)) {
+    padding: 0 30px;
+  }
 }
 
 /* Header*/
 .header {
   @include absolute ($top : 60px, $z-index: 1);
+
   @include size($height: auto);
 
   color: $color-light-xl;
+
+  @media (max-width: ($desctop - 1px)) {
+    @include absolute ($top : 30px, $z-index: 1);
+  }
 }
+
 
 .header-inner {
   @include flex();
-
 
   .header-logo {
     @include flex($direction: column);
@@ -78,7 +88,15 @@ body {
   }
 
   nav {
-      width: calc(443 / 1200) * 100%;
+      width: toPercent(443px, $desctop, 40px);
+
+      @media (max-width: ($desctop - 1px)) {
+        width: toPercent(443px, $laptop, 30px);
+      }
+
+      @media (max-width: ($laptop - 1px)) {
+        width: toPercent(443px, $tablet, 30px);
+      }
   }
 }
 
@@ -146,18 +164,34 @@ body {
   @include size();
 
   padding-top: 180px;
+
+  @media (max-width: ($desctop - 1px)) {
+    @include flex($aling: center, $direction: column);  
+    gap: 20px;
+
+    padding-top: 150px;
+  }
   
   .intro-content {
     @include flex ($aling: flex-start, $direction: column);
     gap: 42px;
 
     width: 42%;
+    
     padding-bottom: 80px;
+
+    @media (max-width: ($desctop - 1px)) {
+      width: toPercent(460px, $tablet, 30px);
+    }
 
     &-title {
       width: 80%;
 
-      @include font ($family: 'georgia', $size: 44px, $line: 130%)
+      @include font ($family: 'georgia', $size: 44px, $line: 130%);
+
+      @media (max-width: ($desctop - 1px)) {
+        width: 23rem;
+      }
     }
 
     &-text {
@@ -165,10 +199,18 @@ body {
 
       @include font ($line: 160%);
       color: $color-dark-s;
+
+      @media (max-width: ($desctop - 1px)) {
+        width: 100%;
+      }
     }
 
     &-button {
       @include button(); 
+
+      @media (max-width: ($desctop - 1px)) {
+        align-self: center;
+      }
     }
   }
 
@@ -177,7 +219,15 @@ body {
     overflow: hidden;
 
     width: 58%;
-    padding-bottom: calc((908px - 180px) / 1200px * 100%);
+    padding-bottom: toPercent(728px, $desctop, 40px);
+
+    @media (max-width: ($desctop - 1px)) {
+      align-self: flex-end;
+
+      padding-bottom: toPercent(593px, $tablet, 30px);
+
+      width: toPercent(569px, $tablet, 30px);
+    }
 
     .intro-puppy {
       @include absolute();
@@ -185,6 +235,10 @@ body {
       @include size();
 
       object-fit: contain;
+
+      @media (max-width: ($desctop - 1px)) {
+        object-fit: cover;
+      }
     }
   }
 }
@@ -197,18 +251,32 @@ body {
 .about-inner {
   @include flex($justify: center);
   gap: 120px;
+  
   @include size();
 
   padding: 80px 0 100px 0;
+
+  @media (max-width: ($desctop - 1px)) {
+    @include flex($justify: center, $direction: column-reverse);
+    gap: 80px;
+    width: toPercent(430px, $tablet, 30px);
+    margin: 0 auto;
+
+  }
 
   .about-img {
     position: relative;
     overflow: hidden;
 
     align-self: start;
-
     width: 25%;
     padding-bottom: 34%;
+
+    @media (max-width: ($desctop - 1px)) {
+      align-self: center;
+      width: toPercent(300px, 430px, 0px);
+      padding-bottom: toPercent(408px, 430px, 0px);
+    }
 
     .about-pets {
       @include absolute();
@@ -216,6 +284,10 @@ body {
       @include size();
 
       object-fit: contain;
+
+      @media (max-width: ($desctop - 1px)) {
+        object-fit: cover;
+      }
     }
   }
   
@@ -224,11 +296,19 @@ body {
     gap: 25px;
     width: 36%;
 
+    @media (max-width: ($desctop - 1px)) {
+      width: 100%;
+    }
+
     &-title {
       width: 80%;
 
       @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
       color: $color-dark-l;
+
+      @media (max-width: ($desctop - 1px)) {
+        width: 23rem;
+      }
     }
 
     &-text {
@@ -258,11 +338,25 @@ body {
 
   &-slider {
     position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 435px;
 
     &-main {
-      @include flex();
+      @include flex($justify: center);
       gap: 90px;
       padding: 0 105px;
+
+      @media (max-width: ($desctop - 1px)) {
+        flex-wrap: wrap;
+        padding: 0 64px;
+      }
+
+      @media (max-width: ($laptop - 1px)) {
+        flex-wrap: wrap;
+        gap: 40px;
+        padding: 0 64px;
+      }
     }
 
     &-button {
@@ -315,9 +409,7 @@ body {
       
       background-color: $color-primary-light;
     }
-  }
-
-  
+  }  
 
   &-button {
     @include button($width: 187px, $border: 2px solid $color-primary, $color-bg: $color-light-s);  
