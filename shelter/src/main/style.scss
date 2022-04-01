@@ -59,19 +59,24 @@ body {
 
 .header-inner {
   @include flex();
-}
 
-.header-logo {
-  @include flex($direction: column);
-  gap: 10px;
 
-  .header-title {
-    @include font ($family: 'georgia', $size: 32px, $line: 110%, $letter: 0.06em);
-    color: $color-primary;
+  .header-logo {
+    @include flex($direction: column);
+    gap: 10px;
+
+    .header-title {
+      @include font ($family: 'georgia', $size: 32px, $line: 110%, $letter: 0.06em);
+      color: $color-primary;
+    }
+    
+    .header-subtitle {
+      @include font ($size: 13px, $line: 115%, $letter: 00.1em);
+    }
   }
-  
-  .header-subtitle {
-    @include font ($size: 13px, $line: 115%, $letter: 00.1em);
+
+  nav {
+      width: calc(443 / 1200) * 100%;
   }
 }
 
@@ -103,7 +108,7 @@ body {
       }
   
       &::after {
-        @include absolute ($top: 18px, $z-index: 2);
+        @include absolute ($top: 19px, $z-index: 2);
 
         display: block;
         @include size($width: 0, $height: 3px);
@@ -323,7 +328,7 @@ body {
 }
 .help-content {
   @include flex($direction: column);
-  gap: 60px;
+  gap: 58px;
 
   @include size();
 
@@ -369,7 +374,7 @@ body {
 
   @include size($width: 76%);
   margin: 0 auto;
-  padding: 80px 0 98px 0;
+  padding: 81px 0 100px 0;
 
   .donation-img {
     position: relative;
@@ -474,7 +479,7 @@ body {
     @include flex ($justify: flex-start);
     flex-wrap: wrap;
     column-gap: 20px;
-    row-gap: 40px;
+    row-gap: 36px;
     width: calc(279px / (1200px - 320px)) * 100%;
     padding-top: 16px;
 
@@ -498,7 +503,7 @@ body {
     }
 
     &.address {
-      row-gap: 33px;
+      row-gap: 31px;
       width: calc(303px / (1200px - 320px)) * 100%;
     }
   }
