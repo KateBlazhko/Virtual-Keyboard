@@ -1,0 +1,66 @@
+/* Footer */
+.footer {
+    color: $color-light-xl;
+  
+    background: url(../assets/img/noise_transparent@2x.png),
+      radial-gradient(100% 215.42% at 0% 0%, #5b483a 0%, #262425 100%),
+      linear-gradient(0deg, #211f20, #211f20);
+  }
+  
+  .footer-inner {
+    @include flex($aling: flex-start);
+    gap: 160px;
+  
+    @include size();
+    padding-top: 40px;
+  
+    .footer-img {
+      position: relative;
+      overflow: hidden;
+  
+      align-self: end;
+      width: calc(300px / (1200px - 320px)) * 100%;
+      padding-bottom: 26%;
+  
+      .footer-puppy {
+        @include absolute();
+  
+        @include size();
+  
+        object-fit: contain;
+      }
+    }
+    
+    .footer-content {
+      @include flex ($justify: flex-start);
+      flex-wrap: wrap;
+      column-gap: 20px;
+      row-gap: 36px;
+      width: calc(279px / (1200px - 320px)) * 100%;
+      padding-top: 16px;
+  
+      &-title {
+        @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
+      }
+  
+      &-icon {
+        @include size($width: 40px, $height: 32px);
+  
+        fill: $color-primary;
+        &.address {
+          @include size($width: 22px, $height: 32px);
+        }
+      }
+  
+      &-link {
+        @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
+        color: $color-primary;
+        text-decoration: none;
+      }
+  
+      &.address {
+        row-gap: 31px;
+        width: calc(303px / (1200px - 320px)) * 100%;
+      }
+    }
+  }
