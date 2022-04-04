@@ -442,9 +442,22 @@ body {
     flex-wrap: wrap;
     width: 86%;
 
+    @media (max-width: ($laptop - 1px)) {
+      width: toPercent(630px, $tablet, 30px);
+      column-gap: 60px;      
+    }
+
     &-item {
       @include flex ($direction: column);
       gap: 30px;
+
+      @media (max-width: ($desctop - 1px)) {
+        width: 11rem;
+      }
+
+      @media (max-width: ($laptop - 1px)) {
+        width: 10.6rem;
+      }
 
       .item-icon {
         display: block;
@@ -470,6 +483,12 @@ body {
   margin: 0 auto;
   padding: 81px 0 98px 0;
 
+  @media (max-width: ($desctop - 1px)) {
+    @include flex($justify: center, $aling: center, $direction: column-reverse);
+    gap: 60px;
+    width: 100%;
+  }
+  
   .donation-img {
     position: relative;
     overflow: hidden;
@@ -477,12 +496,22 @@ body {
     width: 56%;
     padding-bottom: 31%;
 
+    @media (max-width: ($desctop - 1px)) {
+      align-self: center;
+      width: toPercent(505px, $tablet, 30px);
+      padding-bottom: toPercent(261px, $tablet, 30px);
+    }
+
     .donation-puppy {
       @include absolute();
 
       @include size();
 
       object-fit: contain;
+
+      @media (max-width: ($desctop - 1px)) {
+        object-fit: cover;
+      }
     }
   }
   
@@ -491,11 +520,19 @@ body {
     gap: 20px;
     width: 42%;
 
+    @media (max-width: ($laptop - 1px)) {
+      width: toPercent(380px, $tablet, 30px);
+    }
+
     &-title {
       width: 80%;
 
       @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
       color: $color-dark-l;
+
+      @media (max-width: ($desctop - 1px)) {
+        width: 20rem;
+      }
     }
 
     &-subtitle {
@@ -511,6 +548,10 @@ body {
       border-radius: 9px;
 
       background-color: $color-primary;
+
+      @media (max-width: ($desctop - 1px)) {
+        width: 22rem;
+      }
 
       &:hover {
         background-color: $color-primary-light;

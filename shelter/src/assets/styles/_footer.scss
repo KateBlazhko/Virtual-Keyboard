@@ -13,21 +13,47 @@
   
     @include size();
     padding-top: 40px;
+
+    @media (max-width: ($desctop - 1px)) {
+      @include flex($justify: center);
+      row-gap: 60px;
+      flex-wrap: wrap;
+      padding-top: 12px;
+    }
   
+    @media (max-width: ($laptop - 1px)) {
+      @include flex($justify: center);
+      column-gap: 60px;
+    }
+
     .footer-img {
       position: relative;
       overflow: hidden;
   
       align-self: end;
-      width: calc(300px / (1200px - 320px)) * 100%;
+      flex-basis: 300px;
       padding-bottom: 26%;
+
+      @media (max-width: ($desctop - 1px)) {
+        flex-basis: 30%;
+        padding-bottom: 31%;
+      }
+
+      @media (max-width: ($laptop - 1px)) {
+        flex-basis: toPercent(300px, $tablet, 30px);
+        padding-bottom: toPercent(310px, $tablet, 30px);
+      }
   
       .footer-puppy {
         @include absolute();
   
         @include size();
   
-        object-fit: contain;
+        object-fit: contain;  
+
+        @media (max-width: ($desctop - 1px)) {
+          object-fit: cover;
+        }
       }
     }
     
@@ -36,7 +62,7 @@
       flex-wrap: wrap;
       column-gap: 20px;
       row-gap: 36px;
-      width: calc(279px / (1200px - 320px)) * 100%;
+      flex-basis: 279px;
       padding-top: 16px;
   
       &-title {
@@ -60,7 +86,7 @@
   
       &.address {
         row-gap: 31px;
-        width: calc(303px / (1200px - 320px)) * 100%;
+        flex-basis: 303px;
       }
     }
   }
