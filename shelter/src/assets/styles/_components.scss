@@ -1,3 +1,14 @@
+/* Title */
+.title {
+  @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
+  color: $color-dark-l;
+
+  @media (max-width: ($tablet - 1px)) {
+    @include font ($family: 'georgia', $size: 25px, $line: 130%, $letter: 0.06em);
+  }
+}
+
+
 /* Footer */
 .footer {
     color: $color-light-xl;
@@ -43,6 +54,11 @@
         flex-basis: toPercent(300px, $tablet, 30px);
         padding-bottom: toPercent(310px, $tablet, 30px);
       }
+
+      @media (max-width: ($tablet - 1px)) {
+        flex-basis: toPercent(260px, $mobile, 10px);
+        padding-bottom: toPercent(270px, $mobile, 10px);
+      }
   
       .footer-puppy {
         @include absolute();
@@ -65,8 +81,14 @@
       flex-basis: 279px;
       padding-top: 16px;
   
-      &-title {
-        @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
+      & .title {
+        color: $color-light-xl;
+
+        @media (max-width: ($tablet - 1px)) {
+          width: 90%;
+
+          text-align: center;
+        }
       }
   
       &-icon {

@@ -4,7 +4,7 @@
 @import '../assets/styles/fonts';
 @import '../assets/styles/mixin';
 @import '../assets/styles/keyframes';
-@import '../assets/styles/footer';
+@import '../assets/styles/components';
 
 *,
 *::after,
@@ -166,7 +166,7 @@ body {
       padding: 200px 0 75px 0
     }
   
-    &-title {
+    & .title {
       @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
       text-align: center;
       color: $color-dark-l;
