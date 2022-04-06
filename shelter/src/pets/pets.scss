@@ -224,10 +224,8 @@ body {
 
         &.active {
           background-color: $color-primary;
-
-          &:hover {
-            background-color: $color-primary-light;
-          }
+          
+          pointer-events: none;
 
         }
       }
