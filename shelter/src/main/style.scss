@@ -84,10 +84,14 @@ body {
   }
 
   .header-logo {
+    z-index: 2;
+    
     @include flex($direction: column);
     gap: 10px;
 
-    z-index: 2;
+    text-decoration: none;
+    cursor: pointer;
+
 
     .header-title {
       @include font ($family: 'georgia', $size: 32px, $line: 110%, $letter: 0.06em);
@@ -96,6 +100,7 @@ body {
     
     .header-subtitle {
       @include font ($size: 13px, $line: 115%, $letter: 00.1em);
+      color: $color-light-xl;
     }
   }
 

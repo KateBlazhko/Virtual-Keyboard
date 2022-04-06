@@ -81,12 +81,17 @@ body {
     @include flex($direction: column);
     gap: 10px;
 
+    text-decoration: none;
+    cursor: pointer;
+
     .header-title {
       @include font ($family: 'georgia', $size: 32px, $line: 110%, $letter: 0.06em);
+      color: $color-dark-l;
     }
     
     .header-subtitle {
       @include font ($size: 13px, $line: 115%, $letter: 00.1em);
+      color: $color-dark-3xl;
     }
   }
 
