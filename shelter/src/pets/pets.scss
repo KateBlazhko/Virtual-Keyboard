@@ -205,7 +205,7 @@ body {
       @include flex($justify: center);
       gap: 20px;
         
-      &-button {
+      .controls-button {
         @include button ($width: 52px, $border: 2px solid $color-primary,
                         $color-bg: $color-light-s, $color: $color-dark-3xl);         
 
