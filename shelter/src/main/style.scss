@@ -85,7 +85,7 @@ body {
 
   .header-logo {
     z-index: 2;
-    
+
     @include flex($direction: column);
     gap: 10px;
 
@@ -696,10 +696,12 @@ body {
       .credit-card-link {
         @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
         color: $color-dark-l;
+        text-decoration: none;
 
         @media (max-width: ($tablet - 1px)) {
           @include font($family: 'georgia', $size: 15px, $line: 110%, $letter: 0.06em);
         }
+
       }
     }
 
