@@ -21,6 +21,10 @@ const config = {
         clean: true,
     },
     devServer: {
+       static: {
+            watch: true,
+            directory: path.resolve(__dirname, 'src/main'),
+        },
         open: true,
         host: 'localhost',
         hot: true,
@@ -28,7 +32,6 @@ const config = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/main/index.html',
-            favicon: './src/assets/icons/fav.ico',
             filename: 'index.html',
             inject:'body',
             minify: false,
@@ -37,7 +40,6 @@ const config = {
 
         new HtmlWebpackPlugin({
             template: './src/pets/pets.html',
-            favicon: './src/assets/icons/fav.ico',
             filename: 'pets.html',
             inject:'body',
             minify: false,
@@ -55,7 +57,7 @@ const config = {
             ],
             options: {
               concurrency: 100,
-            },
+            },  
           }),
 
     

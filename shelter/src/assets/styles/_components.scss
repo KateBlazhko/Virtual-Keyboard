@@ -23,6 +23,37 @@
   }
 }
 
+/* Card */
+.card {
+  @include flex($direction: column);
+  
+  gap: 30px;
+  padding-bottom: 30px;
+  border-radius: 9px;
+
+  background-color: $color-light-s;
+
+  &-name {
+    @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
+    background-color: $color-light-xl;
+
+    .card-button {
+      border: 2px solid $color-primary-light;
+      
+      background-color: $color-primary-light;
+    }
+  }  
+
+  &-button {
+    @include button($width: 187px, $border: 2px solid $color-primary, $color-bg: $color-light-s);  
+  }
+}
 
 /* Footer */
 .footer {
@@ -44,7 +75,7 @@
       @include flex($justify: center);
       row-gap: 60px;
       flex-wrap: wrap;
-      padding-top: 12px;
+      padding-top: 15px;
     }
   
     @media (max-width: ($laptop - 1px)) {
@@ -54,6 +85,8 @@
 
     @media (max-width: ($tablet - 1px)) {
       column-gap: 75px;
+      row-gap: 35px;
+      padding-top: 30px;
     }
 
     .footer-img {
@@ -65,17 +98,15 @@
       padding-bottom: 26%;
 
       @media (max-width: ($desctop - 1px)) {
-        flex-basis: 30%;
+        flex-basis: 100%;
         padding-bottom: 31%;
       }
 
       @media (max-width: ($laptop - 1px)) {
-        flex-basis: toPercent(300px, $tablet, 30px);
         padding-bottom: toPercent(310px, $tablet, 30px);
       }
 
       @media (max-width: $mobile) {
-        flex-basis: toPercent(260px, $mobile, 10px);
         padding-bottom: toPercent(270px, $mobile, 10px);
       }
   
@@ -84,11 +115,7 @@
   
         @include size();
   
-        object-fit: contain;  
-
-        @media (max-width: ($desctop - 1px)) {
-          object-fit: cover;
-        }
+        object-fit: contain; 
       }
     }
     
@@ -99,12 +126,17 @@
       row-gap: 36px;
       flex-basis: 279px;
       padding-top: 16px;
+
+      @media (max-width: ($tablet - 1px)) {
+        justify-content: center;
+        padding-top: 0;
+      }
   
-      & .title {
+      .title {
         color: $color-light-xl;
 
         @media (max-width: ($tablet - 1px)) {
-          width: 90%;
+          width: 100%;
 
           text-align: center;
         }
@@ -114,6 +146,7 @@
         @include size($width: 40px, $height: 32px);
   
         fill: $color-primary;
+        
         &.address {
           @include size($width: 22px, $height: 32px);
         }
@@ -128,6 +161,16 @@
       &.address {
         row-gap: 31px;
         flex-basis: 303px;
+        justify-content: start;
+
+        @media (max-width: ($tablet - 1px)) {
+          row-gap: 40px;
+
+          .title {
+            display: block;
+            padding: 0 10px
+          }
+        }       
       }
     }
   }

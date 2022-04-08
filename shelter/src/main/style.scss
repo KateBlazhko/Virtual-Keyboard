@@ -269,10 +269,14 @@ body {
 
     @media (max-width: ($desctop - 1px)) {
       align-self: flex-end;
-
+      width: toPercent(569px, $tablet, 30px);
       padding-bottom: toPercent(593px, $tablet, 30px);
 
-      width: toPercent(569px, $tablet, 30px);
+    }
+
+    @media (max-width: $mobile) {
+      width: toPercent(260px, $mobile, 10px);
+      padding-bottom: toPercent(276px, $mobile, 10px);
     }
 
     .intro-puppy {
@@ -322,13 +326,16 @@ body {
 
     @media (max-width: ($desctop - 1px)) {
       align-self: center;
-      width: toPercent(300px, $laptop, 30px);
+      width: 100%;
       padding-bottom: toPercent(408px, $laptop, 30px);
     }
 
     @media (max-width: ($laptop - 1px)) {
-      width: toPercent(300px, $tablet, 30px);
-      padding-bottom: toPercent(408px, $tablet, 30px);
+     padding-bottom: toPercent(408px, $tablet, 30px);
+    }
+
+    @media (max-width: $mobile) {
+      padding-bottom: toPercent(355px, $mobile, 10px);
     }
 
     .about-pets {
@@ -337,10 +344,6 @@ body {
       @include size();
 
       object-fit: contain;
-
-      @media (max-width: ($desctop - 1px)) {
-        object-fit: cover;
-      }
     }
   }
   
@@ -359,10 +362,11 @@ body {
     }
 
     @media (max-width: ($mobile)) {
+      gap: 23px;
       width: 100%;
     }
 
-    & .title {
+    .title {
       width: 80%;
 
       @media (max-width: ($tablet - 1px)) {
@@ -375,6 +379,8 @@ body {
       color: $color-dark-xl;
 
       @media (max-width: ($tablet - 1px)) {
+        padding: 0 15px;
+
         text-align: justify;
       }
     }
@@ -385,7 +391,6 @@ body {
 
 /* Pets */
 .pets-content {
-  position: relative;
   @include flex($direction: column);
   gap: 60px;
   @include size();
@@ -395,43 +400,33 @@ body {
   background-color: $color-light-l;
 
   @media (max-width: ($tablet - 1px)) {
-    gap: 42px;
+    gap: 40px;
     padding: 42px 0 42px 0;
   }
 
-  & .title {
+  .title {
     text-align: center;
   }
 
-  &-slider {
-    overflow: hidden;
+  .slider-container {
+    display: grid;
+    grid-template-columns: 52px 1fr 52px;
+    grid-template-rows: 435px;
+    align-items: center;
+
     width: 100%;
-    height: 435px;
 
     @media (max-width: ($tablet - 1px)) {
-      margin-bottom: 72px;
+      grid-template-columns: 1fr 80px 1fr;
+      grid-template-rows: 435px 52px;
+      row-gap: 20px;
+      justify-items: end;
+      width: 270px;
     }
 
-    &-main {
-      @include flex($justify: center);
-      gap: 90px;
-      padding: 0 105px;
+    .button-arrow {
+      grid-area: 1 / 1 / 2 / 2;
 
-      @media (max-width: ($desctop - 1px)) {
-        flex-wrap: wrap;
-        padding: 0 64px;
-      }
-
-      @media (max-width: ($laptop - 1px)) {
-        flex-wrap: wrap;
-        gap: 40px;
-        padding: 0 64px;
-      }
-    }    
-  }
-
-  &-arrow {
-      @include absolute ($top: 50%);
       @include button ($width: 52px, $border: 2px solid $color-primary,
                       $color-bg: $color-light-xl, $color: $color-dark-3xl); 
 
@@ -439,61 +434,58 @@ body {
       
       background-color: $color-light-s;
 
-      transform: translateY(-35%);
-
       @media (max-width: ($tablet - 1px)) {
-        @include absolute ($left: 40%, $top: 80%);
+        grid-area: 2 / 1 / 3 / 2;
       }
 
       &.right { 
-        left: 100%;
-
-        transform: translatex(-100%) translateY(-35%);
-
+        grid-area: 1 / 3 / 2 / 4;
         @media (max-width: ($tablet - 1px)) {
-          @include absolute ($left: 50%, $top: 80%);
-
-          transform: translateY(-35%);
+          grid-area: 2 / 3 / 3 / 4;
+          justify-self: start;
         }
 
       }
     }
+    .slider {
+      overflow: hidden;
+      align-self: start;
+
+      @media (max-width: ($desctop - 1px)) {
+        max-width: calc(270px + 270px + 90px + 2 * 53px);
+        margin: 0 auto;
+      }
+
+      @media (max-width: ($laptop - 1px)) {
+        max-width: calc(270px + 270px + 40px + 2 * 12px);
+      }
+
+      @media (max-width: ($tablet - 1px)) {
+        grid-area: 1 / 1 / 2 / 4;
+        max-width: 270px;
+      }
+
+      &-main {
+        @include flex($justify: flex-start);
+        gap: 90px;
+        padding: 0 53px;
   
+        @media (max-width: ($laptop - 1px)) {
+          gap: 40px;
+          padding: 0 12px;
+        }
+  
+        @media (max-width: ($tablet - 1px)) {
+          padding: 0;
+        }
+      } 
+    }      
+  }
+ 
   &-button {
     @include button($width: 261px); 
   }
   
-}
-
-.card {
-  @include flex($direction: column);
-  
-  gap: 30px;
-  padding-bottom: 30px;
-  border-radius: 9px;
-
-  background-color: $color-light-s;
-
-  &-name {
-    @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
-  }
-
-  &:hover {
-    cursor: pointer;
-
-    box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
-    background-color: $color-light-xl;
-
-    .card-button {
-      border: 2px solid $color-primary-light;
-      
-      background-color: $color-primary-light;
-    }
-  }  
-
-  &-button {
-    @include button($width: 187px, $border: 2px solid $color-primary, $color-bg: $color-light-s);  
-  }
 }
 
 /* Help */
@@ -509,10 +501,11 @@ body {
   padding: 80px 0 100px 0;
 
   @media (max-width: ($tablet - 1px)) {
+    gap: 42px;
     padding: 42px 0 42px 0;
   }
 
-  & .title {
+  .title {
     text-align: center;
   }
 
@@ -545,13 +538,20 @@ body {
     &-item {
       @include flex ($direction: column);
       gap: 30px;
-      //width: 100%;
+
+      @media (max-width: $mobile) {
+        gap: 20px;
+      }
 
       .item-icon {
         display: block;
         @include size($width: 60px, $height: 60px);
       
         fill: $color-primary;
+
+        @media (max-width: $mobile) {
+          @include size($width: 50px, $height: 50px);
+        }
       }
 
       .item-title {
@@ -573,15 +573,17 @@ body {
 
   @include size($width: 76%);
   margin: 0 auto;
-  padding: 81px 0 98px 0;
+  padding: 80px 0 100px 0;
 
   @media (max-width: ($desctop - 1px)) {
     @include flex($justify: center, $aling: center, $direction: column-reverse);
     gap: 60px;
     width: 100%;
+    padding: 78px 0 100px 0;
   }
   
   @media (max-width: ($tablet - 1px)) {
+    gap: 42px;
     padding: 42px 0 42px 0;
   }
 
@@ -594,14 +596,17 @@ body {
 
     @media (max-width: ($desctop - 1px)) {
       align-self: center;
-      width: toPercent(505px, $laptop, 30px);
+      width: 100%;
       padding-bottom: toPercent(261px, $laptop, 30px);
     }
 
     @media (max-width: ($laptop - 1px)) {
       align-self: center;
-      width: toPercent(505px, $tablet, 30px);
       padding-bottom: toPercent(261px, $tablet, 30px);
+    }
+
+    @media (max-width: ($tablet - 1px)) {
+      padding-bottom: toPercent(135px, $mobile, 10px);
     }
 
     .donation-puppy {
@@ -610,10 +615,6 @@ body {
       @include size();
 
       object-fit: contain;
-
-      @media (max-width: ($desctop - 1px)) {
-        object-fit: cover;
-      }
     }
   }
   
@@ -633,10 +634,11 @@ body {
     }
 
     @media (max-width: $mobile) {
+      gap: 22px;
       width: 100%;
     }
 
-    & .title {
+    .title {
       width: 80%;
 
       @media (max-width: ($desctop - 1px)) {
@@ -653,6 +655,7 @@ body {
       color: $color-dark-l;
 
       @media (max-width: ($tablet - 1px)) {
+        @include font ($family: 'georgia', $size: 15px, $line: 110%);
         text-align: center;
       }
     }
@@ -667,7 +670,7 @@ body {
       background-color: $color-primary;
 
       @media (max-width: ($desctop - 1px)) {
-        width: 352px;
+        width: 350px;
       }
 
       @media (max-width: ($tablet - 1px)) {

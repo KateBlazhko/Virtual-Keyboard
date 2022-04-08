@@ -160,95 +160,69 @@ body {
       padding: 200px 0 75px 0
     }
   
-    & .title {
+    .title {
       @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
       text-align: center;
       color: $color-dark-l;
     }
   
-    &-slider {
+    .pagination {
       position: relative;
-
+      @include flex($direction: column-reverse);
+      gap: 60px;
       width: 100%;
 
       @media (max-width: ($desctop - 1px)) {
-        padding-bottom: 10px;
+        gap: 40px;
       }
 
+
       &-pets {
-        @include flex();              
+        display: grid;
+        grid-template-columns: repeat(4, 270px); 
+        grid-template-rows: repeat(2, auto);             
         row-gap: 30px;
         column-gap: 40px;
-        flex-wrap: wrap;
 
         @media (max-width: ($desctop - 1px)) {
           overflow: hidden;
-          width: 700px;
-          height: 1365px;
+          grid-template-columns: repeat(2, 270px); 
+          grid-template-rows: repeat(3, auto);
+          justify-content: center; 
+          max-height: calc(3 * 435px + 2 * 30px);
           margin: 0 auto;
         }
 
-        @media (max-width: ($laptop - 1px)) {
-          width: 580px;
+        @media (max-width: ($tablet - 1px)) {
+          grid-template-columns: 270px; 
+          grid-template-rows: repeat(3, auto);
         }
       }
-      
-    }
-    
-    &-controls {
-      @include flex($justify: center);
-      gap: 20px;
-        
-      .controls-button {
-        @include button ($width: 52px, $border: 2px solid $color-primary,
-                        $color-bg: $color-light-s, $color: $color-dark-3xl);         
 
-        &.inactive {
-          border: 2px solid $color-dark-s;
-
-          color: $color-dark-s;  
-
-          pointer-events: none;
-        }
-
-        &.active {
-          background-color: $color-primary;
+      &-controls {
+        @include flex($justify: center);
+        gap: 20px;
           
-          pointer-events: none;
-
+        .controls-button {
+          @include button ($width: 52px, $border: 2px solid $color-primary,
+                          $color-bg: $color-light-s, $color: $color-dark-3xl);         
+  
+          &.inactive {
+            border: 2px solid $color-dark-s;
+  
+            color: $color-dark-s;  
+  
+            pointer-events: none;
+          }
+  
+          &.active {
+            background-color: $color-primary;
+            
+            pointer-events: none;
+  
+          }
         }
-      }
-    }
-    
+      } 
+    }  
   }
   
-  .card {
-    @include flex($direction: column);   
-    gap: 30px;
-    width: 270px;
-    padding-bottom: 30px;
-    border-radius: 9px;
-  
-    background-color: $color-light-s;
-  
-    &-name {
-      @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
-    }
-  
-    &-button {
-      @include button($width: 187px, $border: 2px solid $color-primary, $color-bg: $color-light-s);     
-    }
-  
-    &:hover {
-      cursor: pointer;
-  
-      box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
-      background-color: $color-light-xl;
-
-      .card-button {
-        border: 2px solid $color-primary-light;
-
-        background-color: $color-primary-light;
-      }
-    }
-  }
