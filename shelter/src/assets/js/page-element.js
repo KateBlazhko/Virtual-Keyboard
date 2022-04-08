@@ -24,7 +24,7 @@ class Image extends PageElement {
     }
 }
 
-class Slider extends PageElement {
+export class Slider extends PageElement {
     constructor(parent, className) {
       super(parent, 'div', className);
       this.cardList = [];
@@ -45,13 +45,10 @@ class Card extends PageElement {
       this.cardNumber = cardNumber;
       this.img = new Image(this.node, 'card-img', `assets/img/${cardNumber}.png`, `pets-img`);
       this.name = new PageElement(this.node, 'div','card-name', `${petNames[cardNumber-1]}`);
-      this.button = new Link(this.node, 'card-button', 'Learn more', '#about');
+      this.button = new Link(this.node, 'card-button', 'Learn more', '#slider');
     }
 
 }
 
-const contentSlider = document.querySelector('.pets-content-slider');
 const petNames = ['Katrine', 'Jennifer', 'Woody', 'Sophia', 'Timmy', 'Charly', 'Scarlett', 'Freddie'];
-export const sliderMain = new Slider(contentSlider, 'pets-content-slider-main');
-export const sliderPets = new Slider(contentSlider, 'pets-content-slider-pets');
 
