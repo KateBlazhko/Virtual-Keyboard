@@ -1,0 +1,16 @@
+/* Container */
+.container {
+  max-width: calc(#{$desctop} - 80px);
+  margin: 0 auto;
+
+  @media (max-width: ($desctop - 1px)) {
+    max-width: $desctop;
+    padding: 0 30px;
+  }
+
+  @media (max-width: ($tablet - 1px)) {
+    padding: 0 10px;
+  }
+}
+
+

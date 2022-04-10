@@ -1,5 +1,5 @@
 .menu-toggle {
-    z-index: 2;
+    z-index: 4;
 
     display: none;
     
@@ -12,29 +12,41 @@
   
   .menu-toggle:hover .menu-toggle-line {
     background-color: $color-primary-light;
+
+    &.pets {
+      background-color: $color-dark-3xl;
+    }
   }
   
   .menu-toggle-line {
     display: block;
     width: 30px;
     height: 2px;
-    margin: 10px auto;
+    margin: 8px auto;
     background-color: $color-primary;
     transition: all 0.4s linear;
+
+    &.pets {
+      background-color: $color-dark-l;
+    }
   }
   
   .menu-toggle.active .menu-toggle-line:nth-child(2){
-    opacity: 0;
+    transform: rotate(90deg);
   }
   
   .menu-toggle.active .menu-toggle-line:nth-child(1){
-    transform: translateY(13px) rotate(45deg);
+    transform: translateY(10px) translateX(14px) rotate(90deg);
   }
   
   .menu-toggle.active .menu-toggle-line:nth-child(3){
-    transform: translateY(-13px) rotate(-45deg);
+    transform: translateY(-10px) translateX(-14px) rotate(90deg);
   }
   
   .menu-toggle.active:hover .menu-toggle-line {
-    background-color: var(--icon-main-color);
+    background-color: $color-primary-light;
+
+    &.pets {
+      background-color: $color-dark-3xl;
+    }
   }

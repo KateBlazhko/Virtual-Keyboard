@@ -1,0 +1,9 @@
+/* Title */
+.title {
+    @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
+    color: $color-dark-l;
+  
+    @media (max-width: ($tablet - 1px)) {
+      @include font ($family: 'georgia', $size: 25px, $line: 130%, $letter: 0.06em);
+    }
+  }

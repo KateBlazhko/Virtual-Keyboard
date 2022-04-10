@@ -1,182 +1,27 @@
 @import '~normalize.css'; 
-@import '../assets/styles/variables';
-@import '../assets/styles/function';
-@import '../assets/styles/fonts';
-@import '../assets/styles/mixin';
-@import '../assets/styles/keyframes';
-@import '../assets/styles/components';
-@import '../assets/styles/burger';
+
+//abstracts
+@import '../assets/styles/abstracts/function';
+@import '../assets/styles/abstracts/keyframes';
+@import '../assets/styles/abstracts/mixin';
+@import '../assets/styles/abstracts/placeholders';
+@import '../assets/styles/abstracts/variables';
+
+//base
+@import '../assets/styles/base/base';
+@import '../assets/styles/base/fonts';
+
+//components
+@import '../assets/styles/components/burger';
+@import '../assets/styles/components/card';
+@import '../assets/styles/components/title';
+
+//layout
+@import '../assets/styles/layout/container';
+@import '../assets/styles/layout/footer';
+@import '../assets/styles/layout/header';
 
 
-
-*,
-*::after,
-*::before {
-  box-sizing: border-box;
-}
-
-ul, li {
-  margin: 0;
-  padding: 0;
-}
-
-li {
-  list-style-type: none;
-}
-
-button {
-  padding: 0;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-p {
-  margin: 0;
-
-}
-
-body {
-  position: relative;
-  margin: 0 auto;
-  
-  @include font ();
-
-  background: $color-light-l;
-}
-
-/* Header*/
-.header {
-  @include absolute ($top : 60px, $z-index: 1);
-
-  @include size($height: auto);
-
-  color: $color-light-xl;
-
-  @media (max-width: ($desctop - 1px)) {
-    @include absolute ($top : 30px, $z-index: 1);
-  }
-}
-
-.header-inner {
-  position: relative;
-  @include flex();
-
-  @media (max-width: ($tablet - 1px)) {
-    padding-right: 43px;
-  }
-
-  .header-logo {
-    z-index: 2;
-
-    @include flex($direction: column);
-    gap: 10px;
-
-    text-decoration: none;
-    cursor: pointer;
-
-
-    .header-title {
-      @include font ($family: 'georgia', $size: 32px, $line: 110%, $letter: 0.06em);
-      color: $color-primary;
-    }
-    
-    .header-subtitle {
-      @include font ($size: 13px, $line: 115%, $letter: 00.1em);
-      color: $color-light-xl;
-    }
-  }
-
-  nav {
-      width: toPercent(443px, $desctop, 40px);
-
-      @media (max-width: ($desctop - 1px)) {
-        width: toPercent(450px, $laptop, 30px);
-      }
-
-      @media (max-width: ($laptop - 1px)) {
-        width: toPercent(443px, $tablet, 30px);
-      }
-
-      @media (max-width: ($tablet - 1px)) {
-        @include absolute($top: -30px, $left: 100%, $z-index: 1);
-        overflow: auto;
-        display: none;
-        width: 320px;
-        height: 100vh;
-
-        padding-top: 248px;
-
-        background-color: $color-dark-3xl;
-        transform: translateX(-100%);
-      }
-  }
-}
-
-.nav-list {
-  @include flex();
-  gap: 35px;
-  padding: 0;
-
-  @media (max-width: ($tablet - 1px)) {
-    @include flex($direction: column);
-    gap: 40px ;
-  }
-
-  .nav-item {
-
-    .nav-link {
-      position: relative;
-
-      @include font ($line: 160%);
-      text-decoration: none;
-      color: $color-dark-s;
-
-      @media (max-width: ($tablet - 1px)) {
-        @include font ($size: 32px, $line: 160%);
-      }
-
-      &.active {
-        color: $color-light-s;
-
-        transition: color 0.2s linear;
-
-        &::after {
-          opacity: 1;
-          animation: line 0.5s;
-          animation-fill-mode: forwards;
-          animation-direction: normal;
-        }
-      }
-  
-      &::after {
-        @include absolute ($top: 19px, $z-index: 2);
-
-        display: block;
-        @include size($width: 0, $height: 3px);
-
-      
-        content: "";
-        opacity: 0;
-        background-color: $color-primary;
-  
-        transition: opacity 0.2s linear;
-
-        @media (max-width: ($tablet - 1px)) {
-          @include absolute ($top: 40px, $z-index: 2);
-        }
-      }
-  
-      &:hover {
-        color: $color-light-s;
-      } 
-    }
-
-  }
- 
-}
 
 /* Intro */
 .intro {
