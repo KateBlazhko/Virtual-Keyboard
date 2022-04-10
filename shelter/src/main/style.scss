@@ -296,6 +296,8 @@ body {
 }
 
 .card {
+  overflow: hidden;
+  
   @include flex($direction: column);
   
   gap: 30px;
