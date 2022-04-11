@@ -56,13 +56,13 @@
 
       &-pets {
         display: grid;
-        grid-template-columns: repeat(4, 270px); 
+        grid-template-columns: repeat(4, 1fr); 
         grid-template-rows: repeat(2, auto);             
         row-gap: 30px;
         column-gap: 40px;
 
         @media (max-width: ($desctop - 1px)) {
-          overflow: hidden;
+          //overflow: hidden;
           grid-template-columns: repeat(2, 270px); 
           grid-template-rows: repeat(3, auto);
           justify-content: center; 

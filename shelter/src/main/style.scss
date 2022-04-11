@@ -239,7 +239,6 @@
   @include flex($direction: column);
   gap: 60px;
   @include size();
-
   padding: 80px 0 100px 0;
 
   background-color: $color-light-l;
@@ -266,7 +265,7 @@
       grid-template-rows: 435px 52px;
       row-gap: 20px;
       justify-items: end;
-      width: 270px;
+      //width: 270px;
     }
 
     .button-arrow {
@@ -292,9 +291,14 @@
 
       }
     }
+    
     .slider {
-      overflow: hidden;
-      align-self: start;
+      overflow-x: hidden;
+      justify-self: center;
+
+      @include flex();
+      max-width: calc(3* 270px + 2 * 90px + 2 * 53px);
+      min-height: 550px;
 
       @media (max-width: ($desctop - 1px)) {
         max-width: calc(270px + 270px + 90px + 2 * 53px);
@@ -302,13 +306,16 @@
       }
 
       @media (max-width: ($laptop - 1px)) {
-        max-width: calc(270px + 270px + 40px + 2 * 12px);
+        max-width: calc(270px + 270px + 40px + 2 * 30px + 12px);
+        margin: 0 -30px;
       }
 
       @media (max-width: ($tablet - 1px)) {
         grid-area: 1 / 1 / 2 / 4;
-        max-width: 270px;
-      }
+        width: 100%;
+        max-width: calc(270px + 2 * 15px);
+        margin: 0;
+      } 
 
       &-main {
         @include flex($justify: flex-start);
@@ -317,11 +324,11 @@
   
         @media (max-width: ($laptop - 1px)) {
           gap: 40px;
-          padding: 0 12px;
+          padding: 0 36px;
         }
   
         @media (max-width: ($tablet - 1px)) {
-          padding: 0;
+          padding: 0 15px;
         }
       } 
     }      
