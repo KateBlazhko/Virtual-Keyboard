@@ -8,7 +8,7 @@ export class PageElement {
     }
   }
 
-class Link extends PageElement {
+export class Link extends PageElement {
     constructor(parent, className, textContent, href) {
       super(parent, 'a', className);
       this.node.textContent = textContent;
@@ -37,8 +37,6 @@ export class Slider extends PageElement {
       }
     }
 }
-
-
 
 
 export class Card extends PageElement {

@@ -17,11 +17,14 @@ function toggleMenu() {
   
     toggleClassName('active', menuToggle, menu);
     toggleClassName('lock', body);
+    const bodyLock = document.querySelector('.lock');
+    bodyLock.addEventListener('click', closeMenu);
 }
   
   
 function closeMenu(event) {
-    if (event.target.classList.contains('nav-link')) {
+    if (event.target.classList.contains('nav-link') ||
+       (event.target.classList.contains('lock'))) {
         removeClassName('active', menuToggle, menu);
         removeClassName('lock', body);
     }
@@ -30,6 +33,7 @@ function closeMenu(event) {
 
 // burger-menu
 const body = document.body;
+
 const menuToggle = document.querySelector('.menu-toggle');
 const menu = document.querySelector('.nav');
 menuToggle.addEventListener('click', toggleMenu);

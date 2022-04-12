@@ -4,8 +4,8 @@ import burger from '../assets/js/burger.js';
 import pagination from '../assets/js/burger.js';
 import {Pagination} from '../assets/js/pagination.js';
 
-const contentSlider = document.querySelector('.pagination');
-const paginationPets = new Pagination(contentSlider, 'pagination-pets');
+const contentSlider = document.querySelector('.pets-content');
+const paginationPets = new Pagination(contentSlider, 'pagination');
 
 let cardQuantity = getcardQuantity();;
 paginationPets.createCards(cardQuantity);
