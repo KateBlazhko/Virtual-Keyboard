@@ -5,12 +5,7 @@ export class Pagination extends PageElement {
     super(parent, 'div', className);
     this.cardList = [];
 
-    this.paginationControls = new PageElement(this.node, 'div', 'pagination-controls');
-    this.leftScroll = new Link (this.paginationControls.node, 'controls-button', '<<', '#');
-    this.prev = new Link (this.paginationControls.node, 'controls-button', '<', '#');
-    this.page = new Link (this.paginationControls.node, 'controls-button', '1', '#');
-    this.next = new Link (this.paginationControls.node, 'controls-button', '>', '#');
-    this.rightScroll = new Link (this.paginationControls.node, 'controls-button', '>>', '#');
+    this.paginationControls = new Controls(this.node, 'pagination-controls');
 
     this.paginationPets = new PageElement(this.node, 'div', 'pagination-pets');
 
@@ -33,16 +28,7 @@ export class Pagination extends PageElement {
   }
 
   setViewControls() {
-    this.page.node.style.pointerEvents = 'none';
-    this.page.node.classList.add('active');
-    console.log(this.page.node.textContent);
-    if (this.page.node.textContent === '1') {
-      this.leftScroll.node.classList.add('inactive');
-      this.prev.node.classList.add('inactive');
-    } else {
-      this.leftScroll.node.classList.delete('inactive');
-      this.prev.node.classList.delete('inactive');
-    }
+    this.paginationControls.setViewControls()
   }
 
   updateCards() {
@@ -50,3 +36,27 @@ export class Pagination extends PageElement {
   }
 }
 
+class Controls extends PageElement {
+  constructor(parent, className) {
+    super(parent, 'div', className);
+    console.log(this.node);
+    this.leftScroll = new Link (this.node, 'controls-button', '<<', '#');
+    this.prev = new Link (this.node, 'controls-button', '<', '#');
+    this.currentPage = new Link (this.node, 'controls-button', '1', '#');
+    this.next = new Link (this.node, 'controls-button', '>', '#');
+    this.rightScroll = new Link (this.node, 'controls-button', '>>', '#');
+
+  }
+
+    setViewControls() {
+    this.currentPage.node.style.pointerEvents = 'none';
+    this.currentPage.node.classList.add('active');
+    if (this.currentPage.node.textContent === '1') {
+      this.leftScroll.node.classList.add('inactive');
+      this.prev.node.classList.add('inactive');
+    } else {
+      this.leftScroll.node.classList.delete('inactive');
+      this.prev.node.classList.delete('inactive');
+    }
+  }
+}
