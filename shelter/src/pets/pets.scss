@@ -75,6 +75,33 @@
         }
       }
 
+      &-pets-double {
+        @include absolute($z-index: 1);
+
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); 
+        grid-template-rows: repeat(2, auto);             
+        row-gap: 30px;
+        column-gap: 40px;
+
+        @include size();
+
+        opacity: 0;
+
+        @media (max-width: ($desctop - 1px)) {
+          grid-template-columns: repeat(2, 270px); 
+          grid-template-rows: repeat(3, auto);
+          justify-content: center; 
+          max-height: calc(3 * 435px + 2 * 30px);
+          margin: 0 auto;
+        }
+
+        @media (max-width: ($tablet - 1px)) {
+          grid-template-columns: 270px; 
+          grid-template-rows: repeat(3, auto);
+        }
+      }
+
       &-controls {
         @include flex($justify: center);
         gap: 20px;

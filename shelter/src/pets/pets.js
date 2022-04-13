@@ -4,11 +4,10 @@ import burger from '../assets/js/burger.js';
 import pagination from '../assets/js/burger.js';
 import {Pagination} from '../assets/js/pagination.js';
 
-const contentSlider = document.querySelector('.pets-content');
-const paginationPets = new Pagination(contentSlider, 'pagination');
 
 let cardQuantity = getcardQuantity();;
-paginationPets.createCards(cardQuantity);
+const contentSlider = document.querySelector('.pets-content');
+const paginationPets = new Pagination(contentSlider, 'pagination', cardQuantity);
 
 function getcardQuantity(){
   return (window.innerWidth >= 1280) ? 8 :
