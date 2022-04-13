@@ -3,58 +3,115 @@ import {PageElement, Card, Link} from './page-element.js';
 export class Pagination extends PageElement {
   constructor(parent, className, cardQuantity) {
     super(parent, 'div', className);
-    this.cardQuantity = cardQuantity;
-    this.pageQuantity = Math.ceil(8 / this.cardQuantity);
 
     this.paginationControls = new Controls(this.node, 'pagination-controls');
-    this.paginationControls.setpageQuantity(this.pageQuantity);
-
     this.paginationPets = new PageElement(this.node, 'div', 'pagination-pets');
     this.paginationPetsDouble = new PageElement(this.node, 'div', 'pagination-pets-double');
     this.isDouble = false;
+
+    this.cardQuantity = cardQuantity;
+    this.pageQuantity = Math.ceil(8 / this.cardQuantity);
+    this.paginationControls.setpageQuantity(this.pageQuantity);
     this.offset = 0;
 
-    this.cardList = this.createCards();
+    this.onclick = this.onclick();
   }
 
   createCards() {
-    this.onclick();
     this.setViewControls();
     let cardList = []
-    for (let i = (1 + this.offset); i <= this.cardQuantity; i++) {
-      cardList.push(new Card(this.paginationPets.node, 'card', i))
+
+    if (this.isDouble) {
+      for (let i = (1 + this.offset); i <= (this.cardQuantity + this.offset); i++) {
+        cardList.push(new Card(this.paginationPetsDouble.node, 'card', i))
+      }     
+    } else {
+      for (let i = (1 + this.offset); i <= (this.cardQuantity + this.offset); i++) {
+        cardList.push(new Card(this.paginationPets.node, 'card', i))
+      }
     }
     return cardList
   }
 
-  recreateCards(cardQuantity) {
-    this.paginationPets.node.innerHTML = '';
-    this.cardQuantity = cardQuantity;
-    this.pageQuantity = Math.ceil(8 / this.cardQuantity);
-    this.paginationControls.setpageQuantity(this.pageQuantity);
-    this.setViewControls();
-    for (let i = (1 + this.offset); i <= this.cardQuantity; i++) {
-      this.cardList.push(new Card(this.paginationPets.node, 'card', i))
-    }
-  }
+  resizeCards(cardQuantity) {
 
-  setViewControls() {
-    this.paginationControls.setViewControls()
+    if (this.cardQuantity !== cardQuantity) {
+      this.cardQuantity = cardQuantity;
+      this.pageQuantity = Math.ceil(8 / this.cardQuantity);
+      this.paginationControls.setpageQuantity(this.pageQuantity);
+  
+      this.offset = 0;
+      this.isDouble = false;
+      this.paginationPetsDouble.node.style.zIndex = -1;
+      this.paginationPets.node.innerHTML = '';
+      this.paginationPets.node.style.opacity = 1;
+  
+      this.cardList = this.createCards();
+    }
+    
   }
 
   onclick() {
-    for (let key in this.paginationControls.listControls) {
-      let control = this.paginationControls.listControls[key].node;
-      console.log(control);
-      control.onclick = () => {
-
+    let control = this.paginationControls.getListControls()
+  
+    for (let key in control) {
+      control[key].node.onclick = () => {
+        this.setOffset(key);
+        this.updateCards();
         this.paginationControls.handleChange(key);
       }
     }
   }
 
-  updateCards() {
+  setViewControls() {
+    this.paginationControls.setViewControls();
+  }
 
+  setOffset(key) {
+    switch (key) {
+      case 'leftScroll':
+        this.offset = 0;
+        break;
+      case 'prev':
+        this.offset = this.offset - this.cardQuantity;
+        break;
+      case 'next':
+        this.offset = this.offset + this.cardQuantity;
+        break;
+      case 'rightScroll':
+        this.offset = this.offset + this.cardQuantity * (this.pageQuantity - 1);
+        break;
+    }
+  }
+
+  updateCards() {
+    this.isDouble = !this.isDouble;
+    console.log(this.isDouble);
+    if (this.isDouble) {
+
+      this.paginationPetsDouble.node.innerHTML = '';
+      this.cardList = this.createCards();
+
+      this.paginationPetsDouble.node.style.zIndex = '2'
+
+      setTimeout(() => {
+        this.paginationPets.node.style.opacity = 0;
+        this.paginationPetsDouble.node.style.opacity = 1;
+      }, 0)
+
+
+
+    } else {
+
+      this.paginationPets.node.innerHTML = '';
+      this.cardList = this.createCards();
+      
+      this.paginationPets.node.style.opacity = 1;
+      this.paginationPetsDouble.node.style.opacity = 0;
+
+      this.paginationPetsDouble.node.style.zIndex = '-1'
+    }
+    
   }
 }
 
@@ -101,6 +158,7 @@ class Controls extends PageElement {
     let leftScroll = this.listControls.leftScroll.node;
     let prev = this.listControls.prev.node;
     let next = this.listControls.next.node;
+
     currentPage.style.pointerEvents = 'none';
     currentPage.classList.add('active');
 
@@ -124,10 +182,17 @@ class Controls extends PageElement {
 
   setpageQuantity(pageQuantity) {
     this.pageQuantity = pageQuantity
+    let currentPage = this.listControls.currentPage.node;
+    currentPage.textContent = '1';
+    this.setViewControls();
   }
 
   getpageQuantity() {
     return this.pageQuantity
+  }
+
+  getListControls() {
+    return this.listControls
   }
 }
 
