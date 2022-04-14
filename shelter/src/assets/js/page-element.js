@@ -24,21 +24,6 @@ class Image extends PageElement {
     }
 }
 
-export class Slider extends PageElement {
-    constructor(parent, className) {
-      super(parent, 'div', className);
-      this.cardList = [];
-    }
-  
-    createCards(cardQuantity) {
-      this.cardQuantity = cardQuantity;
-      for (let i = 1; i <= this.cardQuantity; i++) {
-        this.cardList.push(new Card(this.node, 'card', i))
-      }
-    }
-}
-
-
 export class Card extends PageElement {
     constructor(parent, className, cardNumber) {
       super(parent, 'div', className);
@@ -48,6 +33,14 @@ export class Card extends PageElement {
       this.button = new Link(this.node, 'card-button', 'Learn more', '#slider');
     }
 
+}
+
+export class Button extends PageElement {
+  constructor(parent, className, textContent, type="button") {
+    super(parent, 'button', className);
+    this.node.textContent = textContent;
+    this.node.type = type;
+  }
 }
 
 const petNames = ['Katrine', 'Jennifer', 'Woody', 'Sophia', 'Timmy', 'Charly', 'Scarlett', 'Freddie'];

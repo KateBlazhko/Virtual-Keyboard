@@ -257,6 +257,7 @@
     grid-template-columns: 52px 1fr 52px;
     grid-template-rows: 435px;
     align-items: center;
+    order: 1;
 
     width: 100%;
 
@@ -291,53 +292,68 @@
 
       }
     }
-    
-    .slider {
-      overflow-x: hidden;
-      justify-self: center;
-
-      @include flex();
-      max-width: calc(3* 270px + 2 * 90px + 2 * 53px);
-      min-height: 550px;
-
-      @media (max-width: ($desctop - 1px)) {
-        max-width: calc(270px + 270px + 90px + 2 * 53px);
-        margin: 0 auto;
-      }
-
-      @media (max-width: ($laptop - 1px)) {
-        max-width: calc(270px + 270px + 40px + 2 * 30px + 12px);
-        margin: 0 -30px;
-      }
-
-      @media (max-width: ($tablet - 1px)) {
-        grid-area: 1 / 1 / 2 / 4;
-        width: 100%;
-        max-width: calc(270px + 2 * 15px);
-        margin: 0;
-      } 
-
-      &-main {
-        @include flex($justify: flex-start);
-        gap: 90px;
-        padding: 0 53px;
-  
-        @media (max-width: ($laptop - 1px)) {
-          gap: 40px;
-          padding: 0 36px;
-        }
-  
-        @media (max-width: ($tablet - 1px)) {
-          padding: 0 15px;
-        }
-      } 
-    }      
+         
   }
  
   &-button {
+    order: 2;
     @include button($width: 261px); 
   }
   
+}
+
+.slider-wrap {
+  overflow-x: hidden;
+  grid-area: 1 / 2 / 2 / 3;
+  justify-self: center;
+  padding: 0 53px;
+
+  @media (max-width: ($desctop - 1px)) {
+    width: auto;
+  }
+
+  @media (max-width: ($laptop - 1px)) {
+    padding: 0 36px;
+    margin: 0 -30px;
+  }
+
+  @media (max-width: ($tablet - 1px)) {
+    padding: 0 15px;
+    margin: 0;
+  }
+
+  .slider {
+    @include flex();
+    max-width: calc(3* 270px + 2 * 90px);
+    min-height: 550px;
+  
+    @media (max-width: ($desctop - 1px)) {
+      max-width: calc(270px + 270px + 90px);
+      margin: 0 auto;
+    }
+  
+    @media (max-width: ($laptop - 1px)) {
+      max-width: calc(270px + 270px + 40px);
+    }
+  
+    @media (max-width: ($tablet - 1px)) {
+      grid-area: 1 / 1 / 2 / 4;
+      width: 100%;
+      max-width: calc(270px);
+      margin: 0;
+    } 
+
+    &-main {
+      transition: transform 1s linear;
+
+      @include flex($justify: flex-start);
+      gap: 90px;
+  
+      @media (max-width: ($laptop - 1px)) {
+        gap: 40px;
+      }
+    } 
+  }
 }
 
 /* Help */
