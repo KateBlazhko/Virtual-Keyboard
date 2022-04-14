@@ -36,11 +36,11 @@
   }
   
   .menu-toggle.active .menu-toggle-line:nth-child(1){
-    transform: translateY(10px) translateX(14px) rotate(90deg);
+    transform: translateY(10px) translateX(10px) rotate(90deg);
   }
   
   .menu-toggle.active .menu-toggle-line:nth-child(3){
-    transform: translateY(-10px) translateX(-14px) rotate(90deg);
+    transform: translateY(-10px) translateX(-10px) rotate(90deg);
   }
   
   .menu-toggle.active:hover .menu-toggle-line {

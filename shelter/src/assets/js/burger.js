@@ -17,8 +17,8 @@ function toggleMenu() {
   
     toggleClassName('active', menuToggle, menu);
     toggleClassName('lock', body);
-    const bodyLock = document.querySelector('.lock');
-    bodyLock.addEventListener('click', closeMenu);
+    const bodyLock = document.querySelector('.lock'); 
+    bodyLock && bodyLock.addEventListener('click', closeMenu);
 }
   
   

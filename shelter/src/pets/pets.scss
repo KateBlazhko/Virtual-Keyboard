@@ -78,6 +78,10 @@
       &-controls {
         @include flex($justify: center);
         gap: 20px;
+
+        @media (max-width: ($tablet - 1px)) {
+          gap: 10px;
+        }
           
         .controls-button {
           @include button ($width: 52px, $border: 2px solid $color-primary,

@@ -55,9 +55,15 @@
           color: $color-dark-3xl;
         }
       }
+
+      &.double {
+        @include absolute($top: 30px, $left:10px, $z-index: -1);
+        opacity: 0;
+      }
     }
   
     nav {
+      position: relative;
         width: toPercent(443px, $desctop, 40px);
   
         @media (max-width: ($desctop - 1px)) {
@@ -70,8 +76,8 @@
   
         @media (max-width: ($tablet - 1px)) {
           position: fixed;
-          top: 0;
-          left: 100%; 
+          top: 100vh;
+          left: calc(100% - 320px); 
           z-index: 3;
           //overflow: auto;
   
@@ -83,14 +89,18 @@
   
           background-color: $color-dark-3xl;
 
+          transition: transform 0.5s linear;
+
           &.pets {
             background-color: $color-light-xl;
           }
   
           &.active {
-            transform: translateX(-100%);
-  
-            transition: transform 0.5s linear;
+            transform: translateY(-100%);
+          }
+
+          .header-logo.double {
+            opacity: 1;
           }
         }
     }

@@ -1,7 +1,6 @@
 import petsStyle from "./pets.scss";
 
 import burger from '../assets/js/burger.js';
-import pagination from '../assets/js/burger.js';
 import {Pagination} from '../assets/js/pagination.js';
 
 const contentSlider = document.querySelector('.pets-content');
