@@ -1,7 +1,7 @@
 import {PageElement, Card, Link} from './page-element.js';
 
 export class Pagination extends PageElement {
-  constructor(parent, className, cardQuantity) {
+  constructor(parent, className, cardQuantity, arrayIndexes) {
     super(parent, 'div', className);
 
     this.paginationControls = new Controls(this.node, 'pagination-controls');
@@ -10,34 +10,39 @@ export class Pagination extends PageElement {
     this.isDouble = false;
 
     this.cardQuantity = cardQuantity;
-    this.pageQuantity = Math.ceil(8 / this.cardQuantity);
+    this.arrayIndexes = arrayIndexes;
+    this.pageQuantity = Math.ceil(48 / this.cardQuantity);
     this.paginationControls.setpageQuantity(this.pageQuantity);
     this.offset = 0;
 
     this.onclick = this.onclick();
+    this.cardList = this.createCards();
   }
 
   createCards() {
+
     this.setViewControls();
     let cardList = []
 
     if (this.isDouble) {
-      for (let i = (1 + this.offset); i <= (this.cardQuantity + this.offset); i++) {
-        cardList.push(new Card(this.paginationPetsDouble.node, 'card', i))
+      for (let i = 0; i < this.cardQuantity; i++) {
+        cardList.push(new Card(this.paginationPetsDouble.node, 'card', this.arrayIndexes[i + this.offset]))
       }     
     } else {
-      for (let i = (1 + this.offset); i <= (this.cardQuantity + this.offset); i++) {
-        cardList.push(new Card(this.paginationPets.node, 'card', i))
+      for (let i = 0; i < this.cardQuantity; i++) {
+        cardList.push(new Card(this.paginationPets.node, 'card', this.arrayIndexes[i + this.offset]))
       }
     }
+  
     return cardList
   }
 
-  resizeCards(cardQuantity) {
+  resizeCards(cardQuantity, arrayIndexes) {
 
     if (this.cardQuantity !== cardQuantity) {
       this.cardQuantity = cardQuantity;
-      this.pageQuantity = Math.ceil(8 / this.cardQuantity);
+      this.arrayIndexes = arrayIndexes;
+      this.pageQuantity = Math.ceil(48 / this.cardQuantity);
       this.paginationControls.setpageQuantity(this.pageQuantity);
   
       this.offset = 0;
@@ -79,14 +84,13 @@ export class Pagination extends PageElement {
         this.offset = this.offset + this.cardQuantity;
         break;
       case 'rightScroll':
-        this.offset = this.offset + this.cardQuantity * (this.pageQuantity - 1);
+        this.offset = this.cardQuantity * (this.pageQuantity - 1);
         break;
     }
   }
 
   updateCards() {
     this.isDouble = !this.isDouble;
-    console.log(this.isDouble);
     if (this.isDouble) {
 
       this.paginationPetsDouble.node.innerHTML = '';
@@ -94,22 +98,20 @@ export class Pagination extends PageElement {
 
       this.paginationPetsDouble.node.style.zIndex = '2'
 
-      setTimeout(() => {
-        this.paginationPets.node.style.opacity = 0;
-        this.paginationPetsDouble.node.style.opacity = 1;
-      }, 0)
-
-
+      this.paginationPets.node.style.opacity = 0;
+      this.paginationPetsDouble.node.style.opacity = 1;
 
     } else {
 
       this.paginationPets.node.innerHTML = '';
       this.cardList = this.createCards();
       
+      this.paginationPetsDouble.node.style.zIndex = '0'
+
       this.paginationPets.node.style.opacity = 1;
       this.paginationPetsDouble.node.style.opacity = 0;
 
-      this.paginationPetsDouble.node.style.zIndex = '-1'
+
     }
     
   }
