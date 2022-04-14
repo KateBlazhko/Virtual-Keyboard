@@ -36,9 +36,13 @@
       gap: 30px;
       padding: 200px 0 75px 0
     }
+
+    @media (max-width: ($tablet - 1px)) {
+      gap: 42px;
+      padding: 160px 0 45px 0
+    }
   
     .title {
-      @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
       text-align: center;
       color: $color-dark-l;
     }
@@ -52,7 +56,6 @@
       @media (max-width: ($desctop - 1px)) {
         gap: 40px;
       }
-
 
       &-pets {
         display: grid;
