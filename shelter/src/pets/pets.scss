@@ -1,143 +1,25 @@
 @import '~normalize.css'; 
-@import '../assets/styles/_variables';
-@import '../assets/styles/_fonts';
-@import '../assets/styles/_mixin';
-@import '../assets/styles/_keyframes';
-@import '../assets/styles/_footer';
 
-*,
-*::after,
-*::before {
-  box-sizing: border-box;
-}
+//abstracts
+@import '../assets/styles/abstracts/function';
+@import '../assets/styles/abstracts/keyframes';
+@import '../assets/styles/abstracts/mixin';
+@import '../assets/styles/abstracts/placeholders';
+@import '../assets/styles/abstracts/variables';
 
-ul, li {
-  margin: 0;
-  padding: 0;
-}
+//base
+@import '../assets/styles/base/base';
+@import '../assets/styles/base/fonts';
 
-li {
-  list-style-type: none;
-}
+//components
+@import '../assets/styles/components/burger';
+@import '../assets/styles/components/card';
+@import '../assets/styles/components/title';
 
-button {
-  padding: 0;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-p {
-  margin: 0;
-
-}
-
-body {
-  position: relative;
-
-  @include font ();
-
-  background: $color-light-l;
-}
-
-/* Container */
-.container {
-  width: 1280px;
-  margin: 0 auto;
-  padding: 0 40px; 
-}
-
-/* Header*/
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1;
-
-  @include size($height: 120px);
-
-  color: $color-dark-l;
-
-  background-color: $color-light-xl;;
-}
-
-.header-inner {
-  @include flex();
-
-  padding: 30px 0;
-
-  .header-logo {
-    @include flex($direction: column);
-    gap: 10px;
-
-    text-decoration: none;
-    cursor: pointer;
-
-    .header-title {
-      @include font ($family: 'georgia', $size: 32px, $line: 110%, $letter: 0.06em);
-      color: $color-dark-l;
-    }
-    
-    .header-subtitle {
-      @include font ($size: 13px, $line: 115%, $letter: 00.1em);
-      color: $color-dark-3xl;
-    }
-  }
-
-  nav {
-    width: calc(443 / 1200) * 100%;
-  }
-}
-
-.nav-list {
-  @include flex();
-  gap: 35px;
-  padding: 0;
-
-  .nav-item {
-
-    .nav-link {
-      position: relative;
-
-      @include font ($line: 160%);
-      text-decoration: none;
-      color: $color-dark-l;
-
-      &.active {
-        transition: color 0.2s linear;
-
-        &::after {
-          opacity: 1;
-          animation: line 0.5s;
-          animation-fill-mode: forwards;
-          animation-direction: normal;
-        }
-      }
-  
-      &::after {
-        @include absolute ($top: 18px, $z-index: 2);
-
-        display: block;
-        @include size($width: 0, $height: 3px);
-
-      
-        content: "";
-        opacity: 0;
-        background-color: $color-primary;
-  
-        transition: opacity 0.2s linear;
-      }
-  
-      &:hover {
-        color: $color-dark-3xl;
-      } 
-    }
-
-  }
- 
-}
+//layout
+@import '../assets/styles/layout/container';
+@import '../assets/styles/layout/footer';
+@import '../assets/styles/layout/header';
 
 /* Pets */
 .pets-content {
@@ -148,83 +30,83 @@ body {
     padding: 200px 0 100px 0;
   
     background-color: $color-light-l;
+
+    @media (max-width: ($desctop - 1px)) {
+      gap: 30px;
+      padding: 200px 0 75px 0
+    }
+
+    @media (max-width: ($tablet - 1px)) {
+      gap: 42px;
+      padding: 160px 0 45px 0
+    }
   
-    &-title {
-      @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
+    .title {
       text-align: center;
       color: $color-dark-l;
     }
   
-    &-slider {
+    .pagination {
       position: relative;
-
+      @include flex($direction: column-reverse);
+      gap: 60px;
       width: 100%;
 
+      @media (max-width: ($desctop - 1px)) {
+        gap: 40px;
+      }
+
       &-pets {
-        @include flex();
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); 
+        grid-template-rows: repeat(2, auto);             
         row-gap: 30px;
         column-gap: 40px;
-        flex-wrap: wrap;
-      }
-      
-    }
-    
-    &-controls {
-      @include flex($justify: center);
-      gap: 20px;
-        
-      .controls-button {
-        @include button ($width: 52px, $border: 2px solid $color-primary,
-                        $color-bg: $color-light-s, $color: $color-dark-3xl);         
 
-        &.inactive {
-          border: 2px solid $color-dark-s;
-
-          color: $color-dark-s;  
-
-          pointer-events: none;
+        @media (max-width: ($desctop - 1px)) {
+          grid-template-columns: repeat(2, 270px); 
+          grid-template-rows: repeat(3, auto);
+          justify-content: center; 
+          max-height: calc(3 * 435px + 2 * 30px);
+          margin: 0 auto;
         }
 
-        &.active {
-          background-color: $color-primary;
+        @media (max-width: ($tablet - 1px)) {
+          grid-template-columns: 270px; 
+          grid-template-rows: repeat(3, auto);
+        }
+      }
+
+      &-controls {
+        @include flex($justify: center);
+        gap: 20px;
+
+
+        @media (max-width: ($tablet - 1px)) {
+          gap: 10px;
+        }
           
-          pointer-events: none;
+        .controls-button {
+          @include button ($width: 52px, $border: 2px solid $color-primary,
+                          $color-bg: $color-light-s, $color: $color-dark-3xl);         
+  
 
+          &.inactive {
+            border: 2px solid $color-dark-s;
+  
+            color: $color-dark-s;  
+  
+            pointer-events: none;
+          }
+  
+          &.active {
+            background-color: $color-primary;
+            
+            pointer-events: none;
+  
+          }
         }
-      }
-    }
-    
+      } 
+    }  
   }
   
-  .card {
-    overflow: hidden;
-  
-    @include flex($direction: column);   
-    gap: 30px;
-    width: calc((100% - 120px) / 4);
-    padding-bottom: 30px;
-    border-radius: 9px;
-  
-    background-color: $color-light-s;
-  
-    &-name {
-      @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
-    }
-  
-    &-button {
-      @include button($width: 187px, $border: 2px solid $color-primary, $color-bg: $color-light-s);     
-    }
-  
-    &:hover {
-      cursor: pointer;
-  
-      box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
-      background-color: $color-light-xl;
-
-      .card-button {
-        border: 2px solid $color-primary-light;
-
-        background-color: $color-primary-light;
-      }
-    }
-  }

@@ -1,8 +1,9 @@
 import mainStyle from './style.scss';
 import {Slider} from '../assets/js/page-element.js';
+import burger from '../assets/js/burger.js';
 
+const contentSlider = document.querySelector('.slider');
+const sliderMain = new Slider(contentSlider, 'slider-main');
 
-const contentSlider = document.querySelector('.pets-content-slider');
-const sliderMain = new Slider(contentSlider, 'pets-content-slider-main');
-
-sliderMain.createCards(3);
+//console.log (document.documentElement.clientWidth);
+sliderMain.createCards(8);

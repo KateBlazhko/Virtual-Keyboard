@@ -24,21 +24,3 @@
          url('../assets/fonts/georgia-regular.woff2') format('woff2'),
          url('../assets/fonts/georgia-regular.woff') format('woff');
   }
-
-  @font-face {  
-    font-family: 'georgia-italic';
-    font-style: italic;
-    font-weight: normal;
-    src: url('../assets/fonts/georgia-italic.ttf') format('truetype'),
-         url('../assets/fonts/georgia-italic.woff2') format('woff2'),
-         url('../assets/fonts/georgia-italic.woff') format('woff');
-  }
-
-  @font-face {  
-    font-family: 'georgia-bold';
-    font-style: normal;
-    font-weight: bold;
-    src: url('../assets/fonts/georgia-bold.ttf') format('truetype'),
-         url('../assets/fonts/georgia-bold.woff2') format('woff2'),
-         url('../assets/fonts/georgia-bold.woff') format('woff');
-  }

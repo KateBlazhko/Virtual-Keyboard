@@ -1,4 +1,4 @@
-class PageElement {
+export class PageElement {
     constructor(node, tagName = 'div', className = '', content = '') {
       const el = document.createElement(tagName);
       el.className = className;
@@ -8,7 +8,7 @@ class PageElement {
     }
   }
 
-class Link extends PageElement {
+export class Link extends PageElement {
     constructor(parent, className, textContent, href) {
       super(parent, 'a', className);
       this.node.textContent = textContent;
@@ -39,7 +39,7 @@ export class Slider extends PageElement {
 }
 
 
-class Card extends PageElement {
+export class Card extends PageElement {
     constructor(parent, className, cardNumber) {
       super(parent, 'div', className);
       this.cardNumber = cardNumber;

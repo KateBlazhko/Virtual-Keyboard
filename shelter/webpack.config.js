@@ -21,6 +21,10 @@ const config = {
         clean: true,
     },
     devServer: {
+       static: {
+            watch: true,
+            directory: path.resolve(__dirname, 'src/main'),
+        },
         open: true,
         host: 'localhost',
         hot: true,
@@ -55,7 +59,7 @@ const config = {
             ],
             options: {
               concurrency: 100,
-            },
+            },  
           }),
 
     

@@ -1,7 +1,26 @@
 import petsStyle from "./pets.scss";
-import {Slider} from '../assets/js/page-element.js';
+import burger from '../assets/js/burger.js';
+import {Pagination} from '../assets/js/pagination.js';
 
+const contentSlider = document.querySelector('.pets-content');
+const paginationPets = new Pagination(contentSlider, 'pagination');
 
-const contentSlider = document.querySelector('.pets-content-slider');
-const sliderPets = new Slider(contentSlider, 'pets-content-slider-pets');
-sliderPets.createCards(8);
+let cardQuantity = getcardQuantity();;
+paginationPets.createCards(cardQuantity);
+
+function getcardQuantity(){
+  return (window.innerWidth >= 1280) ? 8 :
+         (window.innerWidth >= 768) ? 6 : 3
+}
+
+window.addEventListener('resize', () => {
+    let resizeTimeout;
+    if (!resizeTimeout) {
+      resizeTimeout = setTimeout(() => {
+        resizeTimeout = null;
+        cardQuantity = getcardQuantity()
+        paginationPets.recreateCards(cardQuantity);
+      }, 50)
+    }
+})
+

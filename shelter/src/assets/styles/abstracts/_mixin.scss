@@ -1,5 +1,8 @@
+//abstracts
 @import './variables';
-@import './fonts';
+
+//base
+@import '../base/fonts';;
 
 @mixin flex ($aling: center, $justify: space-between, $direction: row) {
     display: flex;

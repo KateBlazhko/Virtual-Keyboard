@@ -1,0 +1,3 @@
+@function toPercent($pxBlock, $pxContainer, $pxPadding) {
+    @return calc($pxBlock  / ($pxContainer - 2 * $pxPadding) * 100%);
+}
