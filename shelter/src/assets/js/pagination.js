@@ -121,11 +121,11 @@ class Controls extends PageElement {
   constructor(parent, className) {
     super(parent, 'div', className);
     this.listControls = {
-      leftScroll: new Link (this.node, 'controls-button', '<<', '##'),
-      prev: new Link (this.node, 'controls-button', '<', '##'),
-      currentPage: new Link (this.node, 'controls-button', '1', '##'),
-      next: new Link (this.node, 'controls-button', '>', '##'),
-      rightScroll: new Link (this.node, 'controls-button', '>>', '##'),
+      leftScroll: new PageElement(this.node, 'div', 'controls-button', '<<', '##'),
+      prev: new PageElement(this.node, 'div', 'controls-button', '<', '##'),
+      currentPage: new PageElement(this.node, 'div', 'controls-button', '1', '##'),
+      next: new PageElement(this.node, 'div', 'controls-button', '>', '##'),
+      rightScroll: new PageElement(this.node, 'div', 'controls-button', '>>', '##'),
     };
   }
 
