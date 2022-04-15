@@ -69,7 +69,7 @@
       @include font ($family: 'georgia', $size: 44px, $line: 130%);
 
       @media (max-width: ($tablet - 1px)) {
-        @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
+        @include font ($family: 'georgia', $size: 30px, $line: 130%, $letter: 0.06em);
         text-align: center;
       }
 

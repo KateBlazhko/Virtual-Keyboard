@@ -37,6 +37,16 @@
       text-decoration: none;
       cursor: pointer;
   
+      &.lock {
+
+        .header-title {
+          color: mix($color-primary, $blackout);
+        }
+
+        .header-subtitle {
+          color: mix($color-light-xl, $blackout);
+        }
+      }
   
       .header-title {
         @include font ($family: 'georgia', $size: 32px, $line: 110%, $letter: 0.06em);
@@ -59,6 +69,16 @@
       &.double {
         @include absolute($top: 30px, $left:10px, $z-index: -1);
         opacity: 0;
+
+        transition: opacity 0.3s linear;
+
+        @media (max-width: ($tablet - 1px)) {
+
+          &.active {
+            opacity: 1;
+          }
+
+        }
       }
     }
   
@@ -76,8 +96,8 @@
   
         @media (max-width: ($tablet - 1px)) {
           position: fixed;
-          top: 100vh;
-          left: calc(100% - 320px); 
+          top: 0;
+          left: 100%; 
           z-index: 3;
           //overflow: auto;
   
@@ -96,11 +116,7 @@
           }
   
           &.active {
-            transform: translateY(-100%);
-          }
-
-          .header-logo.double {
-            opacity: 1;
+            transform: translateX(-100%);
           }
         }
     }
