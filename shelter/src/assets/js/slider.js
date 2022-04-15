@@ -51,15 +51,15 @@ export class Slider extends PageElement {
 
     createCards() {
       let slideSize = this.cardQuantity / 3;
-      this.indexVisibleSlide = 1;
-      this.indexesVisibleCard = [];
+      // this.indexVisibleSlide = 1;
+      // this.indexesVisibleCard = [];
       this.slideList.forEach((slide, index) => {
 
         for (let i = 0; i < slideSize; i++) {
           new Card(slide.node, 'card', i + 1)
-          if (this.indexVisibleSlide === index) {
-            this.indexesVisibleCard.push(i + 1)
-          }
+          // if (this.indexVisibleSlide === index) {
+          //   this.indexesVisibleCard.push(i + 1)
+          // }
         } 
       })
     }
