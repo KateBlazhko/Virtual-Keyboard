@@ -4,9 +4,10 @@ export class Pagination extends PageElement {
   constructor(parent, className, cardQuantity, arrayIndexes) {
     super(parent, 'div', className);
 
-    this.paginationControls = new Controls(this.node, 'pagination-controls');
+    this.paginationControls = new Controls(this.node, 'pagination-controls', this);
     this.paginationPets = new PageElement(this.node, 'div', 'pagination-pets');
     this.paginationPetsDouble = new PageElement(this.node, 'div', 'pagination-pets-double');
+
     this.isDouble = false;
 
     this.cardQuantity = cardQuantity;
@@ -15,8 +16,13 @@ export class Pagination extends PageElement {
     this.paginationControls.setpageQuantity(this.pageQuantity);
     this.offset = 0;
 
-    this.onclick = this.onclick();
     this.cardList = this.createCards();
+
+  }
+
+  onChange(control) {
+    this.setOffset(control);
+    this.updateCards();
   }
 
   createCards() {
@@ -37,7 +43,7 @@ export class Pagination extends PageElement {
     return cardList
   }
 
-  resizeCards(cardQuantity, arrayIndexes) {
+  resizePagination(cardQuantity, arrayIndexes) {
 
     if (this.cardQuantity !== cardQuantity) {
       this.cardQuantity = cardQuantity;
@@ -54,18 +60,6 @@ export class Pagination extends PageElement {
       this.cardList = this.createCards();
     }
     
-  }
-
-  onclick() {
-    let control = this.paginationControls.getListControls()
-  
-    for (let key in control) {
-      control[key].node.onclick = () => {
-        this.setOffset(key);
-        this.updateCards();
-        this.paginationControls.handleChange(key);
-      }
-    }
   }
 
   setViewControls() {
@@ -118,15 +112,23 @@ export class Pagination extends PageElement {
 }
 
 class Controls extends PageElement {
-  constructor(parent, className) {
+  constructor(parent, className, parentInstance) {
     super(parent, 'div', className);
     this.listControls = {
-      leftScroll: new PageElement(this.node, 'div', 'controls-button', '<<', '##'),
-      prev: new PageElement(this.node, 'div', 'controls-button', '<', '##'),
-      currentPage: new PageElement(this.node, 'div', 'controls-button', '1', '##'),
-      next: new PageElement(this.node, 'div', 'controls-button', '>', '##'),
-      rightScroll: new PageElement(this.node, 'div', 'controls-button', '>>', '##'),
+      leftScroll: new PageElement(this.node, 'div', 'controls-button', '<<'),
+      prev: new PageElement(this.node, 'div', 'controls-button', '<'),
+      currentPage: new PageElement(this.node, 'div', 'controls-button', '1'),
+      next: new PageElement(this.node, 'div', 'controls-button', '>'),
+      rightScroll: new PageElement(this.node, 'div', 'controls-button', '>>'),
     };
+    this.parentInstance = parentInstance;
+
+    for (let control in this.listControls) {
+      this.listControls[control].node.onclick = () => {
+        this.parentInstance.onChange(control);
+        this.handleChange(control);
+      }
+    }
   }
 
   handleChange(key) {

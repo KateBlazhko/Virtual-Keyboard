@@ -1,10 +1,12 @@
 export class PageElement {
-    constructor(node, tagName = 'div', className = '', content = '') {
+    constructor(node, tagName = 'div', className = '', content = '', isAppend = true) {
       const el = document.createElement(tagName);
       el.className = className;
       el.innerHTML = content;
       this.node = el;
-      node.append(el);
+
+      if (isAppend) node.append(el);
+      else node.prepend(el)
     }
   }
 
@@ -25,14 +27,17 @@ class Image extends PageElement {
 }
 
 export class Card extends PageElement {
-    constructor(parent, className, cardNumber) {
-      super(parent, 'div', className);
+    constructor(parent, className, cardNumber, isAppend = true) {
+      super(parent, 'div', className, '', isAppend);
       this.cardNumber = cardNumber;
-      this.img = new Image(this.node, 'card-img', `assets/img/${cardNumber}.png`, `pets-img`);
-      this.name = new PageElement(this.node, 'div','card-name', `${petNames[cardNumber-1]}`);
+      this.img = new Image(this.node, 'card-img', `assets/img/${this.cardNumber}.png`, `pets-img`);
+      this.name = new PageElement(this.node, 'div','card-name', `${petNames[this.cardNumber-1]}`);
       this.button = new Link(this.node, 'card-button', 'Learn more', '#slider');
     }
 
+    getCardNumber() {
+      return this.cardNumber
+    }
 }
 
 export class Button extends PageElement {

@@ -266,7 +266,6 @@
       grid-template-rows: 435px 52px;
       row-gap: 20px;
       justify-items: end;
-      //width: 270px;
     }
 
     .button-arrow {
@@ -306,18 +305,21 @@
   overflow-x: hidden;
   grid-area: 1 / 2 / 2 / 3;
   justify-self: center;
+  width: 100%;
   padding: 0 53px;
 
   @media (max-width: ($desctop - 1px)) {
-    width: auto;
+    width: calc(270px + 270px + 90px + 2 * 53px);
   }
 
   @media (max-width: ($laptop - 1px)) {
+    width: calc(270px + 270px + 40px + 2 * 36px);
     padding: 0 36px;
     margin: 0 -30px;
   }
 
   @media (max-width: ($tablet - 1px)) {
+    width: calc(270px + 2 * 15px);
     padding: 0 15px;
     margin: 0;
   }
@@ -344,11 +346,13 @@
     } 
 
     &-main {
-      transition: transform 1s linear;
+      position: relative;
 
       @include flex($justify: flex-start);
       gap: 90px;
-  
+
+      @include size($height: 435px);
+
       @media (max-width: ($laptop - 1px)) {
         gap: 40px;
       }

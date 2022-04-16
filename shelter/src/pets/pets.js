@@ -5,7 +5,6 @@ import {Pagination} from '../assets/js/pagination.js';
 
 
 let arrayIndexes = getArray();
-console.log(arrayIndexes)
 let cardQuantity = getcardQuantity();
 const contentSlider = document.querySelector('.pets-content');
 const paginationPets = new Pagination(contentSlider, 'pagination', cardQuantity, arrayIndexes);
@@ -53,7 +52,7 @@ window.addEventListener('resize', () => {
         resizeTimeout = null;
         cardQuantity = getcardQuantity();
         arrayIndexes = getArray();
-        paginationPets.resizeCards(cardQuantity, arrayIndexes);
+        paginationPets.resizePagination(cardQuantity, arrayIndexes);
       }, 50)
     }
 })

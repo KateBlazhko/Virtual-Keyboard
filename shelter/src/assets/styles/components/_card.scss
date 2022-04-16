@@ -2,6 +2,7 @@
 .card {
     overflow: hidden;
 
+
     @include flex($direction: column);
     gap: 30px;
     min-width: 270px;
@@ -9,6 +10,8 @@
     border-radius: 9px;
   
     background-color: $color-light-s;
+
+    transition: transform 1s linear;
   
     &-name {
       @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
@@ -33,6 +36,11 @@
   
     &-button {
       @include button($width: 187px, $border: 2px solid $color-primary, $color-bg: $color-light-s);  
+    }
+
+    &.card-slider {
+      @include absolute();
+
     }
   }
   
