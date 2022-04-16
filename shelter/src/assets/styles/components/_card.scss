@@ -11,7 +11,7 @@
     background-color: $color-light-s;
   
     &-name {
-      @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
+      @include font($family: 'Noto', $size: 20px, $line: 115%, $letter: 0.03em);
     }
   
     &:hover {

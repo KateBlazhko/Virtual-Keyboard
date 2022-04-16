@@ -77,6 +77,7 @@
   
       .title {
         color: $color-light-xl;
+        letter-spacing: 0.02em;
 
         @media (max-width: ($tablet - 1px)) {
           width: 100%;
@@ -96,7 +97,7 @@
       }
   
       &-link {
-        @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
+        @include font($family: 'Noto', $size: 20px, $line: 115%, $letter: 0.03em);
         color: $color-primary;
         text-decoration: none;
       }

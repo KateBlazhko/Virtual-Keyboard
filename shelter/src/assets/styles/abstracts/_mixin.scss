@@ -23,7 +23,7 @@
   height: $height;
 }
 
-@mixin font ($family: 'arial', $style: normal, $weight: normal, 
+@mixin font ($family: 'Liberation', $style: normal, $weight: normal, 
             $size: 15px, $line: normal, $letter: normal) {
     
   font-family: $family;
@@ -44,7 +44,7 @@
   border-radius: 100px;
   border-color: $color-primary;
 
-  @include font($family: 'georgia', $size: 17px, $line: 130%, $letter: 0.06em);
+  @include font($family: 'Noto', $size: 17px, $line: 130%, $letter: 0.03em);
   color: $color;
   text-decoration: none;
 
