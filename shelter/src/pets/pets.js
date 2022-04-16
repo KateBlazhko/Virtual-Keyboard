@@ -45,14 +45,14 @@ function sort(array) {
   return array;
 }
 
+let resizeTimeout;
 window.addEventListener('resize', () => {
-    let resizeTimeout;
     if (!resizeTimeout) {
       resizeTimeout = setTimeout(() => {
         resizeTimeout = null;
         cardQuantity = getcardQuantity();
         arrayIndexes = getArray();
         paginationPets.resizePagination(cardQuantity, arrayIndexes);
-      }, 50)
+      }, 66)
     }
 })

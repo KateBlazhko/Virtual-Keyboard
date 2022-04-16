@@ -12,15 +12,29 @@ export class Slider extends PageElement {
       this.offset = 0;
       this.cardList = [];
       this.delay = 0.5;
+      
+      let clickTimeoutPrev;
+      this.prev.node.addEventListener('click', () => {
 
-      this.prev.node.onclick = () => {
-        this.changeImgPrev(0.5)
-      };
+        if (!clickTimeoutPrev) {
+          this.changeImgPrev(0.3)
+          clickTimeoutPrev = setTimeout(() => {
+            clickTimeoutPrev = null;
+          }, 300)
+        }
+      })
 
 
-      this.next.node.onclick = () => {
-        this.changeImgNext(0.5)
-      };
+      let clickTimeoutNext;
+      this.next.node.addEventListener('click', () => {
+        if (!clickTimeoutNext) {
+          this.changeImgNext(0.3)
+          clickTimeoutNext = setTimeout(() => {
+            clickTimeoutNext = null;
+          }, 300)
+        }
+      })
+
     }
 
     createCards() {
@@ -34,7 +48,6 @@ export class Slider extends PageElement {
 
     translateCards() {
       this.cardList.forEach((card, i) => {
-        //let delay = 0.5;
         let delay = this.delay
         let position = 0;
         if ((i + this.offset) < this.cardList.length) {
@@ -43,8 +56,6 @@ export class Slider extends PageElement {
         if ((i + this.offset) > this.cardList.length) {
           position = i + this.offset - this.cardList.length
         }
-        
-        console.log(position)
 
         if (this.isPrev) {
           if (i === this.indexMovedCard - 1) {

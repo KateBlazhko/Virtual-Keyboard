@@ -19,8 +19,8 @@ function getCardGap(){
            (window.innerWidth >= 768) ? 40 : 0
 }
 
+let resizeTimeout;
 window.addEventListener('resize', () => {
-    let resizeTimeout;
     if (!resizeTimeout) {
       resizeTimeout = setTimeout(() => {
         resizeTimeout = null;
@@ -28,6 +28,6 @@ window.addEventListener('resize', () => {
         cardGap = getCardGap();
         //arrayIndexes = getArray();
         sliderPets.resizeSlider(cardQuantity, cardGap);
-      }, 50)
-    }
+      }, 66)
+    } 
 })
