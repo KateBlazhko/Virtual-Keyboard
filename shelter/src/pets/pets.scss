@@ -38,7 +38,7 @@
     }
   
     .title {
-      @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
+      @include font ($family: 'Noto', $size: 35px, $line: 130%, $letter: 0.03em);
       text-align: center;
       color: $color-dark-l;
     }

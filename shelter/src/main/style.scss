@@ -68,15 +68,15 @@
     &-title {
       width: 80%;
 
-      @include font ($family: 'georgia', $size: 44px, $line: 130%);
+      @include font ($family: 'Noto', $size: 41px, $line: 140%);
 
       @media (max-width: ($tablet - 1px)) {
-        @include font ($family: 'georgia', $size: 35px, $line: 130%, $letter: 0.06em);
+        @include font ($family: 'Noto', $size: 35px, $line: 130%, $letter: 0.03em);
         text-align: center;
       }
 
       @media (max-width: ($mobile)) {
-        @include font ($family: 'georgia', $size: 25px, $line: 130%, $letter: 0.06em);
+        @include font ($family: 'Noto', $size: 25px, $line: 130%, $letter: 0.03em);
         text-align: center;
       }
     }
@@ -427,10 +427,10 @@
       }
 
       .item-title {
-        @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
+        @include font($family: 'Noto', $size: 20px, $line: 115%, $letter: 0.02em);
 
         @media (max-width: ($tablet - 1px)) {
-          @include font($family: 'georgia', $size: 15px, $line: 115%, $letter: 0.06em);
+          @include font($family: 'Noto', $size: 15px, $line: 115%, $letter: 0.02em);
         }
       }
 
@@ -513,6 +513,8 @@
     .title {
       width: 80%;
 
+      letter-spacing: 0.02em;
+
       @media (max-width: ($desctop - 1px)) {
         width: 320px;
       }
@@ -523,11 +525,11 @@
     }
 
     &-subtitle {
-      @include font ($family: 'georgia', $size: 15px, $line: 110%, $letter: 0.06em);
+      @include font ($family: 'Noto', $size: 15px, $line: 110%, $letter: 0.03em);
       color: $color-dark-l;
 
       @media (max-width: ($tablet - 1px)) {
-        @include font ($family: 'georgia', $size: 15px, $line: 110%);
+        @include font ($family: 'Noto', $size: 14px, $line: 120%);
         text-align: center;
       }
     }
@@ -560,12 +562,12 @@
       }
 
       .credit-card-link {
-        @include font($family: 'georgia', $size: 20px, $line: 115%, $letter: 0.06em);
+        @include font($family: 'Noto', $size: 20px, $line: 115%, $letter: 0.05em);
         color: $color-dark-l;
         text-decoration: none;
 
         @media (max-width: ($tablet - 1px)) {
-          @include font($family: 'georgia', $size: 15px, $line: 110%, $letter: 0.06em);
+          @include font($family: 'Noto', $size: 15px, $line: 110%, $letter: 0.05em);
         }
 
       }

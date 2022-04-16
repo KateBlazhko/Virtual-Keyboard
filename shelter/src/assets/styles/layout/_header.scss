@@ -39,7 +39,7 @@
   
   
       .header-title {
-        @include font ($family: 'georgia', $size: 32px, $line: 110%, $letter: 0.06em);
+        @include font ($family: 'Noto', $size: 32px, $line: 110%, $letter: 0.03em);
         color: $color-primary;
 
         &.pets {

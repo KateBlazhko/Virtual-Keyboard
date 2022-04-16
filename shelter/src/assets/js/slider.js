@@ -11,13 +11,15 @@ export class Slider extends PageElement {
       this.gap = cardGap;
       this.offset = 0;
       this.cardList = [];
+      this.delay = 0.5;
 
       this.prev.node.onclick = () => {
-        this.changeImgPrev()
+        this.changeImgPrev(0.5)
       };
 
+
       this.next.node.onclick = () => {
-        this.changeImgNext()
+        this.changeImgNext(0.5)
       };
     }
 
@@ -32,7 +34,8 @@ export class Slider extends PageElement {
 
     translateCards() {
       this.cardList.forEach((card, i) => {
-        let delay = 0.5;
+        //let delay = 0.5;
+        let delay = this.delay
         let position = 0;
         if ((i + this.offset) < this.cardList.length) {
           position = i + this.offset
@@ -64,11 +67,14 @@ export class Slider extends PageElement {
             card.node.style.transitionDuration = `${delay}s`;
           }
       })
+
+      
     }
 
-    changeImgPrev() {
+    changeImgPrev(delay) {
         this.slider.node.style.overflow = 'hidden';
         this.isPrev = true;
+        this.delay = delay;
 
         if (this.offset !== 0) {
           this.offset -= 1;
