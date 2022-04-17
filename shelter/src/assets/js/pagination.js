@@ -44,7 +44,7 @@ export class Pagination extends PageElement {
   }
 
   resizePagination(cardQuantity, arrayIndexes) {
-
+    
     if (this.cardQuantity !== cardQuantity) {
       this.cardQuantity = cardQuantity;
       this.arrayIndexes = arrayIndexes;
