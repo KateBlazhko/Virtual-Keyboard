@@ -38,10 +38,10 @@
       @include button($width: 187px, $border: 2px solid $color-primary, $color-bg: $color-light-s);  
     }
 
-    &.card-slider {
-      @include absolute();
+    // &.card-slider {
+    //   @include absolute();
 
-    }
+    // }
   }
   
   

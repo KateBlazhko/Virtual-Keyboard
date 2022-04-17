@@ -348,13 +348,28 @@
     &-main {
       position: relative;
 
-      @include flex($justify: flex-start);
-      gap: 90px;
+      // @include flex($justify: flex-start);
+      // gap: 90px;
 
       @include size($height: 435px);
 
-      @media (max-width: ($laptop - 1px)) {
-        gap: 40px;
+      // @media (max-width: ($laptop - 1px)) {
+      //   gap: 40px;
+      // }
+
+      .slide {
+        @include absolute();
+
+        @include flex();
+        gap: 90px;
+
+        @media (max-width: ($laptop - 1px)) {
+          gap: 40px;
+        }
+
+        @media (max-width: ($tablet - 1px)) {
+          gap: 15px;
+        }
       }
     } 
   }

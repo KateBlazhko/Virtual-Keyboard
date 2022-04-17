@@ -48,11 +48,11 @@ function sort(array) {
 let resizeTimeout;
 window.addEventListener('resize', () => {
     if (!resizeTimeout) {
+      cardQuantity = getcardQuantity();
+      arrayIndexes = getArray();
+      paginationPets.resizePagination(cardQuantity, arrayIndexes);
       resizeTimeout = setTimeout(() => {
         resizeTimeout = null;
-        cardQuantity = getcardQuantity();
-        arrayIndexes = getArray();
-        paginationPets.resizePagination(cardQuantity, arrayIndexes);
       }, 66)
     }
 })

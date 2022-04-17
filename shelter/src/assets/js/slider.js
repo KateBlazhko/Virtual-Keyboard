@@ -10,79 +10,85 @@ export class Slider extends PageElement {
       this.cardQuantity = cardQuantity;
       this.gap = cardGap;
       this.offset = 0;
-      this.cardList = [];
+      this.slideList = [];
       this.delay = 0.5;
       
       let clickTimeoutPrev;
-      this.prev.node.addEventListener('click', () => {
-
+      this.prev.node.onclick = () => {
         if (!clickTimeoutPrev) {
-          this.changeImgPrev(0.3)
+          this.toSlidePrev(0.3)
           clickTimeoutPrev = setTimeout(() => {
             clickTimeoutPrev = null;
           }, 300)
         }
-      })
-
+      }
 
       let clickTimeoutNext;
-      this.next.node.addEventListener('click', () => {
+      this.next.node.onclick = () => {
         if (!clickTimeoutNext) {
-          this.changeImgNext(0.3)
+          this.toSlideNext(0.3)
           clickTimeoutNext = setTimeout(() => {
             clickTimeoutNext = null;
           }, 300)
         }
-      })
-
-    }
-
-    createCards() {
-      this.sliderMain = new PageElement(this.slider.node, 'div', 'slider-main');
-      for (let i = 0; i < this.cardQuantity; i++) {
-        this.cardList.push(new Card(this.sliderMain.node, 'card card-slider', i + 1))
       }
-      this.indexMovedCard = this.cardList.length - 1;
-      this.translateCards();
+
     }
 
-    translateCards() {
-      this.cardList.forEach((card, i) => {
+    createSlides() {
+      this.sliderMain = new PageElement(this.slider.node, 'div', 'slider-main');
+      let slideSize = this.cardQuantity / 3;
+ 
+      for (let i = 0; i < 3; i++) {
+        this.slideList.push(new PageElement(this.sliderMain.node, 'div', 'slide'))
+      }
+
+      this.slideList.forEach((slide) => {
+        for (let i = 0; i < slideSize; i++) {
+          new Card(slide.node, 'card', i + 1)
+        }
+      })
+      this.indexMovedSlide = this.slideList.length - 1;
+      this.translateSlides();
+    }
+
+    translateSlides() {
+      this.slideList.forEach((slide, i) => {
         let delay = this.delay
         let position = 0;
-        if ((i + this.offset) < this.cardList.length) {
+        if ((i + this.offset) < this.slideList.length) {
           position = i + this.offset
         }
-        if ((i + this.offset) > this.cardList.length) {
-          position = i + this.offset - this.cardList.length
+        if ((i + this.offset) > this.slideList.length) {
+          position = i + this.offset - this.slideList.length
         }
 
         if (this.isPrev) {
-          if (i === this.indexMovedCard - 1) {
+          if (i === this.indexMovedSlide - 1) {
             delay = 0;
           }
         } else {
-          if (i === this.indexMovedCard) {
+          if (i === this.indexMovedSlide) {
             delay = 0;
           }
         }
 
         if (position === 0) {
-          card.node.style.transform = `translate(${position * 100}%)`;
-          card.node.style.transitionDuration = `${delay}s`;
-        } else if (position === this.cardList.length - 1) {
-          card.node.style.transform = `translate(calc(-100% - ${this.gap}px))`;
-          card.node.style.transitionDuration = `${delay}s`;
+          slide.node.style.transform = `translate(${position * 100}%)`;
+          slide.node.style.transitionDuration = `${delay}s`;
+        } else if (position === this.slideList.length - 1) {
+          slide.node.style.transform = `translate(calc(-100% - ${this.gap}px))`;
+          slide.node.style.transitionDuration = `${delay}s`;
           } else {
-            card.node.style.transform = `translate(calc(${position * 100}% + ${position * this.gap}px))`;
-            card.node.style.transitionDuration = `${delay}s`;
+            slide.node.style.transform = `translate(calc(${position * 100}% + ${position * this.gap}px))`;
+            slide.node.style.transitionDuration = `${delay}s`;
           }
       })
 
       
     }
 
-    changeImgPrev(delay) {
+    toSlidePrev(delay) {
         this.slider.node.style.overflow = 'hidden';
         setTimeout (() => {
           this.slider.node.style.overflow = 'visible';
@@ -94,40 +100,40 @@ export class Slider extends PageElement {
         if (this.offset !== 0) {
           this.offset -= 1;
         } else {
-          this.offset = this.cardList.length - 1;
+          this.offset = this.slideList.length - 1;
         }
       
-        if (this.indexMovedCard < this.cardList.length) {
-          this.indexMovedCard += 1;
+        if (this.indexMovedSlide < this.slideList.length) {
+          this.indexMovedSlide += 1;
         } else {
-          this.indexMovedCard = 1;
+          this.indexMovedSlide = 1;
         }
         
-        this.translateCards();
+        this.translateSlides();
      
     }
 
-    changeImgNext() {
+    toSlideNext() {
         this.slider.node.style.overflow = 'hidden';
         setTimeout (() => {
           this.slider.node.style.overflow = 'visible';
         }, 300)
-        
+
         this.isPrev = false;
 
-        if (this.offset !== this.cardList.length - 1) {
+        if (this.offset !== this.slideList.length - 1) {
           this.offset += 1;
         } else {
           this.offset = 0;
         }
 
-        if (this.indexMovedCard !== 0) {
-          this.indexMovedCard -= 1;
+        if (this.indexMovedSlide !== 0) {
+          this.indexMovedSlide -= 1;
         } else {
-          this.indexMovedCard = this.cardList.length - 1;
+          this.indexMovedSlide = this.slideList.length - 1;
         }
 
-        this.translateCards();
+        this.translateSlides();
 
     }
 
@@ -137,8 +143,8 @@ export class Slider extends PageElement {
         this.cardQuantity = cardQuantity;
         this.gap = cardGap;
         this.offset = 0;
-        this.cardList = [];
-        this.createCards();
+        this.slideList = [];
+        this.createSlides();
       }
     }
 }

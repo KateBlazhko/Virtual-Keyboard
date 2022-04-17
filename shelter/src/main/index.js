@@ -7,7 +7,7 @@ let cardQuantity = getcardQuantity();
 let cardGap = getCardGap();
 const contentSlider = document.querySelector('.pets-content');
 const sliderPets = new Slider(contentSlider, 'slider-container', cardQuantity, cardGap);
-sliderPets.createCards();
+sliderPets.createSlides();
 
 function getcardQuantity(){
     return (window.innerWidth >= 1280) ? 9 :
@@ -16,18 +16,18 @@ function getcardQuantity(){
 
 function getCardGap(){
     return (window.innerWidth >= 1024) ? 90 :
-           (window.innerWidth >= 768) ? 40 : 0
+           (window.innerWidth >= 768) ? 40 : 15
 }
 
 let resizeTimeout;
 window.addEventListener('resize', () => {
     if (!resizeTimeout) {
+      cardQuantity = getcardQuantity();
+      cardGap = getCardGap();
+      //arrayIndexes = getArray();
+      sliderPets.resizeSlider(cardQuantity, cardGap);
       resizeTimeout = setTimeout(() => {
         resizeTimeout = null;
-        cardQuantity = getcardQuantity();
-        cardGap = getCardGap();
-        //arrayIndexes = getArray();
-        sliderPets.resizeSlider(cardQuantity, cardGap);
       }, 66)
     } 
 })
