@@ -27,6 +27,7 @@ function closeMenu(event) {
        (event.target.classList.contains('lock'))) {
         removeClassName('active', menuToggle, menu, logo);
         removeClassName('lock', body, logoMain);
+
     }
 }
 
