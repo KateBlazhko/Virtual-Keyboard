@@ -84,6 +84,10 @@ export class Slider extends PageElement {
 
     changeImgPrev(delay) {
         this.slider.node.style.overflow = 'hidden';
+        setTimeout (() => {
+          this.slider.node.style.overflow = 'visible';
+        }, 300)
+
         this.isPrev = true;
         this.delay = delay;
 
@@ -105,6 +109,10 @@ export class Slider extends PageElement {
 
     changeImgNext() {
         this.slider.node.style.overflow = 'hidden';
+        setTimeout (() => {
+          this.slider.node.style.overflow = 'visible';
+        }, 300)
+        
         this.isPrev = false;
 
         if (this.offset !== this.cardList.length - 1) {
