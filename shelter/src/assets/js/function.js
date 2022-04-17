@@ -32,11 +32,11 @@ export function randomSort(array) {
     return array;
   }
 
-export function increaseCircle(operand, limit) {
+export function increaseCircle(operand, limit, reset) {
     if (operand < limit) {
         operand += 1;
       } else {
-        operand = 1;
+        operand = reset;
       }
     return operand
 }
@@ -47,5 +47,6 @@ export function decreaseCircle(operand, reset) {
   } else {
     operand = reset;
   }
+  return operand
 }
 

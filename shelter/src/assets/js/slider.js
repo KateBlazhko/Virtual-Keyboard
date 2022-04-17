@@ -17,20 +17,20 @@ export class Slider extends PageElement {
       let clickTimeoutPrev;
       this.prev.node.onclick = () => {
         if (!clickTimeoutPrev) {
-          this.toSlidePrev(0.3)
+          this.toSlidePrev(0.4)
           clickTimeoutPrev = setTimeout(() => {
             clickTimeoutPrev = null;
-          }, 300)
+          }, 400)
         }
       }
 
       let clickTimeoutNext;
       this.next.node.onclick = () => {
         if (!clickTimeoutNext) {
-          this.toSlideNext(0.3)
+          this.toSlideNext(0.4)
           clickTimeoutNext = setTimeout(() => {
             clickTimeoutNext = null;
-          }, 300)
+          }, 400)
         }
       }
 
@@ -56,7 +56,7 @@ export class Slider extends PageElement {
       this.slideList.forEach((slide, index) => {
 
         for (let i = 0; i < slideSize; i++) {
-          new Card(slide.node, 'card', i + 1)
+          new Card(slide.node, 'card', Math.floor(Math.random() * 8) + 1)
           // if (this.indexVisibleSlide === index) {
           //   this.indexesVisibleCard.push(i + 1)
           // }
@@ -66,24 +66,8 @@ export class Slider extends PageElement {
 
     translateSlides() {
       this.slideList.forEach((slide, i) => {
-        let delay = this.delay
-        let position = 0;
-        if ((i + this.offset) < this.slideList.length) {
-          position = i + this.offset
-        }
-        if ((i + this.offset) > this.slideList.length) {
-          position = i + this.offset - this.slideList.length
-        }
-
-        if (this.isPrev) {
-          if (i === this.indexMovedSlide - 1) {
-            delay = 0;
-          }
-        } else {
-          if (i === this.indexMovedSlide) {
-            delay = 0;
-          }
-        }
+        let delay = this.getDelay(i);
+        let position = this.getPosition(i);
 
         if (position === 0) {
           slide.node.style.transform = `translate(${position * 100}%)`;
@@ -95,9 +79,7 @@ export class Slider extends PageElement {
             slide.node.style.transform = `translate(calc(${position * 100}% + ${position * this.gap}px))`;
             slide.node.style.transitionDuration = `${delay}s`;
           }
-      })
-
-      
+      })   
     }
 
     toSlidePrev(delay) {
@@ -109,20 +91,10 @@ export class Slider extends PageElement {
         this.isPrev = true;
         this.delay = delay;
 
-        if (this.offset !== 0) {
-          this.offset -= 1;
-        } else {
-          this.offset = this.slideList.length - 1;
-        }
-        //this.offset = myFunc.decreaseCircle(this.offset, this.slideList.length - 1)
-      
-        if (this.indexMovedSlide < this.slideList.length) {
-          this.indexMovedSlide += 1;
-        } else {
-          this.indexMovedSlide = 1;
-        }
-        //this.indexMovedSlide = myFunc.increaseCircle(this.indexMovedSlide, this.slideList.length)
-        
+        this.offset = myFunc.decreaseCircle(this.offset, this.slideList.length - 1)
+
+        this.indexMovedSlide = myFunc.increaseCircle(this.indexMovedSlide, this.slideList.length, 1)
+
         this.translateSlides();
      
     }
@@ -135,19 +107,9 @@ export class Slider extends PageElement {
 
         this.isPrev = false;
 
-        if (this.offset < this.slideList.length - 1) {
-          this.offset += 1;
-        } else {
-          this.offset = 0;
-        }
-        //this.offset = myFunc.increaseCircle(this.offset, this.slideList.length - 1)
+        this.offset = myFunc.increaseCircle(this.offset, this.slideList.length - 1, 0)
 
-        if (this.indexMovedSlide !== 0) {
-          this.indexMovedSlide -= 1;
-        } else {
-          this.indexMovedSlide = this.slideList.length - 1;
-        }
-        //this.indexMovedSlide = myFunc.decreaseCircle(this.indexMovedSlide, this.slideList.length - 1)
+        this.indexMovedSlide = myFunc.decreaseCircle(this.indexMovedSlide, this.slideList.length - 1)
 
         this.translateSlides();
 
@@ -166,6 +128,32 @@ export class Slider extends PageElement {
 
     updateSlide() {
 
+    }
+
+    getDelay(i) {
+      let delay = this.delay
+
+      if (this.isPrev) {
+        if (i === this.indexMovedSlide - 1) {
+          delay = 0;
+        }
+      } else {
+        if (i === this.indexMovedSlide) {
+          delay = 0;
+        }
+      }
+      return delay
+    }
+
+    getPosition(i) {
+      let position = 0;
+        if ((i + this.offset) < this.slideList.length) {
+          position = i + this.offset
+        }
+        if ((i + this.offset) > this.slideList.length) {
+          position = i + this.offset - this.slideList.length
+        }
+      return position
     }
 }
 
