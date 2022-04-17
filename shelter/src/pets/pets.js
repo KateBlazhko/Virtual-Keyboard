@@ -13,8 +13,8 @@ function getcardQuantity(){
          (window.innerWidth >= 768) ? 6 : 3
 }
 
+let resizeTimeout;
 window.addEventListener('resize', () => {
-    let resizeTimeout;
     if (!resizeTimeout) {
       resizeTimeout = setTimeout(() => {
         resizeTimeout = null;
