@@ -16,6 +16,8 @@ function closeMenu(event) {
     if (event.target.classList.contains('nav-link') ||
        (event.target.classList.contains('lock'))) {
         myFunc.removeClassName('active', menuToggle, menu, logo);
+        console.log(body, 'body')
+        console.log(logoMain, 'logoMain')
         myFunc.removeClassName('lock', body, logoMain);
     }
 }
