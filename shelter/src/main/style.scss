@@ -348,14 +348,7 @@
     &-main {
       position: relative;
 
-      // @include flex($justify: flex-start);
-      // gap: 90px;
-
       @include size($height: 435px);
-
-      // @media (max-width: ($laptop - 1px)) {
-      //   gap: 40px;
-      // }
 
       .slide {
         @include absolute();

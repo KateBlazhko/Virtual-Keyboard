@@ -1,4 +1,5 @@
 import {PageElement, Card, Button} from './page-element.js';
+import * as myFunc from './function.js';
 
 export class Slider extends PageElement {
     constructor(parent, className, cardQuantity, cardGap) {
@@ -37,19 +38,30 @@ export class Slider extends PageElement {
 
     createSlides() {
       this.sliderMain = new PageElement(this.slider.node, 'div', 'slider-main');
-      let slideSize = this.cardQuantity / 3;
- 
+
       for (let i = 0; i < 3; i++) {
         this.slideList.push(new PageElement(this.sliderMain.node, 'div', 'slide'))
       }
 
-      this.slideList.forEach((slide) => {
+      this.indexMovedSlide = this.slideList.length - 1;
+
+      this.createCards();
+      this.translateSlides();
+    }
+
+    createCards() {
+      let slideSize = this.cardQuantity / 3;
+      this.indexVisibleSlide = 1;
+      this.indexesVisibleCard = [];
+      this.slideList.forEach((slide, index) => {
+
         for (let i = 0; i < slideSize; i++) {
           new Card(slide.node, 'card', i + 1)
-        }
+          if (this.indexVisibleSlide === index) {
+            this.indexesVisibleCard.push(i + 1)
+          }
+        } 
       })
-      this.indexMovedSlide = this.slideList.length - 1;
-      this.translateSlides();
     }
 
     translateSlides() {
@@ -102,12 +114,14 @@ export class Slider extends PageElement {
         } else {
           this.offset = this.slideList.length - 1;
         }
+        //this.offset = myFunc.decreaseCircle(this.offset, this.slideList.length - 1)
       
         if (this.indexMovedSlide < this.slideList.length) {
           this.indexMovedSlide += 1;
         } else {
           this.indexMovedSlide = 1;
         }
+        //this.indexMovedSlide = myFunc.increaseCircle(this.indexMovedSlide, this.slideList.length)
         
         this.translateSlides();
      
@@ -121,17 +135,19 @@ export class Slider extends PageElement {
 
         this.isPrev = false;
 
-        if (this.offset !== this.slideList.length - 1) {
+        if (this.offset < this.slideList.length - 1) {
           this.offset += 1;
         } else {
           this.offset = 0;
         }
+        //this.offset = myFunc.increaseCircle(this.offset, this.slideList.length - 1)
 
         if (this.indexMovedSlide !== 0) {
           this.indexMovedSlide -= 1;
         } else {
           this.indexMovedSlide = this.slideList.length - 1;
         }
+        //this.indexMovedSlide = myFunc.decreaseCircle(this.indexMovedSlide, this.slideList.length - 1)
 
         this.translateSlides();
 
@@ -147,4 +163,50 @@ export class Slider extends PageElement {
         this.createSlides();
       }
     }
+
+    updateSlide() {
+
+    }
 }
+
+
+export class SliderModel {
+  constructor() {
+    this.cardQuantity = this.getcardQuantity();
+    this.cardGap = this.getCardGap();
+
+    this.slider = new Slider(contentSlider, 'slider-container', this.cardQuantity, this.cardGap);
+
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      if (!resizeTimeout) {
+        this.cardQuantity = this.getcardQuantity();
+        this.cardGap = this.getCardGap();
+        //arrayIndexes = getArray();
+        this.slider.resizeSlider(this.cardQuantity, this.cardGap);
+        resizeTimeout = setTimeout(() => {
+          resizeTimeout = null;
+        }, 66)
+      } 
+    })
+
+  }
+
+  getcardQuantity(){
+    return (window.innerWidth >= 1280) ? 9 :
+           (window.innerWidth >= 768) ? 6 : 3
+  }
+
+  getCardGap(){
+    return (window.innerWidth >= 1024) ? 90 :
+           (window.innerWidth >= 768) ? 40 : 15
+  }
+
+  createSlider() {
+    this.slider.createSlides();
+  }
+
+}
+
+
+const contentSlider = document.querySelector('.pets-content');

@@ -1,7 +1,7 @@
 import petsStyle from "./pets.scss";
-
 import burger from '../assets/js/burger.js';
 import {Pagination} from '../assets/js/pagination.js';
+import * as myFunc from '../assets/js/function.js';
 
 
 let arrayIndexes = getArray();
@@ -22,28 +22,14 @@ function getArray() {
     for (let j = 1; j <= 8; j++) {
       arrayCards.push(j);
     }
-    sort(arrayCards);
+    myFunc.randomSort(arrayCards);
 
     arrayPages.push(...arrayCards);
   }
   return arrayPages
 }
 
-function sort(array) {
-  let currentIndex = array.length;
-  let randomIndex;
 
-  while (currentIndex != 0) {
-
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
-  }
-
-  return array;
-}
 
 let resizeTimeout;
 window.addEventListener('resize', () => {
