@@ -2,7 +2,6 @@
 .card {
     overflow: hidden;
 
-
     @include flex($direction: column);
     gap: 30px;
     min-width: 270px;
@@ -10,7 +9,8 @@
     border-radius: 9px;
   
     background-color: $color-light-s;
-
+    
+    user-select: none;
     transition: transform 1s linear;
   
     &-name {

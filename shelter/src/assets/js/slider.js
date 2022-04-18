@@ -1,13 +1,14 @@
-import {PageElement, Card, Button} from './page-element.js';
-import * as myFunc from './function.js';
+import {PageElement, Button} from './page-element';
+import * as myFunc from './function';
+import {Card} from './card';
 
 export class Slider extends PageElement {
     constructor(parent, className, cardQuantity, cardGap) {
       super(parent, 'div', className);
-      this.sliderWrap = new PageElement(this.node, 'div', 'slider-wrap');
-      this.slider = new PageElement(this.sliderWrap.node, 'div', 'slider');
-      this.prev = new PageElement(this.node, 'div', 'button-arrow left', '←');
-      this.next = new PageElement(this.node, 'div', 'button-arrow right', '→');
+      const sliderWrap = new PageElement(this.node, 'div', 'slider-wrap');
+      const prev = new PageElement(this.node, 'div', 'button-arrow left');
+      const next = new PageElement(this.node, 'div', 'button-arrow right');
+      this.slider = new PageElement(sliderWrap.node, 'div', 'slider');
       this.cardQuantity = cardQuantity;
       this.gap = cardGap;
       this.offset = 0;
@@ -15,7 +16,7 @@ export class Slider extends PageElement {
       this.delay = 0.5;
       
       let clickTimeoutPrev;
-      this.prev.node.onclick = () => {
+      prev.node.onclick = () => {
         if (!clickTimeoutPrev) {
           this.toSlidePrev(0.4);
           clickTimeoutPrev = setTimeout(() => {
@@ -25,7 +26,7 @@ export class Slider extends PageElement {
       }
 
       let clickTimeoutNext;
-      this.next.node.onclick = () => {
+      next.node.onclick = () => {
         if (!clickTimeoutNext) {
           this.toSlideNext(0.4);
           clickTimeoutNext = setTimeout(() => {
@@ -58,12 +59,14 @@ export class Slider extends PageElement {
     createCards(slide) {
       let array = [1, 2, 3, 4, 5, 6, 7, 8];
       let arrayNew = array.filter(item => !this.indexesVisibleCard.includes(item))
-      this.arrayIndexes = myFunc.randomSort(arrayNew);
+      let arrayIndexes = myFunc.randomSort(arrayNew);
+
       slide.node.innerHTML = '';
       this.indexesVisibleCard = []
+      
       for (let i = 0; i < this.slideSize; i++) {
-        new Card(slide.node, 'card', this.arrayIndexes[i])
-        this.indexesVisibleCard.push(this.arrayIndexes[i])
+        new Card(slide.node, 'card', arrayIndexes[i])
+        this.indexesVisibleCard.push(arrayIndexes[i])
       } 
 
     }
@@ -106,7 +109,7 @@ export class Slider extends PageElement {
      
     }
 
-    toSlideNext() {
+    toSlideNext(delay) {
         this.slider.node.style.overflow = 'hidden';
         setTimeout (() => {
           this.slider.node.style.overflow = 'visible';
@@ -116,6 +119,7 @@ export class Slider extends PageElement {
         this.updateSlides();
 
         this.isPrev = false;
+        this.delay = delay;
 
         this.offset = myFunc.increaseCircle(this.offset, this.slideList.length - 1, 0)
 
@@ -182,7 +186,7 @@ export class SliderModel {
       if (!resizeTimeout) {
         this.cardQuantity = this.getcardQuantity();
         this.cardGap = this.getCardGap();
-        this.slider.resizeSlider(this.cardQuantity, this.cardGap, this.arrayIndexes);
+        this.slider.resizeSlider(this.cardQuantity, this.cardGap);
         resizeTimeout = setTimeout(() => {
           resizeTimeout = null;
         }, 66)

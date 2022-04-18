@@ -18,25 +18,11 @@ export class Link extends PageElement {
     }
 }
 
-class Image extends PageElement {
+export class Image extends PageElement {
     constructor(parent, className, src, alt) {
       super(parent, 'img', className);
       this.node.src = src;
       this.node.alt = alt;
-    }
-}
-
-export class Card extends PageElement {
-    constructor(parent, className, cardNumber, isAppend = true) {
-      super(parent, 'div', className, '', isAppend);
-      this.cardNumber = cardNumber;
-      this.img = new Image(this.node, 'card-img', `assets/img/${this.cardNumber}.png`, `pets-img`);
-      this.name = new PageElement(this.node, 'div','card-name', `${petNames[this.cardNumber-1]}`);
-      this.button = new Link(this.node, 'card-button', 'Learn more', '#slider');
-    }
-
-    getCardNumber() {
-      return this.cardNumber
     }
 }
 
@@ -48,5 +34,4 @@ export class Button extends PageElement {
   }
 }
 
-const petNames = ['Katrine', 'Jennifer', 'Woody', 'Sophia', 'Timmy', 'Charly', 'Scarlett', 'Freddie'];
 

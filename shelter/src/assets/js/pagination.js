@@ -1,4 +1,5 @@
-import {PageElement, Card, Link} from './page-element.js';
+import {PageElement} from './page-element';
+import {Card} from './card';
 
 export class Pagination extends PageElement {
   constructor(parent, className, cardQuantity, arrayIndexes) {
@@ -29,7 +30,7 @@ export class Pagination extends PageElement {
 
     this.setViewControls();
     let cardList = []
-
+    //console.log(this.arrayIndexes)
     if (this.isDouble) {
       for (let i = 0; i < this.cardQuantity; i++) {
         cardList.push(new Card(this.paginationPetsDouble.node, 'card', this.arrayIndexes[i + this.offset]))
