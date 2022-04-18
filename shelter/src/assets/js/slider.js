@@ -17,7 +17,7 @@ export class Slider extends PageElement {
       let clickTimeoutPrev;
       this.prev.node.onclick = () => {
         if (!clickTimeoutPrev) {
-          this.toSlidePrev(0.4)
+          this.toSlidePrev(0.4);
           clickTimeoutPrev = setTimeout(() => {
             clickTimeoutPrev = null;
           }, 400)
@@ -27,7 +27,7 @@ export class Slider extends PageElement {
       let clickTimeoutNext;
       this.next.node.onclick = () => {
         if (!clickTimeoutNext) {
-          this.toSlideNext(0.4)
+          this.toSlideNext(0.4);
           clickTimeoutNext = setTimeout(() => {
             clickTimeoutNext = null;
           }, 400)
@@ -44,24 +44,28 @@ export class Slider extends PageElement {
       }
 
       this.indexMovedSlide = this.slideList.length - 1;
+      this.indexVisibleSlide = 0;
+      this.indexesVisibleCard = [];
+      this.slideSize = this.cardQuantity / 3;
 
-      this.createCards();
+  
+
+      let slide = this.slideList[this.indexVisibleSlide]
+      this.createCards(slide);
       this.translateSlides();
-    }
+    } 
 
-    createCards() {
-      let slideSize = this.cardQuantity / 3;
-      // this.indexVisibleSlide = 1;
-      // this.indexesVisibleCard = [];
-      this.slideList.forEach((slide, index) => {
+    createCards(slide) {
+      let array = [1, 2, 3, 4, 5, 6, 7, 8];
+      let arrayNew = array.filter(item => !this.indexesVisibleCard.includes(item))
+      this.arrayIndexes = myFunc.randomSort(arrayNew);
+      slide.node.innerHTML = '';
+      this.indexesVisibleCard = []
+      for (let i = 0; i < this.slideSize; i++) {
+        new Card(slide.node, 'card', this.arrayIndexes[i])
+        this.indexesVisibleCard.push(this.arrayIndexes[i])
+      } 
 
-        for (let i = 0; i < slideSize; i++) {
-          new Card(slide.node, 'card', Math.floor(Math.random() * 8) + 1)
-          // if (this.indexVisibleSlide === index) {
-          //   this.indexesVisibleCard.push(i + 1)
-          // }
-        } 
-      })
     }
 
     translateSlides() {
@@ -86,7 +90,10 @@ export class Slider extends PageElement {
         this.slider.node.style.overflow = 'hidden';
         setTimeout (() => {
           this.slider.node.style.overflow = 'visible';
-        }, 300)
+        }, 400)
+
+        this.indexVisibleSlide = myFunc.increaseCircle(this.indexVisibleSlide, this.slideList.length - 1, 0)
+        this.updateSlides();
 
         this.isPrev = true;
         this.delay = delay;
@@ -103,7 +110,10 @@ export class Slider extends PageElement {
         this.slider.node.style.overflow = 'hidden';
         setTimeout (() => {
           this.slider.node.style.overflow = 'visible';
-        }, 300)
+        }, 400)
+
+        this.indexVisibleSlide = myFunc.decreaseCircle(this.indexVisibleSlide, this.slideList.length - 1)
+        this.updateSlides();
 
         this.isPrev = false;
 
@@ -115,6 +125,10 @@ export class Slider extends PageElement {
 
     }
 
+    updateSlides() {
+      this.createCards(this.slideList[this.indexVisibleSlide])
+    }
+
     resizeSlider(cardQuantity, cardGap) {
       if (this.cardQuantity !== cardQuantity) {
         this.sliderMain.node.remove();
@@ -123,11 +137,10 @@ export class Slider extends PageElement {
         this.offset = 0;
         this.slideList = [];
         this.createSlides();
+      } else {
+        this.gap = cardGap;
+        this.translateSlides();
       }
-    }
-
-    updateSlide() {
-
     }
 
     getDelay(i) {
@@ -162,7 +175,6 @@ export class SliderModel {
   constructor() {
     this.cardQuantity = this.getcardQuantity();
     this.cardGap = this.getCardGap();
-
     this.slider = new Slider(contentSlider, 'slider-container', this.cardQuantity, this.cardGap);
 
     let resizeTimeout;
@@ -170,8 +182,7 @@ export class SliderModel {
       if (!resizeTimeout) {
         this.cardQuantity = this.getcardQuantity();
         this.cardGap = this.getCardGap();
-        //arrayIndexes = getArray();
-        this.slider.resizeSlider(this.cardQuantity, this.cardGap);
+        this.slider.resizeSlider(this.cardQuantity, this.cardGap, this.arrayIndexes);
         resizeTimeout = setTimeout(() => {
           resizeTimeout = null;
         }, 66)
@@ -186,8 +197,7 @@ export class SliderModel {
   }
 
   getCardGap(){
-    return (window.innerWidth >= 1024) ? 90 :
-           (window.innerWidth >= 768) ? 40 : 15
+    return (window.innerWidth >= 1024) ? 90 : 40
   }
 
   createSlider() {
