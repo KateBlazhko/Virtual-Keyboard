@@ -50,6 +50,8 @@
       width: 100%;
       min-height: calc(435px * 2 + 30px + 60px + 52px);
 
+      user-select: none;
+
       @media (max-width: ($desctop - 1px)) {
         gap: 40px;
         min-height: calc(435px * 3 + 30px * 2 + 40px + 52px);

@@ -263,6 +263,8 @@
 
     width: 100%;
 
+    user-select: none;
+
     @media (max-width: ($tablet - 1px)) {
       grid-template-columns: 1fr 80px 1fr;
       grid-template-rows: 435px 52px;
