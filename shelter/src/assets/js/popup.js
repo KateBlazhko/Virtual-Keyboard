@@ -66,7 +66,7 @@ export class DataItem {
 
 	loadData(name){
     this.name = name
-    return fetch('../assets/json/pets.json')
+    return fetch('assets/json/pets.json')
 						.then(res => res.json())
             .then(data => data.find(pet => pet.name === this.name))
 	}
