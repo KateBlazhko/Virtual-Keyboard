@@ -42,6 +42,7 @@
     }
   
     .title {
+      @include font ($family: 'Noto', $size: 35px, $line: 130%, $letter: 0.03em);
       text-align: center;
       color: $color-dark-l;
     }
@@ -51,21 +52,64 @@
       @include flex($direction: column-reverse);
       gap: 60px;
       width: 100%;
+      min-height: calc(435px * 2 + 30px + 60px + 52px);
+
+      user-select: none;
 
       @media (max-width: ($desctop - 1px)) {
         gap: 40px;
+        min-height: calc(435px * 3 + 30px * 2 + 40px + 52px);
       }
 
       &-pets {
+        @include absolute($z-index: 1);
+
         display: grid;
         grid-template-columns: repeat(4, 1fr); 
-        grid-template-rows: repeat(2, auto);             
+        grid-template-rows: repeat(2, 435px);             
         row-gap: 30px;
         column-gap: 40px;
 
+        opacity: 1;
+
+        transition: opacity 0.5s linear;
+
+        @media (max-width: ($desctop - 1px)) {
+          left: 50%;
+
+          grid-template-columns: repeat(2, 270px); 
+          grid-template-rows: repeat(3, 435px);
+          justify-content: center; 
+          max-height: calc(3 * 435px + 2 * 30px);
+          margin: 0 auto;
+
+          transform: translateX(-50%);
+        }
+
+        @media (max-width: ($tablet - 1px)) {
+          grid-template-columns: 270px; 
+          grid-template-rows: repeat(3, 435px);
+        }
+      }
+
+      &-pets-double {
+        @include absolute($z-index: -1);
+
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); 
+        grid-template-rows: repeat(2, 435px);             
+        row-gap: 30px;
+        column-gap: 40px;
+
+        width: 100%;;
+
+        opacity: 0;
+
+        transition: opacity 0.5s linear;
+
         @media (max-width: ($desctop - 1px)) {
           grid-template-columns: repeat(2, 270px); 
-          grid-template-rows: repeat(3, auto);
+          grid-template-rows: repeat(3, 435px);
           justify-content: center; 
           max-height: calc(3 * 435px + 2 * 30px);
           margin: 0 auto;
@@ -73,7 +117,7 @@
 
         @media (max-width: ($tablet - 1px)) {
           grid-template-columns: 270px; 
-          grid-template-rows: repeat(3, auto);
+          grid-template-rows: repeat(3, 435px);
         }
       }
 

@@ -1,9 +1,8 @@
 import mainStyle from './style.scss';
-import {Slider} from '../assets/js/page-element.js';
+import {Slider, SliderModel} from '../assets/js/slider.js';
 import burger from '../assets/js/burger.js';
+//import { Module } from 'webpack';
 
-const contentSlider = document.querySelector('.slider');
-const sliderMain = new Slider(contentSlider, 'slider-main');
+const sliderPets = new SliderModel()
+sliderPets.createSlider()
 
-//console.log (document.documentElement.clientWidth);
-sliderMain.createCards(8);

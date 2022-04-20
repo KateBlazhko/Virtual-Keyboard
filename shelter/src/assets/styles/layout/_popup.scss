@@ -1,0 +1,73 @@
+.popup-overlay {
+	position: fixed;
+
+	width: 100%;
+	height: 100vh;
+	top: 0;
+	left: 0;
+
+	@include flex($justify: center);
+
+	background-color: $blackout;
+}
+
+.popup-wrapper {
+	width: 682px;
+	height: 402px;
+	margin-right: 52px;
+
+		background-color: transparent;
+
+		.popup-close-button {
+			@include button ($width: 52px, $border: 2px solid $color-primary,
+				$color-bg: transparent, $color: $color-dark-3xl);  
+		}
+
+		.popup-container {
+			@include flex();
+			width: 100%;
+			border-radius: 9px;
+
+			background-color: $color-light-s;
+
+			.popup-img {
+				$card-img-url: "../../assets/images/1.png";
+
+				width: toPercent(682px, 350px);
+				padding-bottom: 100%;
+
+				background-image: url(#{$card-img-url});
+				background-size: cover;
+				background-repeat: no-repeat;
+			}
+
+			.popup-data {
+				@include flex($direction: column);
+
+				.title {
+					text-align: left;
+				}
+
+				.subtitle {
+					@include font($family: 'Noto', $size: 20px, $line: 115%, $letter: 0.02em);
+					text-align: left;
+				}
+
+				.pets-description {
+					@include font($family: 'Noto', $size: 13px, $line: 115%, $letter: 0.02em);
+					text-align: left;
+				}
+
+				.list {
+					.list-item {
+						list-style-type: circle;
+					}
+				}
+
+			}
+		}
+}
+
+
+
+

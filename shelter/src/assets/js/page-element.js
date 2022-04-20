@@ -1,10 +1,12 @@
 export class PageElement {
-    constructor(node, tagName = 'div', className = '', content = '') {
+    constructor(node, tagName = 'div', className = '', content = '', isAppend = true) {
       const el = document.createElement(tagName);
       el.className = className;
       el.innerHTML = content;
       this.node = el;
-      node.append(el);
+
+      if (isAppend) node.append(el);
+      else node.prepend(el)
     }
   }
 
@@ -16,7 +18,7 @@ export class Link extends PageElement {
     }
 }
 
-class Image extends PageElement {
+export class Image extends PageElement {
     constructor(parent, className, src, alt) {
       super(parent, 'img', className);
       this.node.src = src;
@@ -24,31 +26,12 @@ class Image extends PageElement {
     }
 }
 
-export class Slider extends PageElement {
-    constructor(parent, className) {
-      super(parent, 'div', className);
-      this.cardList = [];
-    }
-  
-    createCards(cardQuantity) {
-      this.cardQuantity = cardQuantity;
-      for (let i = 1; i <= this.cardQuantity; i++) {
-        this.cardList.push(new Card(this.node, 'card', i))
-      }
-    }
+export class Button extends PageElement {
+  constructor(parent, className, textContent, type="button") {
+    super(parent, 'button', className);
+    this.node.textContent = textContent;
+    this.node.type = type;
+  }
 }
 
-
-export class Card extends PageElement {
-    constructor(parent, className, cardNumber) {
-      super(parent, 'div', className);
-      this.cardNumber = cardNumber;
-      this.img = new Image(this.node, 'card-img', `assets/img/${cardNumber}.png`, `pets-img`);
-      this.name = new PageElement(this.node, 'div','card-name', `${petNames[cardNumber-1]}`);
-      this.button = new Link(this.node, 'card-button', 'Learn more', '#slider');
-    }
-
-}
-
-const petNames = ['Katrine', 'Jennifer', 'Woody', 'Sophia', 'Timmy', 'Charly', 'Scarlett', 'Freddie'];
 

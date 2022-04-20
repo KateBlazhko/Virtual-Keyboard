@@ -9,6 +9,9 @@
     border-radius: 9px;
   
     background-color: $color-light-s;
+    
+    user-select: none;
+    transition: transform 1s linear;
   
     &-name {
       @include font($family: 'Noto', $size: 20px, $line: 115%, $letter: 0.03em);
@@ -34,6 +37,11 @@
     &-button {
       @include button($width: 187px, $border: 2px solid $color-primary, $color-bg: $color-light-s);  
     }
+
+    // &.card-slider {
+    //   @include absolute();
+
+    // }
   }
   
   
