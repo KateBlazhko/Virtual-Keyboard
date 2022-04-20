@@ -3,9 +3,8 @@ import burger from '../assets/js/burger.js';
 import {Pagination} from '../assets/js/pagination.js';
 import * as myFunc from '../assets/js/function.js';
 
-
-let arrayIndexes = getArray();
 let cardQuantity = getcardQuantity();
+let arrayIndexes = getArray();
 const contentSlider = document.querySelector('.pets-content');
 const paginationPets = new Pagination(contentSlider, 'pagination', cardQuantity, arrayIndexes);
 
@@ -26,7 +25,8 @@ function getArray() {
 
     arrayPages.push(...arrayCards);
   }
-  return arrayPages
+
+  return myFunc.checkArr(arrayPages, cardQuantity)
 }
 
 
@@ -34,11 +34,15 @@ function getArray() {
 let resizeTimeout;
 window.addEventListener('resize', () => {
     if (!resizeTimeout) {
-      cardQuantity = getcardQuantity();
-      arrayIndexes = getArray();
-      paginationPets.resizePagination(cardQuantity, arrayIndexes);
       resizeTimeout = setTimeout(() => {
+        let newCardQuantity = getcardQuantity();
+        if (newCardQuantity !== cardQuantity) {
+          cardQuantity = newCardQuantity
+          arrayIndexes = getArray();
+          paginationPets.resizePagination(cardQuantity, arrayIndexes);
+        }
         resizeTimeout = null;
       }, 66)
+
     }
 })

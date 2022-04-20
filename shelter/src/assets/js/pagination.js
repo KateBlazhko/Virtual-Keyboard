@@ -29,8 +29,7 @@ export class Pagination extends PageElement {
   createCards() {
 
     this.setViewControls();
-    let cardList = []
-    //console.log(this.arrayIndexes)
+    let cardList = [];
     if (this.isDouble) {
       for (let i = 0; i < this.cardQuantity; i++) {
         cardList.push(new Card(this.paginationPetsDouble.node, 'card', this.arrayIndexes[i + this.offset]))
@@ -46,7 +45,6 @@ export class Pagination extends PageElement {
 
   resizePagination(cardQuantity, arrayIndexes) {
     
-    if (this.cardQuantity !== cardQuantity) {
       this.cardQuantity = cardQuantity;
       this.arrayIndexes = arrayIndexes;
       this.pageQuantity = Math.ceil(48 / this.cardQuantity);
@@ -59,7 +57,6 @@ export class Pagination extends PageElement {
       this.paginationPets.node.style.opacity = 1;
   
       this.cardList = this.createCards();
-    }
     
   }
 
