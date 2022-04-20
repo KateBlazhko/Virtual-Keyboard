@@ -29,8 +29,6 @@ function getArray() {
   return arrayPages
 }
 
-
-
 let resizeTimeout;
 window.addEventListener('resize', () => {
     if (!resizeTimeout) {
@@ -42,3 +40,4 @@ window.addEventListener('resize', () => {
       }, 66)
     }
 })
+

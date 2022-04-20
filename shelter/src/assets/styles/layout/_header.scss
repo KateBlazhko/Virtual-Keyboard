@@ -99,6 +99,7 @@
     }
   
     nav {
+      position: relative;
         width: toPercent(443px, $desctop, 40px);
   
         @media (max-width: ($desctop - 1px)) {

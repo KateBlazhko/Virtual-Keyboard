@@ -21,8 +21,6 @@
 @import '../assets/styles/layout/footer';
 @import '../assets/styles/layout/header';
 
-
-
 /* Intro */
 .intro {
   color: $color-light-xl;
@@ -72,8 +70,6 @@
 
       @media (max-width: ($tablet - 1px)) {
         @include font ($family: 'Noto', $size: 35px, $line: 130%, $letter: 0.03em);
-
-
         text-align: center;
       }
 

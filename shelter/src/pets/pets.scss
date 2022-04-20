@@ -21,7 +21,6 @@
 @import '../assets/styles/layout/footer';
 @import '../assets/styles/layout/header';
 
-
 /* Pets */
 .pets-content {
     @include flex($direction: column);
@@ -35,6 +34,11 @@
     @media (max-width: ($desctop - 1px)) {
       gap: 30px;
       padding: 200px 0 75px 0
+    }
+
+    @media (max-width: ($tablet - 1px)) {
+      gap: 42px;
+      padding: 160px 0 45px 0
     }
   
     .title {
@@ -56,7 +60,6 @@
         gap: 40px;
         min-height: calc(435px * 3 + 30px * 2 + 40px + 52px);
       }
-
 
       &-pets {
         @include absolute($z-index: 1);
@@ -121,11 +124,17 @@
       &-controls {
         @include flex($justify: center);
         gap: 20px;
+
+
+        @media (max-width: ($tablet - 1px)) {
+          gap: 10px;
+        }
           
         .controls-button {
           @include button ($width: 52px, $border: 2px solid $color-primary,
                           $color-bg: $color-light-s, $color: $color-dark-3xl);         
   
+
           &.inactive {
             border: 2px solid $color-dark-s;
   
