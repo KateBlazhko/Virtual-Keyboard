@@ -32,6 +32,26 @@ export function randomSort(array) {
     return array;
   }
 
+export function checkArr(array, sizeParts) {
+  let checkArray = []
+  for (let i = 0; i < 48 / sizeParts; i++) {
+    checkArray.push([])
+  }
+
+  checkArray.forEach(partArray => {
+    let i = 0;
+    while (partArray.length < sizeParts) {
+      if (partArray.includes(array[i])) {
+        i++
+      } else {
+        partArray.push(array[i])
+        array.splice(i, 1)
+      }
+    }
+  })
+  return checkArray.join(',').split(',')
+}
+
 export function increaseCircle(operand, limit, reset) {
     if (operand < limit) {
         operand += 1;

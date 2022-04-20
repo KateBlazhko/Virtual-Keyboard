@@ -6,8 +6,8 @@ export class Slider extends PageElement {
     constructor(parent, className, cardQuantity, cardGap) {
       super(parent, 'div', className);
       const sliderWrap = new PageElement(this.node, 'div', 'slider-wrap');
-      const prev = new PageElement(this.node, 'div', 'button-arrow left', '←');
-      const next = new PageElement(this.node, 'div', 'button-arrow right', '→');
+      const prev = new PageElement(this.node, 'div', 'button-arrow left');
+      const next = new PageElement(this.node, 'div', 'button-arrow right');
       this.slider = new PageElement(sliderWrap.node, 'div', 'slider');
       this.cardQuantity = cardQuantity;
       this.gap = cardGap;

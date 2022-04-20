@@ -20,6 +20,7 @@
 @import '../assets/styles/layout/container';
 @import '../assets/styles/layout/footer';
 @import '../assets/styles/layout/header';
+@import '../assets/styles/layout/popup';
 
 /* Intro */
 .intro {
@@ -274,12 +275,19 @@
       @include button ($width: 52px, $border: 2px solid $color-primary,
                       $color-bg: $color-light-xl, $color: $color-dark-3xl); 
 
-      @include font ($weight: bold, $size: 15px);               
+      @include font ($weight: bold, $size: 17px, $line: 100%);               
       
       background-color: $color-light-s;
+      background-image: url(../assets/icons/Arrow.svg);
+      background-repeat: no-repeat;
+      background-position: center;
 
       @media (max-width: ($tablet - 1px)) {
         grid-area: 2 / 1 / 3 / 2;
+      }
+
+      &.left {
+        transform: rotate(180deg);
       }
 
       &.right { 

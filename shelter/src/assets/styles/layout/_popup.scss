@@ -1,10 +1,13 @@
 .popup-overlay {
 	position: fixed;
-
+  top: 0;
+	left: 0;
+	z-index: 3;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	width: 100%;
 	height: 100vh;
-	top: 0;
-	left: 0;
 
 	@include flex($justify: center);
 
@@ -12,55 +15,148 @@
 }
 
 .popup-wrapper {
-	width: 682px;
-	height: 402px;
-	margin-right: 52px;
+	@include flex($direction: column);
+	width: 952px;
 
-		background-color: transparent;
+	background-color: transparent;
+
+		@media (max-width: ($desctop - 1px)) {
+			width: 682px;
+		}
+
+		@media (max-width: ($tablet - 1px)) {
+			width: 270px;
+		}
 
 		.popup-close-button {
+			align-self: flex-end;
 			@include button ($width: 52px, $border: 2px solid $color-primary,
-				$color-bg: transparent, $color: $color-dark-3xl);  
+				$color-bg: transparent, $color: $color-dark-3xl); 
+				
+			@include font ($weight: bold, $size: 30px);
+			color: $color-dark-3xl;
+
+			background-image: url(../assets/icons/Vector.svg);
+			background-repeat: no-repeat;
+			background-position: center;
+
+			&.hover {
+				cursor: pointer;
+
+				border: 2px solid $color-primary-light;
+			
+				background-color: $color-primary-light;
+			}
+
 		}
 
 		.popup-container {
+			overflow: hidden;
 			@include flex();
-			width: 100%;
+			align-self: flex-start;
+			width: calc(100% - 52px);
 			border-radius: 9px;
 
 			background-color: $color-light-s;
 
+			@media (max-width: ($tablet - 1px)) {
+				width: calc(100% - 30px);
+			}
+
 			.popup-img {
-				$card-img-url: "../../assets/images/1.png";
+				width: 500px;
+				padding-bottom: calc(500 / 900 * 100%);
 
-				width: toPercent(682px, 350px);
-				padding-bottom: 100%;
-
-				background-image: url(#{$card-img-url});
 				background-size: cover;
 				background-repeat: no-repeat;
+
+				@media (max-width: ($desctop - 1px)) {
+					width: 350px;
+					padding-bottom: calc(350 / 630 * 100%);
+				}
+
+				@media (max-width: ($tablet - 1px)) {
+					display: none;
+				}
 			}
 
 			.popup-data {
-				@include flex($direction: column);
+				align-self: flex-start;
+				@include flex($aling: flex-start, $direction: column);
+				gap: 10px;
+
+				width: 400px;
+				padding: 50px 20px 0 30px;
+
+				@media (max-width: ($desctop - 1px)) {
+					width: 280px;
+					padding: 10px 9px 10px 11px;
+				}
+
+				@media (max-width: ($tablet - 1px)) {
+					width: 100%;
+				}
 
 				.title {
-					text-align: left;
+					font-size: 35px;
+					color: $color-dark-3xl;
+
+					@media (max-width: ($tablet - 1px)) {
+						align-self: center;
+					}
 				}
 
 				.subtitle {
 					@include font($family: 'Noto', $size: 20px, $line: 115%, $letter: 0.02em);
-					text-align: left;
+
+					@media (max-width: ($tablet - 1px)) {
+						align-self: center;
+
+						text-align: center;
+					}
 				}
 
 				.pets-description {
-					@include font($family: 'Noto', $size: 13px, $line: 115%, $letter: 0.02em);
-					text-align: left;
+					padding: 30px 0;
+
+					@include font($family: 'Noto', $size: 15px, $line: 115%, $letter: 0.03em);
+
+					@media (max-width: ($desctop - 1px)) {
+						padding: 10px 0 14px 0;
+
+						font-size: 13px;
+					}
+
+					@media (max-width: ($tablet - 1px)) {
+						text-align: justify;
+					}
 				}
 
-				.list {
-					.list-item {
-						list-style-type: circle;
+				.popup-list {
+
+					li:not(:last-child) {
+						padding-bottom: 10px;
+
+						@media (max-width: ($desctop - 1px)) {
+							padding-bottom: 5px;
+						}
+					}
+
+					.list-item {	
+						font-weight: bold;
+
+						list-style-position: inside;
+						
+						&::before {
+							color: $color-primary; 
+							content: "●"; 
+							padding-right: 10px; 
+							
+						}
+
+						span {
+							font-weight: normal;
+						}
 					}
 				}
 

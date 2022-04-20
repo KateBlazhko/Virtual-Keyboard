@@ -6,18 +6,20 @@ export class Card extends PageElement {
       super(parent, 'div', className, '', isAppend);
       this.cardNumber = cardNumber;
       const img = new Image(this.node, 'card-img', `assets/img/${this.cardNumber}.png`, `pets-img`);
-      const button = new PageElement(this.node, 'div', 'card-button', 'Learn more');
       this.name = new PageElement(this.node, 'div','card-name', `${petNames[this.cardNumber-1]}`);
+      const button = new PageElement(this.node, 'div', 'card-button', 'Learn more');
 
 
-      button.node.onclick = () => {
-        console.log ('fff')
-        const data  = new DataItem (this.name)
-        console.log(data.loadData());
-        const popup = new Popup (document.documentElement, this.cardNumber, data)
+      this.node.onclick = () => {
+       document.body.style.overflow = 'hidden';
+        const data  = new DataItem (this.name.node.textContent);
+        data.loadData(this.name.node.textContent).then(loaded => {
+          const popup = new Popup (document.documentElement, loaded)
         	popup.onClose = ()=>{
           	popup.node.remove();
+            document.body.style.overflow = 'visible';
           }
+        });
       }
 
     //   this.node. = () => {
@@ -30,4 +32,5 @@ export class Card extends PageElement {
     }
 }
 
-const petNames = ['Katrine', 'Jennifer', 'Woody', 'Sophia', 'Timmy', 'Charly', 'Scarlett', 'Freddie'];
+const petNames = ['Katrine', 'Jennifer', 'Woody', 'Sophia', 'Scarlett', 'Timmy', 'Charly', 'Freddie'];
+
