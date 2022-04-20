@@ -4,14 +4,13 @@ import * as myFunc from './function.js';
 export class Popup extends PageElement {
 	constructor(parent, pet) {
 			super(parent);
-
 			const overlay = new PageElement (this.node, 'div', 'popup-overlay');
 			const wrapper = new PageElement (overlay.node, 'div', 'popup-wrapper');
 			const closeButton = new PageElement (wrapper.node, 'div', 'popup-close-button');
 			const container = new PageElement (wrapper.node, 'div', 'popup-container');
 
 			const popupImg = new PageElement (container.node, 'div', 'popup-img');
-      		popupImg.node.style.backgroundImage = `url(${pet.img}`;
+      popupImg.node.style.backgroundImage = `url(${pet.img}`;
 
 			const popupData = new PageElement (container.node, 'div', 'popup-data');
 
@@ -63,7 +62,6 @@ export class Popup extends PageElement {
 
 export class DataItem {
 	constructor() {
-
 	}
 
 	loadData(name){

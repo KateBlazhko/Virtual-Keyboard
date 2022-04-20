@@ -27,8 +27,9 @@
     }
 
     @media (max-width: ($tablet - 1px)) {
-      column-gap: 75px;
-      row-gap: 35px;
+      row-gap: 36px;
+      max-width: 300px;
+      margin: 0 auto;
       padding-top: 30px;
     }
 
@@ -49,7 +50,7 @@
         padding-bottom: toPercent(310px, $tablet, 30px);
       }
 
-      @media (max-width: $mobile) {
+      @media (max-width: ($tablet - 1px)) {
         padding-bottom: toPercent(270px, $mobile, 10px);
       }
   

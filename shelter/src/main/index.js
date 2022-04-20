@@ -6,4 +6,3 @@ import burger from '../assets/js/burger.js';
 const sliderPets = new SliderModel()
 sliderPets.createSlider()
 
-

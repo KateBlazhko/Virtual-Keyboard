@@ -22,8 +22,6 @@
 @import '../assets/styles/layout/header';
 @import '../assets/styles/layout/popup';
 
-
-
 /* Intro */
 .intro {
   color: $color-light-xl;
@@ -73,8 +71,6 @@
 
       @media (max-width: ($tablet - 1px)) {
         @include font ($family: 'Noto', $size: 35px, $line: 130%, $letter: 0.03em);
-
-
         text-align: center;
       }
 

@@ -29,8 +29,6 @@ function getArray() {
   return myFunc.checkArr(arrayPages, cardQuantity)
 }
 
-
-
 let resizeTimeout;
 window.addEventListener('resize', () => {
     if (!resizeTimeout) {
@@ -46,3 +44,4 @@ window.addEventListener('resize', () => {
 
     }
 })
+

@@ -212,3 +212,4 @@ export class SliderModel {
 
 
 const contentSlider = document.querySelector('.pets-content');
+

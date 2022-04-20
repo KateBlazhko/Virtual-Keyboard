@@ -20,7 +20,6 @@ export class Card extends PageElement {
             document.body.style.overflow = 'visible';
           }
         });
-
       }
 
     //   this.node. = () => {
@@ -34,3 +33,4 @@ export class Card extends PageElement {
 }
 
 const petNames = ['Katrine', 'Jennifer', 'Woody', 'Sophia', 'Scarlett', 'Timmy', 'Charly', 'Freddie'];
+

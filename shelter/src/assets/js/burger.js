@@ -4,6 +4,7 @@ function toggleMenu() {
     menuToggle.onmousedown = function() {
       return false;
     };
+
     isOpen = !isOpen;
     myFunc.toggleClassName('active', menuToggle, menu, logo);
     myFunc.toggleClassName('lock', body, logoMain);
