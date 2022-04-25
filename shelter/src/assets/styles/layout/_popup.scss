@@ -1,6 +1,6 @@
 .popup-overlay {
 	position: fixed;
-  top: 0;
+  	top: 0;
 	left: 0;
 	z-index: 3;
 	display: flex;
@@ -12,6 +12,12 @@
 	@include flex($justify: center);
 
 	background-color: $blackout;
+
+	opacity: 0;
+
+	animation: Change-opacity 1s;
+	animation-fill-mode: forwards;
+	animation-direction: normal;
 }
 
 .popup-wrapper {

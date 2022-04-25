@@ -10,7 +10,7 @@ export class Popup extends PageElement {
 			const container = new PageElement (wrapper.node, 'div', 'popup-container');
 
 			const popupImg = new PageElement (container.node, 'div', 'popup-img');
-      popupImg.node.style.backgroundImage = `url(${pet.img}`;
+      		popupImg.node.style.backgroundImage = `url(${pet.img}`;
 
 			const popupData = new PageElement (container.node, 'div', 'popup-data');
 
@@ -27,7 +27,7 @@ export class Popup extends PageElement {
 			this.age = new PageElement (list.node, 'li', 'list-item', `Age: <span>${pet.age}<span>`);
 			this.inoculations = new PageElement (list.node, 'li', 'list-item', 
                                           `Inoculations: <span>${pet.inoculations.join(', ')}</span>`);
-			console.log(pet.diseases.join(', '))
+
 			this.diseases = new PageElement (list.node, 'li', 'list-item', 
                                       `Diseases: <span>${pet.diseases.join(', ')}</span>`);
 
