@@ -27,6 +27,7 @@ export class Pagination extends PageElement {
   }
 
   createCards() {
+    console.log(this.arrayIndexes)
     this.setViewControls();
     let cardList = [];
     if (this.isDouble) {
