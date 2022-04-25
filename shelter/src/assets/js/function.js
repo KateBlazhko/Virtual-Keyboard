@@ -70,3 +70,4 @@ export function decreaseCircle(operand, reset) {
   return operand
 }
 
+
