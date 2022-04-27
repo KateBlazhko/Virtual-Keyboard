@@ -1,0 +1,29 @@
+@mixin flex ($aling: center, $justify: center, $direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $aling;
+  justify-content: $justify;
+}
+  
+@mixin absolute ($left: 0, $top: 0, $z-index: 0) {
+  position: absolute;
+  left: $left;
+  top: $top;
+  z-index: $z-index;
+}
+
+@mixin size ($width: 100%, $height: 100%) {
+  width: $width;
+  height: $height;
+}
+
+@mixin font ($family: 'Liberation', $style: normal, $weight: normal, 
+        $size: 15px, $line: normal, $letter: normal) {
+
+  font-family: $family;
+  font-style: $style;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line;
+  letter-spacing: $letter;
+}
