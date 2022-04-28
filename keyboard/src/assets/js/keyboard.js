@@ -48,6 +48,7 @@ class Keybord extends PageElement {
     this.keyList.forEach(key => {
       key.onClick = () => {
         this.setPressKey(key)
+        this.isPress = true
       }
     })
   }
@@ -57,7 +58,7 @@ class Keybord extends PageElement {
   } 
 
   getPressKey() {
-    return this.pressKey
+    return this.isPress ? this.pressKey : null
   } 
 
 }
@@ -83,9 +84,12 @@ export class Application {
     this.keyboard.node.onmousedown = () => {
       this.textArea.node.focus();
       let pressKey = this.keyboard.getPressKey();
-
+      this.keyboard.isPress = false
+      if (!pressKey) return false
+      
       if (pressKey instanceof SymbolKey) {
         let symbol = pressKey.getSymbol();
+
         this.printSymbol(symbol);
 
       } else {
@@ -125,6 +129,10 @@ export class Application {
       case 'Delete':
         this.delete()
         break;
+
+      case 'Tab':
+        this.tab()
+        break;
     }
 
   }
@@ -154,6 +162,13 @@ export class Application {
     let {cursorPosition, beforeCursor, afterCursor} = this.getCursorPosition();
 
     this.textArea.node.value = beforeCursor + afterCursor.slice(1);
+    this.textArea.node.selectionStart = cursorPosition;
+  }
+
+  tab() {
+    let {cursorPosition, beforeCursor, afterCursor} = this.getCursorPosition();
+    this.textArea.node.value = beforeCursor + '\t' + afterCursor;
+    cursorPosition += '\t'.length
     this.textArea.node.selectionStart = cursorPosition;
   }
 }
