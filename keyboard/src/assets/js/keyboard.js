@@ -23,20 +23,18 @@ class Keybord extends PageElement {
     this.keyList = [];
 
     keysData.forEach((row, i)=> {
+      
       this.rows[i].node.innerHTML = '';
 
       row.forEach(key => {
         if (key.type === "Symbol") {
           let textContent
-
           if (this.caps) {
             textContent = key[`${this.lang}`].toUpperCase();
           } else {
             textContent = key[`${this.lang}`];
           }
-
           this.keyList.push(new SymbolKey(this.rows[i].node, textContent))
-
         } else {
           let textContent = key.en
           this.keyList.push(new FuncionKey(this.rows[i].node, textContent, key.code, `key_${key.en.toLowerCase()}`))
@@ -73,42 +71,89 @@ export class Application {
     this.keyboard = new Keybord(container.node, 'keyboard-wrap', this.lang)
     this.keyboard.node.setAttribute('tabindex', '1');
     this.textArea.node.value = '';
+
+
+   
     this.isCaps = false
 
-    this.keyboard.node.onclick = () => {
+    // this.textArea.node.oninput = () => {
+    //   this.getCursorPosition();
+    // }
+
+    this.keyboard.node.onmousedown = () => {
+      this.textArea.node.focus();
       let pressKey = this.keyboard.getPressKey();
+
       if (pressKey instanceof SymbolKey) {
-        let symbol = pressKey.getSymbol()
+        let symbol = pressKey.getSymbol();
         this.printSymbol(symbol);
+
       } else {
-        this.defineFunctionKey(pressKey);
+        
+        this.defineFunction(pressKey);
       }
+    }
+
+    this.keyboard.node.onmouseup = () => {
+      //this.textArea.node.focus();
+    }
+  } 
+
+  getCursorPosition() {
+    let cursorPosition = this.textArea.node.selectionStart;
+    let beforeCursor = this.textArea.node.value.slice(0, cursorPosition);
+    let afterCursor = this.textArea.node.value.slice(cursorPosition);
+    return {
+      cursorPosition,
+      beforeCursor,
+      afterCursor,
     }
   }
 
-  defineFunctionKey(pressKey) {
+  defineFunction(pressKey) {
     let code = pressKey.code
-    if (code === 'Backspace') {
-      this.backspace()
+
+    switch (code) {
+      case 'Backspace':
+        this.backspace()
+        break;
+
+      case 'CapsLock':
+        this.caps()
+        break;
+
+      case 'Delete':
+        this.delete()
+        break;
     }
-    if (code === 'CapsLock') {
-      this.caps()
-    }
+
   }
 
   printSymbol(symbol) {
-    this.textArea.node.value += symbol
+    let {cursorPosition, beforeCursor, afterCursor} = this.getCursorPosition();
+
+    this.textArea.node.value = beforeCursor + symbol + afterCursor;
+    cursorPosition += 1
+    this.textArea.node.selectionStart = cursorPosition;
   }
 
   backspace() {
-    let value = this.textArea.node.value
-    value = value.slice(0, value.length - 1);
-    this.textArea.node.value = value
+    let {cursorPosition, beforeCursor, afterCursor} = this.getCursorPosition();
+
+    this.textArea.node.value = beforeCursor.slice(0, beforeCursor.length - 1) + afterCursor;
+    cursorPosition -= 1;
+    this.textArea.node.selectionStart = cursorPosition;
   }
 
   caps() {
-    this.isCaps = !this.isCaps
-    this.keyboard.renderKeyboard(this.isCaps)
+    this.isCaps = !this.isCaps;
+    this.keyboard.renderKeyboard(this.isCaps);
   }
 
+  delete() {
+    let {cursorPosition, beforeCursor, afterCursor} = this.getCursorPosition();
+
+    this.textArea.node.value = beforeCursor + afterCursor.slice(1);
+    this.textArea.node.selectionStart = cursorPosition;
+  }
 }

@@ -6,7 +6,7 @@ class Key extends PageElement {
     this.node.textContent = textContent
     this.onClick = () => {}
 
-    this.node.onclick = () => {
+    this.node.onmousedown = () => {
       this.onClick()
     }
 
