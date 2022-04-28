@@ -7,27 +7,20 @@
 
   border: 2px solid #000;
 
-  &.key_backspace {
-    flex-grow: 2;
-  }
-
-  &.key_tab {
-    flex-grow: 2;
-  }
-
-  &.key_capslock {
-    flex-grow: 2;
-  }
-
-  &.key_enter {
-    flex-grow: 2;
-  }
-
+  &.key_backspace,
+  &.key_tab,
+  &.key_capslock,
+  &.key_enter,
   &.key_shift {
     flex-grow: 2;
   }
 
   &.key_ {
     flex-grow: 2;
+  }
+
+  &.mark {
+
+    background: rgb(182, 127, 50);
   }
 }

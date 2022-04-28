@@ -15,11 +15,12 @@ class Keybord extends PageElement {
       new PageElement(keyboard.node, 'div', 'keyboard__row'),
     ]
     this.lang = lang
+    this.isCaps = false
     this.renderKeyboard();
   }
 
-  renderKeyboard(caps = false) {
-    this.caps = caps
+  renderKeyboard() {
+
     this.keyList = [];
 
     keysData.forEach((row, i)=> {
@@ -29,12 +30,14 @@ class Keybord extends PageElement {
       row.forEach(key => {
         if (key.type === "Symbol") {
           let textContent
-          if (this.caps) {
-            textContent = key[`${this.lang}`].toUpperCase();
-          } else {
+
+          // if (this.isCaps) {
+          //   textContent = key[`${this.lang}`].toUpperCase();
+          // } else {
             textContent = key[`${this.lang}`];
-          }
-          this.keyList.push(new SymbolKey(this.rows[i].node, textContent))
+          // }
+
+          this.keyList.push(new SymbolKey(this.rows[i].node, textContent, key.code))
         } else {
           let textContent = key.en
           this.keyList.push(new FuncionKey(this.rows[i].node, textContent, key.code, `key_${key.en.toLowerCase()}`))
@@ -61,21 +64,38 @@ class Keybord extends PageElement {
     return this.isPress ? this.pressKey : null
   } 
 
+  onCapsLock() {
+    this.isCaps = !this.isCaps;
+    this.keyList.forEach(key =>{
+      key.update && key.update(this.isCaps)
+    })
+  }
+
+  onMark(e) {
+    this.markKey = this.keyList.find(key => key.code === e.code) || null
+    if (!this.markKey) return 
+    this.markKey.node.classList.toggle('mark');
+  }
+
+  offMark(e) {
+    this.markKey = this.keyList.find(key => key.code === e.code) || null
+    if (!this.markKey) return 
+    this.markKey.node.classList.remove('mark');
+    // console.log(this.markKey.node, '3')
+  }
+
 }
 
 export class Application {
   constructor() {
     this.lang = 'en';
-    const container = new PageElement(document.body, 'div', 'container')
-    const title = new PageElement(container.node, 'h1', 'title', 'RSS Виртуальная клавиатура')
-    this.textArea = new PageElement(container.node, 'textarea', 'textarea')
-    this.keyboard = new Keybord(container.node, 'keyboard-wrap', this.lang)
+    const container = new PageElement(document.body, 'div', 'container');
+    const title = new PageElement(container.node, 'h1', 'title', 'RSS Виртуальная клавиатура');
+    this.textArea = new PageElement(container.node, 'textarea', 'textarea');
+    this.keyboard = new Keybord(container.node, 'keyboard-wrap', this.lang);
     this.keyboard.node.setAttribute('tabindex', '1');
+    //this.keyboard.node.focus();
     this.textArea.node.value = '';
-
-
-   
-    this.isCaps = false
 
     // this.textArea.node.oninput = () => {
     //   this.getCursorPosition();
@@ -98,8 +118,27 @@ export class Application {
       }
     }
 
+
     this.keyboard.node.onmouseup = () => {
-      //this.textArea.node.focus();
+      this.keyboard.node.focus();
+    }
+    
+    document.onkeydown = (e) => {
+      if (e.code === 'CapsLock') {
+        this.caps()
+      }
+      this.keyboard.onMark(e);
+      this.textArea.node.focus();
+
+    }
+
+    document.onkeyup = (e) => {
+      if (e.code !== 'CapsLock') {
+
+        this.keyboard.offMark(e);
+      }
+
+      this.keyboard.node.focus();
     }
   } 
 
@@ -115,6 +154,7 @@ export class Application {
   }
 
   defineFunction(pressKey) {
+    
     let code = pressKey.code
 
     switch (code) {
@@ -154,8 +194,9 @@ export class Application {
   }
 
   caps() {
-    this.isCaps = !this.isCaps;
-    this.keyboard.renderKeyboard(this.isCaps);
+    // this.keyboard.isCaps = !this.keyboard.isCaps;
+    // this.keyboard.renderKeyboard();
+    this.keyboard.onCapsLock();
   }
 
   delete() {
