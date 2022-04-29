@@ -5,10 +5,10 @@ class Key extends PageElement {
     super(parent, 'div', className)
     this.node.textContent = textContent;
     this.code = code;
-    this.onClick = () => {}
+    this.onKey = () => {}
 
     this.node.onmousedown = () => {
-      this.onClick()
+      this.onKey()
     }
 
   }
