@@ -58,16 +58,20 @@ export class Keybord extends PageElement {
   }
 
   onMark(e) {
-    this.markKey = this.keyList.find(key => key.code === e.code) || null
-    if (this.markKey) {
-      this.markKey.node.classList.toggle('mark');
+    if (e) {
+      this.markKey = this.keyList.find(key => key.code === e.code) || null
+      if (this.markKey) {
+        this.markKey.node.classList.toggle('mark');
+      }
     }
   }
 
   offMark(e) {
-    this.markKey = this.keyList.find(key => key.code === e.code) || null
-    if (this.markKey) {
-      this.markKey.node.classList.remove('mark');
+    if (e) {
+      this.markKey = this.keyList.find(key => key.code === e.code) || null
+      if (this.markKey) {
+        this.markKey.node.classList.remove('mark');
+      }
     }
   }
 

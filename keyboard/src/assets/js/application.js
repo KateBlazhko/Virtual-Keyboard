@@ -24,6 +24,7 @@ export class Application extends PageElement{
 
       if (e.code.match(/Shift/)) {
         this.isShift = false
+        this.keyboard.offMark(this.pressShift);
         this.shift()
       }
 
@@ -84,10 +85,30 @@ export class Application extends PageElement{
             this.shift()
             this.keyboard.offMark(this.pressShift)
           } 
-  
-        } else {
-          this.defineFunction();
-        }
+        } 
+
+        if (this.pressKey.code.match(/Shift/)) {
+            if (this.isShift) {
+              this.keyboard.offMark(this.pressShift)
+              this.shift()
+            } else {
+              this.pressShift = this.pressKey
+              this.keyboard.onMark(this.pressKey)
+              this.shift()
+            }
+        } 
+
+        if (this.pressKey.code.match(/Caps/)) {
+          if (this.isCaps) {
+            this.keyboard.offMark(this.pressKey)
+            this.caps()
+          } else {
+            this.keyboard.onMark(this.pressKey)
+            this.caps()
+          }
+        } 
+          
+        this.defineFunction();
 
       } 
     }
@@ -117,6 +138,16 @@ export class Application extends PageElement{
     this.textArea.node.setSelectionRange(cursorPosition, cursorPosition)
   }
 
+  caps() {
+    this.isCaps = !this.isCaps;
+    this.keyboard.onCapsLock(this.isCaps);
+  }
+
+  shift() {
+    this.isShift = !this.isShift;
+    this.keyboard.onShift(this.isShift);
+  }
+
   defineFunction() {
     
     let code = this.pressKey.code
@@ -124,16 +155,6 @@ export class Application extends PageElement{
     switch (code) {
       case 'Backspace':
         this.backspace()
-        break;
-
-      case 'CapsLock':
-        if (this.isCaps) {
-          this.keyboard.offMark(this.pressKey)
-          this.caps()
-        } else {
-          this.keyboard.onMark(this.pressKey)
-          this.caps()
-        }
         break;
 
       case 'Delete':
@@ -151,28 +172,6 @@ export class Application extends PageElement{
       case 'Enter':
         this.enter()
         break;
-
-      case 'ShiftRight':
-        if (this.isShift) {
-          this.keyboard.offMark(this.pressShift)
-          this.shift()
-        } else {
-          this.pressShift = this.pressKey
-          this.keyboard.onMark(this.pressKey)
-          this.shift()
-        }
-        break;
-
-      case 'ShiftLeft':
-        if (this.isShift) {
-          this.keyboard.offMark(this.pressShift)
-          this.shift()
-        } else {
-          this.pressShift = this.pressKey
-          this.keyboard.onMark(this.pressKey)
-          this.shift()
-        }
-        break;
     }
 
   }
@@ -186,11 +185,6 @@ export class Application extends PageElement{
       this.textArea.node.setSelectionRange(cursorPosition, cursorPosition)
     }
 
-  }
-
-  caps() {
-    this.isCaps = !this.isCaps;
-    this.keyboard.onCapsLock(this.isCaps);
   }
 
   delete() {
@@ -222,10 +216,5 @@ export class Application extends PageElement{
     this.textArea.node.value = beforeCursor + '\n' + afterCursor;
     cursorPosition += 1
     this.textArea.node.setSelectionRange(cursorPosition, cursorPosition);
-  }
-
-  shift() {
-    this.isShift = !this.isShift;
-    this.keyboard.onShift(this.isShift);
   }
 }
