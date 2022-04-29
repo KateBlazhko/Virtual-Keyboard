@@ -44,7 +44,12 @@ class SymbolKey extends Key {
     if (this.isCaps) {
       this.node.textContent = this.node.textContent.toUpperCase()
     } else {
-      this.node.textContent = this.node.textContent.toLowerCase()
+      if (this.isShift) {
+        this.node.textContent = this.node.textContent.toUpperCase()
+      } else {
+        this.node.textContent = this.node.textContent.toLowerCase()
+      }
+
     }
   }
 
@@ -69,7 +74,11 @@ class SymbolKey extends Key {
         }
       }
     } else {
-      this.node.textContent = this.defaultValue[`${this.lang}`] || this.defaultValue.en
+      if (this.isCaps) {
+        this.node.textContent = this.defaultValue[`${this.lang}`].toUpperCase() || this.defaultValue.en.toUpperCase()
+      } else {
+        this.node.textContent = this.defaultValue[`${this.lang}`] || this.defaultValue.en
+      }
     }
   }
 

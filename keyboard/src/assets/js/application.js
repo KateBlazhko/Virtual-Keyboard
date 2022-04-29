@@ -127,8 +127,13 @@ export class Application extends PageElement{
         break;
 
       case 'CapsLock':
-        this.pressCaps = this.pressKey
-        this.caps()
+        if (this.isCaps) {
+          this.keyboard.offMark(this.pressKey)
+          this.caps()
+        } else {
+          this.keyboard.onMark(this.pressKey)
+          this.caps()
+        }
         break;
 
       case 'Delete':
@@ -186,12 +191,6 @@ export class Application extends PageElement{
   caps() {
     this.isCaps = !this.isCaps;
     this.keyboard.onCapsLock(this.isCaps);
-
-    // if (this.isCaps) {
-    //   this.keyboard.onMark(this.pressCaps)
-    // } else {
-    //   this.keyboard.offMark(this.pressCaps)
-    // }
   }
 
   delete() {
