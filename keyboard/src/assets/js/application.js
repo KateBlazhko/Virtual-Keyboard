@@ -23,6 +23,7 @@ export class Application extends PageElement{
       }
 
       if (e.code.match(/Shift/)) {
+        this.isShift = false
         this.shift()
       }
 
@@ -49,22 +50,23 @@ export class Application extends PageElement{
     }
 
     this.node.onkeyup = (e) => {
-      if (e.code !== 'CapsLock') {
-
-        if (e.code.match(/Shift/)) {
-          this.shift()
-        }
-
-        if (e.code.match(/Control/)) {
-          this.isCtrl = false
-        }
-  
-        if (e.code.match(/Alt/)) {
-          this.isAlt = false
-        }
-
-        this.keyboard.offMark(e);
+      if (e.code.match(/Caps/)) {
+        return
       }
+
+      if (e.code.match(/Shift/)) {
+        this.shift()
+      }
+
+      if (e.code.match(/Control/)) {
+        this.isCtrl = false
+      }
+
+      if (e.code.match(/Alt/)) {
+        this.isAlt = false
+      }
+
+      this.keyboard.offMark(e);
     }
 
     this.node.onmousedown = () => {
@@ -77,9 +79,14 @@ export class Application extends PageElement{
         if (this.pressKey.getSymbol) {
           let symbol = this.pressKey.getSymbol();
           this.printSymbol(symbol);
+
+          if (this.isShift) {
+            this.shift()
+            this.keyboard.offMark(this.pressShift)
+          } 
   
         } else {
-          this.defineFunction(this.pressKey);
+          this.defineFunction();
         }
 
       } 
@@ -87,12 +94,6 @@ export class Application extends PageElement{
 
     this.node.onmouseup = () => {
       this.textArea.node.focus();
-
-      if (this.pressKey) {
-        if (this.pressKey.code.match(/Shift/)) {
-          this.shift()
-        }
-      }
     }
     
   } 
@@ -108,9 +109,17 @@ export class Application extends PageElement{
     }
   }
 
-  defineFunction(pressKey) {
+  printSymbol(symbol) {
+    let {cursorPosition, beforeCursor, afterCursor} = this.getCursorPosition();
+
+    this.textArea.node.value = beforeCursor + symbol + afterCursor;
+    cursorPosition += 1
+    this.textArea.node.setSelectionRange(cursorPosition, cursorPosition)
+  }
+
+  defineFunction() {
     
-    let code = pressKey.code
+    let code = this.pressKey.code
 
     switch (code) {
       case 'Backspace':
@@ -118,6 +127,7 @@ export class Application extends PageElement{
         break;
 
       case 'CapsLock':
+        this.pressCaps = this.pressKey
         this.caps()
         break;
 
@@ -138,22 +148,28 @@ export class Application extends PageElement{
         break;
 
       case 'ShiftRight':
-        this.shift()
+        if (this.isShift) {
+          this.keyboard.offMark(this.pressShift)
+          this.shift()
+        } else {
+          this.pressShift = this.pressKey
+          this.keyboard.onMark(this.pressKey)
+          this.shift()
+        }
         break;
 
       case 'ShiftLeft':
-        this.shift()
+        if (this.isShift) {
+          this.keyboard.offMark(this.pressShift)
+          this.shift()
+        } else {
+          this.pressShift = this.pressKey
+          this.keyboard.onMark(this.pressKey)
+          this.shift()
+        }
         break;
     }
 
-  }
-
-  printSymbol(symbol) {
-    let {cursorPosition, beforeCursor, afterCursor} = this.getCursorPosition();
-
-    this.textArea.node.value = beforeCursor + symbol + afterCursor;
-    cursorPosition += 1
-    this.textArea.node.setSelectionRange(cursorPosition, cursorPosition)
   }
 
   backspace() {
@@ -170,6 +186,12 @@ export class Application extends PageElement{
   caps() {
     this.isCaps = !this.isCaps;
     this.keyboard.onCapsLock(this.isCaps);
+
+    // if (this.isCaps) {
+    //   this.keyboard.onMark(this.pressCaps)
+    // } else {
+    //   this.keyboard.offMark(this.pressCaps)
+    // }
   }
 
   delete() {
