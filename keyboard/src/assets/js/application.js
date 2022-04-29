@@ -14,9 +14,14 @@ export class Application extends PageElement{
     this.node.setAttribute('tabindex', '1');
 
     this.node.onkeydown = (e) => {
-      if (e.code === 'CapsLock') {
+      if (e.code.match(/Caps/)) {
         this.caps()
       }
+
+      if (e.code.match(/Shift/)) {
+        this.shift()
+      }
+
       this.keyboard.onMark(e);
       this.textArea.node.focus();
 
@@ -25,32 +30,40 @@ export class Application extends PageElement{
     this.node.onkeyup = (e) => {
       if (e.code !== 'CapsLock') {
 
+        if (e.code.match(/Shift/)) {
+          this.shift()
+        }
+
         this.keyboard.offMark(e);
       }
-
-      this.keyboard.node.focus();
     }
 
-    this.keyboard.onKeyboard = () => {
+    this.node.onmousedown = () => {
       this.textArea.node.focus();
-      let pressKey = this.keyboard.getPressKey();
+      this.pressKey = this.keyboard.getPressKey();
       this.keyboard.isPress = false
 
-      if (pressKey) {
+      if (this.pressKey) {
 
-        if (pressKey.getSymbol) {
-          let symbol = pressKey.getSymbol();
+        if (this.pressKey.getSymbol) {
+          let symbol = this.pressKey.getSymbol();
           this.printSymbol(symbol);
   
         } else {
-          this.defineFunction(pressKey);
+          this.defineFunction(this.pressKey);
         }
 
       } 
     }
 
-    this.keyboard.offKeyboard = () => {
+    this.node.onmouseup = () => {
       this.textArea.node.focus();
+
+      if (this.pressKey) {
+        if (this.pressKey.code.match(/Shift/)) {
+          this.shift()
+        }
+      }
     }
     
   } 
@@ -85,6 +98,22 @@ export class Application extends PageElement{
 
       case 'Tab':
         this.tab()
+        break;
+
+      case 'Space':
+        this.space()
+        break;
+
+      case 'Enter':
+        this.enter()
+        break;
+
+      case 'ShiftRight':
+        this.shift()
+        break;
+
+      case 'ShiftLeft':
+        this.shift()
         break;
     }
 
@@ -126,5 +155,25 @@ export class Application extends PageElement{
     this.textArea.node.value = beforeCursor + '\t' + afterCursor;
     cursorPosition += 1
     this.textArea.node.setSelectionRange(cursorPosition, cursorPosition);
+  }
+
+  space() {
+    let {cursorPosition, beforeCursor, afterCursor} = this.getCursorPosition();
+
+    this.textArea.node.value = beforeCursor + ' ' + afterCursor;
+    cursorPosition += 1
+    this.textArea.node.setSelectionRange(cursorPosition, cursorPosition);
+  }
+
+  enter() {
+    let {cursorPosition, beforeCursor, afterCursor} = this.getCursorPosition();
+
+    this.textArea.node.value = beforeCursor + '\n' + afterCursor;
+    cursorPosition += 1
+    this.textArea.node.setSelectionRange(cursorPosition, cursorPosition);
+  }
+
+  shift() {
+    this.keyboard.onShift();
   }
 }

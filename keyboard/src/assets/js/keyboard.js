@@ -14,14 +14,10 @@ export class Keybord extends PageElement {
       new PageElement(keyboard.node, 'div', 'keyboard__row'),
       new PageElement(keyboard.node, 'div', 'keyboard__row'),
     ]
-    this.onKeyboard =() => {};
-    this.offKeyboard =() => {};
-    this.lang = lang
-    this.isCaps = false
+    this.lang = lang;
+    this.isCaps = false;
+    this.isShift = false;
     this.renderKeyboard();
-
-    this.node.onmousedown = () => this.onKeyboard()
-    this.node.onmouseup = () => this.offKeyboard()
   }
 
   renderKeyboard() {
@@ -34,11 +30,9 @@ export class Keybord extends PageElement {
 
       row.forEach(key => {
         if (key.type === "Symbol") {
-          let textContent = key[`${this.lang}`];
-          this.keyList.push(new SymbolKey(this.rows[i].node, textContent, key.code))
+          this.keyList.push(new SymbolKey(this.rows[i].node, key.code, key.default, key.shift, this.lang))
         } else {
-          let textContent = key.en
-          this.keyList.push(new FuncionKey(this.rows[i].node, textContent, key.code, `key_${key.en.toLowerCase()}`))
+          this.keyList.push(new FuncionKey(this.rows[i].node, key.code, key.default))
         }
       })
     });
@@ -61,7 +55,15 @@ export class Keybord extends PageElement {
   onCapsLock() {
     this.isCaps = !this.isCaps;
     this.keyList.forEach(key =>{
-      key.update && key.update(this.isCaps)
+      key.caps && key.caps(this.isCaps)
+    })
+  }
+
+  onShift() {
+    let lang = this.lang
+    this.isShift = !this.isShift;
+    this.keyList.forEach(key =>{
+      key.shift && key.shift(this.isShift, lang)
     })
   }
 
