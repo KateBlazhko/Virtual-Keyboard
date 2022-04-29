@@ -15,19 +15,12 @@ export class Keybord extends PageElement {
       new PageElement(keyboard.node, 'div', 'keyboard__row'),
     ]
     this.lang = lang;
-    this.isCaps = false;
-    this.isShift = false;
     this.renderKeyboard();
   }
 
   renderKeyboard() {
-
     this.keyList = [];
-
     keysData.forEach((row, i)=> {
-      
-      this.rows[i].node.innerHTML = '';
-
       row.forEach(key => {
         if (key.type === "Symbol") {
           this.keyList.push(new SymbolKey(this.rows[i].node, key.code, key.default, key.shift, this.lang))
@@ -52,18 +45,15 @@ export class Keybord extends PageElement {
     return this.isPress ? this.pressKey : null
   } 
 
-  onCapsLock() {
-    this.isCaps = !this.isCaps;
+  onCapsLock(isCaps) {
     this.keyList.forEach(key =>{
-      key.caps && key.caps(this.isCaps)
+      key.caps && key.caps(isCaps)
     })
   }
 
-  onShift() {
-    let lang = this.lang
-    this.isShift = !this.isShift;
+  onShift(isShift) {
     this.keyList.forEach(key =>{
-      key.shift && key.shift(this.isShift, lang)
+      key.shift && key.shift(isShift)
     })
   }
 
@@ -79,6 +69,19 @@ export class Keybord extends PageElement {
     if (this.markKey) {
       this.markKey.node.classList.remove('mark');
     }
+  }
+
+  switchLang() {
+    if (this.lang === 'en') {
+      this.lang = 'ru'
+    } else {
+      this.lang = 'en'
+    }
+    this.keyList.forEach(key =>{
+      if (key.switchLang) {
+       key.switchLang(this.lang)
+      }
+    })
   }
 
 }

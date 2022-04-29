@@ -30,7 +30,8 @@ class SymbolKey extends Key {
     super(parent, 'key', code)  
     this.defaultValue = defaultValue
     this.shiftValue = shiftValue
-    this.node.textContent = this.defaultValue[`${lang}`];  
+    this.lang = lang
+    this.node.textContent = this.defaultValue[`${this.lang}`];  
 
   }
 
@@ -39,25 +40,51 @@ class SymbolKey extends Key {
   }
 
   caps(isCaps) {
-    if (isCaps) {
+    this.isCaps = isCaps;
+    if (this.isCaps) {
       this.node.textContent = this.node.textContent.toUpperCase()
     } else {
       this.node.textContent = this.node.textContent.toLowerCase()
     }
   }
 
-  shift(isShift, lang) {
-    if (isShift) {
+  shift(isShift) {
+    this.isShift = isShift
+    if (this.isShift) {
       if (this.shiftValue) {
-        this.node.textContent = this.shiftValue[`${lang}`].toUpperCase() || 
-                                this.shiftValue.en.toUpperCase()
+        if (this.shiftValue[`${this.lang}`]) {
+          this.node.textContent = this.shiftValue[`${this.lang}`].toUpperCase()
+        } else if (this.defaultValue[`${this.lang}`]) {
+          this.node.textContent = this.defaultValue[`${this.lang}`].toUpperCase()
+          } else {
+            this.node.textContent = this.shiftValue.en
+          }
+
       } else {
-        this.node.textContent = this.defaultValue[`${lang}`].toUpperCase() || 
-                                this.defaultValue.en.toUpperCase()
+
+        if (this.defaultValue[`${this.lang}`]) {
+          this.node.textContent = this.defaultValue[`${this.lang}`].toUpperCase()
+        } else {
+          this.node.textContent = this.defaultValue.en.toUpperCase()
+        }
       }
     } else {
-      this.node.textContent = this.defaultValue[`${lang}`] || this.defaultValue.en
+      this.node.textContent = this.defaultValue[`${this.lang}`] || this.defaultValue.en
     }
+  }
+
+  switchLang(lang) {
+    this.lang = lang
+    this.node.textContent = this.defaultValue[`${lang}`] || this.defaultValue.en
+
+    if (this.isShift) {
+      this.shift(this.isShift)
+    }
+
+    if (this.isCaps) {
+      this.caps(this.isCaps)
+    }
+
   }
 }
 

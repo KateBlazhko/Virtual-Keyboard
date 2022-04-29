@@ -10,6 +10,10 @@ export class Application extends PageElement{
     this.textArea.node.value = '';
     this.lang = 'en';
     this.keyboard = new Keybord(container.node, 'keyboard-wrap', this.lang);
+    this.isCaps = false;
+    this.isShift = false;
+    this.isCtrl = false;
+    this.isAlt = false;
 
     this.node.setAttribute('tabindex', '1');
 
@@ -22,6 +26,23 @@ export class Application extends PageElement{
         this.shift()
       }
 
+      if (e.code.match(/Control/)) {
+        this.isCtrl = true
+
+        if (this.isAlt) {
+          this.keyboard.switchLang()
+        }
+      }
+
+      if (e.code.match(/Alt/)) {
+        this.isAlt = true
+
+        if (this.isCtrl) {
+          this.keyboard.switchLang()
+        }
+
+      }
+
       this.keyboard.onMark(e);
       this.textArea.node.focus();
 
@@ -32,6 +53,14 @@ export class Application extends PageElement{
 
         if (e.code.match(/Shift/)) {
           this.shift()
+        }
+
+        if (e.code.match(/Control/)) {
+          this.isCtrl = false
+        }
+  
+        if (e.code.match(/Alt/)) {
+          this.isAlt = false
         }
 
         this.keyboard.offMark(e);
@@ -139,7 +168,8 @@ export class Application extends PageElement{
   }
 
   caps() {
-    this.keyboard.onCapsLock();
+    this.isCaps = !this.isCaps;
+    this.keyboard.onCapsLock(this.isCaps);
   }
 
   delete() {
@@ -174,6 +204,7 @@ export class Application extends PageElement{
   }
 
   shift() {
-    this.keyboard.onShift();
+    this.isShift = !this.isShift;
+    this.keyboard.onShift(this.isShift);
   }
 }
