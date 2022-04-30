@@ -70,12 +70,17 @@ export default class Application extends PageElement {
         if (this.pressKey.getSymbol) {
           const symbol = this.pressKey.getSymbol();
           this.printSymbol(symbol);
+          this.keyboard.onMark(this.pressKey);
           this.resetPress({ isAlt: this.isAlt, isShift: this.isShift, isCtrl: this.isCtrl });
           return;
         }
 
         if (this.pressKey.code.match(/Shift/)) {
           if (this.isShift) {
+            if (this.pressKey === this.pressShift) {
+              this.resetPress({ isAlt: false, isShift: this.isShift, isCtrl: false });
+              return
+            }
             this.keyboard.offMark(this.pressShift);
           } else {
             this.shift();
@@ -89,6 +94,10 @@ export default class Application extends PageElement {
 
         if (this.pressKey.code.match(/Control/)) {
           if (this.isCtrl) {
+            if (this.pressKey === this.pressCtrl) {
+              this.resetPress({ isAlt: false, isShift: false, isCtrl: this.isCtrl });
+              return
+            }
             this.keyboard.offMark(this.pressCtrl);
           } else {
             this.ctrl();
@@ -109,6 +118,10 @@ export default class Application extends PageElement {
 
         if (this.pressKey.code.match(/Alt/)) {
           if (this.isAlt) {
+            if (this.pressKey === this.pressAlt) {
+              this.resetPress({ isAlt: this.isAlt, isShift: false, isCtrl: false });
+              return
+            }
             this.keyboard.offMark(this.pressAlt);
           } else {
             this.alt();
