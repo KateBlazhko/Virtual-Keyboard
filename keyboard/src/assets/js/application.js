@@ -18,12 +18,38 @@ export default class Application extends PageElement {
     this.node.onkeydown = (e) => {
       if (e.code.match(/Caps/)) {
         this.caps();
+
+        if (this.isCtrl) {
+          this.ctrl();
+          this.keyboard.offMark(this.pressCtrl);
+        }
+
+        if (this.isShift) {
+          this.shift();
+          this.keyboard.offMark(this.pressShift);
+        }
+
+        if (this.isAlt) {
+          this.alt();
+          this.keyboard.offMark(this.pressAlt);
+        }
+
       }
 
       if (e.code.match(/Shift/)) {
         this.isShift = false;
         this.keyboard.offMark(this.pressShift);
         this.shift();
+
+        if (this.isCtrl) {
+          this.ctrl();
+          this.keyboard.offMark(this.pressCtrl);
+        }
+
+        if (this.isAlt) {
+          this.alt();
+          this.keyboard.offMark(this.pressAlt);
+        }
       }
 
       if (e.code.match(/Control/)) {
@@ -32,6 +58,16 @@ export default class Application extends PageElement {
         if (this.isAlt) {
           this.keyboard.switchLang();
         }
+
+        if (this.isShift) {
+          this.shift();
+          this.keyboard.offMark(this.pressShift);
+        }
+
+        if (this.isAlt) {
+          this.alt();
+          this.keyboard.offMark(this.pressAlt);
+        }
       }
 
       if (e.code.match(/Alt/)) {
@@ -39,6 +75,16 @@ export default class Application extends PageElement {
 
         if (this.isCtrl) {
           this.keyboard.switchLang();
+        }
+
+        if (this.isShift) {
+          this.shift();
+          this.keyboard.offMark(this.pressShift);
+        }
+
+        if (this.isCtrl) {
+          this.ctrl();
+          this.keyboard.offMark(this.pressCtrl);
         }
       }
 
@@ -56,11 +102,11 @@ export default class Application extends PageElement {
       }
 
       if (e.code.match(/Control/)) {
-        this.isCtrl = false;
+        this.ctrl();
       }
 
       if (e.code.match(/Alt/)) {
-        this.isAlt = false;
+        this.alt()
       }
 
       this.keyboard.offMark(e);
@@ -74,12 +120,24 @@ export default class Application extends PageElement {
       if (this.pressKey) {
         if (this.pressKey.getSymbol) {
           const symbol = this.pressKey.getSymbol();
+          this.keyboard.onMark(this.pressKey);
           this.printSymbol(symbol);
 
           if (this.isShift) {
             this.shift();
             this.keyboard.offMark(this.pressShift);
           }
+
+          if (this.isCtrl) {
+            this.ctrl();
+            this.keyboard.offMark(this.pressCtrl);
+          }
+
+          if (this.isAlt) {
+            this.alt();
+            this.keyboard.offMark(this.pressAlt);
+          }
+          return
         }
 
         if (this.pressKey.code.match(/Shift/)) {
@@ -91,6 +149,81 @@ export default class Application extends PageElement {
             this.keyboard.onMark(this.pressKey);
             this.shift();
           }
+
+          if (this.isCtrl) {
+            this.ctrl();
+            this.keyboard.offMark(this.pressCtrl);
+          }
+
+          if (this.isAlt) {
+            this.alt();
+            this.keyboard.offMark(this.pressAlt);
+          }
+
+          return
+        }
+
+        if (this.pressKey.code.match(/Control/)) {
+          if (this.isCtrl) {
+            this.keyboard.offMark(this.pressCtrl);
+            this.ctrl();
+          } else {
+            this.pressCtrl = this.pressKey;
+            this.keyboard.onMark(this.pressKey);
+            this.ctrl();
+          }
+
+          if (this.isAlt) {
+            this.keyboard.switchLang();
+
+            if (this.isCtrl) {
+              this.ctrl();
+              this.keyboard.offMark(this.pressCtrl);
+            }
+          }
+  
+
+          if (this.isShift) {
+            this.shift();
+            this.keyboard.offMark(this.pressShift);
+          }
+
+          if (this.isAlt) {
+            this.alt();
+            this.keyboard.offMark(this.pressAlt);
+          }
+          return
+        }
+
+        if (this.pressKey.code.match(/Alt/)) {
+          if (this.isAlt) {
+            this.keyboard.offMark(this.pressAlt);
+            this.alt();
+          } else {
+            this.pressAlt = this.pressKey;
+            this.keyboard.onMark(this.pressKey);
+            this.alt();
+          }
+
+          if (this.isCtrl) {
+            this.keyboard.switchLang();
+
+            if (this.isAlt) {
+              this.alt();
+              this.keyboard.offMark(this.pressAlt);
+            }
+          }  
+
+          if (this.isShift) {
+            this.shift();
+            this.keyboard.offMark(this.pressShift);
+          }
+
+          if (this.isCtrl) {
+            this.ctrl();
+            this.keyboard.offMark(this.pressCtrl);
+          }
+          return
         }
 
         if (this.pressKey.code.match(/Caps/)) {
@@ -101,14 +234,66 @@ export default class Application extends PageElement {
             this.keyboard.onMark(this.pressKey);
             this.caps();
           }
+
+          if (this.isAlt) {
+            this.alt();
+            this.keyboard.offMark(this.pressAlt);
+          }
+
+          if (this.isShift) {
+            this.shift();
+            this.keyboard.offMark(this.pressShift);
+          }
+
+          if (this.isCtrl) {
+            this.ctrl();
+            this.keyboard.offMark(this.pressCtrl);
+          }
+          return
         }
 
+        if (this.isCtrl) {
+          this.ctrl();
+          this.keyboard.offMark(this.pressCtrl);
+        }
+
+        if (this.isAlt) {
+          this.alt();
+          this.keyboard.offMark(this.pressAlt);
+        }
+
+        if (this.isShift) {
+          this.shift();
+          this.keyboard.offMark(this.pressShift);
+        }
+        
         this.defineFunction();
       }
     };
 
     this.node.onmouseup = () => {
       this.textArea.node.focus();
+
+      if (this.pressKey) {
+        if (this.pressKey.code.match(/Shift/)) {
+          return
+        }
+  
+        if (this.pressKey.code.match(/Caps/)) {
+          return
+        }
+  
+        if (this.pressKey.code.match(/Control/)) {
+          return
+        }
+
+        if (this.pressKey.code.match(/Alt/)) {
+          return
+        }
+
+        this.keyboard.offMark(this.pressKey);
+      }
+
     };
   }
 
@@ -143,6 +328,33 @@ export default class Application extends PageElement {
   shift() {
     this.isShift = !this.isShift;
     this.keyboard.onShift(this.isShift);
+  }
+
+  ctrl() {
+    this.isCtrl = !this.isCtrl;
+  }
+
+  alt() {
+    this.isAlt = !this.isAlt;
+  }
+
+  resetPress(needReset) {
+    const {isAlt, isShift, isCtrl} = needReset
+
+    if (isAlt) {
+      this.alt();
+      this.keyboard.offMark(this.pressAlt);
+    }
+
+    if (isShift) {
+      this.shift();
+      this.keyboard.offMark(this.pressShift);
+    }
+
+    if (isCtrl) {
+      this.ctrl();
+      this.keyboard.offMark(this.pressCtrl);
+    }
   }
 
   defineFunction() {
