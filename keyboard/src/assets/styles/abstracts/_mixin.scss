@@ -18,7 +18,7 @@
 }
 
 @mixin font ($family: 'Liberation', $style: normal, $weight: normal, 
-        $size: 15px, $line: normal, $letter: normal) {
+        $size: 20px, $line: 60px, $letter: normal) {
 
   font-family: $family;
   font-style: $style;

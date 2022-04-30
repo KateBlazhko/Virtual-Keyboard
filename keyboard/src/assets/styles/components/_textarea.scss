@@ -1,6 +1,12 @@
 .textarea {
   width: 100%;
   min-height: 100px;
+  border: none;
 
+  color: #4185d9;
+
+  background: #ebf5fc;
+  box-shadow: inset -2px -2px 5px white, inset 3px 3px 5px rgb(0 0 0 / 20%);
   outline: none;
+  
 }

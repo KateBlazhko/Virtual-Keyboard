@@ -6,7 +6,7 @@
 
 //base
 @import './assets/styles/base/base';
-//@import '../assets/styles/base/fonts';
+@import './assets/styles/base/fonts';
 
 //components
 @import './assets/styles/components/keys';
@@ -19,6 +19,8 @@
 
 .app {
   height: 100vh;
+
+  background: #ebf5fc;
 }
 
 

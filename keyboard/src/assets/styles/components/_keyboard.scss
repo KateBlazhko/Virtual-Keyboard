@@ -7,15 +7,19 @@
 
   .keyboard {    
     width: 100%;
-    padding: 10px;
+    padding: 15px;
 
-    background-color: rgb(229, 155, 155);
+    background: #ebf5fc;
+    box-shadow: -2px -2px 5px #ffffff, 3px 3px 5px rgb(0 0 0 / 20%);
 
     &__row {
       @include flex();
       column-gap: 10px;
 
       width: 100%;
+    }
+
+    &__row:not(:last-child) {
       padding-bottom: 10px;
     }
   }
