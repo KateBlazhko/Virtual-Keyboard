@@ -97,6 +97,9 @@ export default class Keybord extends PageElement {
     } else {
       this.lang = 'en';
     }
+
+    localStorage.setItem('lang', this.lang);
+
     this.keyList.forEach((key) => {
       if (key.switchLang) {
         key.switchLang(this.lang);

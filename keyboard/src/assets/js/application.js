@@ -4,14 +4,10 @@ import Keybord from './keyboard';
 export default class Application extends PageElement {
   constructor(parent) {
     super(parent, 'div', 'app');
-    const container = new PageElement(this.node, 'div', 'container');
-    const title = new PageElement(container.node, 'h1', 'title');
-    title.node.textContent = 'RSS Виртуальная клавиатура';
-
-    this.textArea = new PageElement(container.node, 'textarea', 'textarea');
-    this.textArea.node.value = '';
-    this.lang = 'en';
-    this.keyboard = new Keybord(container.node, 'keyboard-wrap', this.lang);
+    this.isCaps = false;
+    this.isShift = false;
+    this.isCtrl = false;
+    this.isAlt = false;
 
     this.node.setAttribute('tabindex', '1');
 
@@ -105,14 +101,13 @@ export default class Application extends PageElement {
             this.keyboard.switchLang();
             setTimeout(() => {
               this.resetPress({ isAlt: false, isShift: false, isCtrl: this.isCtrl });
-            }, 66)
+            }, 66);
           }
           this.resetPress({ isAlt: this.isAlt, isShift: this.isShift, isCtrl: false });
           return;
         }
 
         if (this.pressKey.code.match(/Alt/)) {
-
           if (this.isAlt) {
             this.keyboard.offMark(this.pressAlt);
           } else {
@@ -126,7 +121,7 @@ export default class Application extends PageElement {
             this.keyboard.switchLang();
             setTimeout(() => {
               this.resetPress({ isAlt: this.isAlt, isShift: false, isCtrl: false });
-            }, 66)
+            }, 66);
           }
 
           this.resetPress({ isAlt: false, isShift: this.isShift, isCtrl: this.isCtrl });
@@ -175,11 +170,24 @@ export default class Application extends PageElement {
     };
   }
 
-  start() {
-    this.isCaps = false;
-    this.isShift = false;
-    this.isCtrl = false;
-    this.isAlt = false;
+  getLang() {
+    if (localStorage.getItem('lang')) {
+      this.lang = localStorage.getItem('lang');
+    } else {
+      this.lang = 'en';
+    }
+
+    this.renderKeyboard();
+  }
+
+  renderKeyboard() {
+    const container = new PageElement(this.node, 'div', 'container');
+    const title = new PageElement(container.node, 'h1', 'title');
+    title.node.textContent = 'RSS Виртуальная клавиатура';
+
+    this.textArea = new PageElement(container.node, 'textarea', 'textarea');
+    this.textArea.node.value = '';
+    this.keyboard = new Keybord(container.node, 'keyboard-wrap', this.lang);
   }
 
   getCursorPosition() {
