@@ -18,74 +18,27 @@ export default class Application extends PageElement {
     this.node.onkeydown = (e) => {
       if (e.code.match(/Caps/)) {
         this.caps();
-
-        if (this.isCtrl) {
-          this.ctrl();
-          this.keyboard.offMark(this.pressCtrl);
-        }
-
-        if (this.isShift) {
-          this.shift();
-          this.keyboard.offMark(this.pressShift);
-        }
-
-        if (this.isAlt) {
-          this.alt();
-          this.keyboard.offMark(this.pressAlt);
-        }
-
       }
 
       if (e.code.match(/Shift/)) {
         this.isShift = false;
-        this.keyboard.offMark(this.pressShift);
-        this.shift();
-
-        if (this.isCtrl) {
-          this.ctrl();
-          this.keyboard.offMark(this.pressCtrl);
-        }
-
-        if (this.isAlt) {
-          this.alt();
-          this.keyboard.offMark(this.pressAlt);
-        }
+        this.resetPress({ isAlt: this.isAlt, isShift: true, isCtrl: this.isCtrl });
       }
 
       if (e.code.match(/Control/)) {
         this.isCtrl = true;
-
         if (this.isAlt) {
           this.keyboard.switchLang();
         }
-
-        if (this.isShift) {
-          this.shift();
-          this.keyboard.offMark(this.pressShift);
-        }
-
-        if (this.isAlt) {
-          this.alt();
-          this.keyboard.offMark(this.pressAlt);
-        }
+        this.resetPress({ isAlt: this.isAlt, isShift: this.isShift, isCtrl: false });
       }
 
       if (e.code.match(/Alt/)) {
         this.isAlt = true;
-
         if (this.isCtrl) {
           this.keyboard.switchLang();
         }
-
-        if (this.isShift) {
-          this.shift();
-          this.keyboard.offMark(this.pressShift);
-        }
-
-        if (this.isCtrl) {
-          this.ctrl();
-          this.keyboard.offMark(this.pressCtrl);
-        }
+        this.resetPress({ isAlt: false, isShift: this.isShift, isCtrl: this.isCtrl });
       }
 
       this.keyboard.onMark(e);
@@ -106,7 +59,7 @@ export default class Application extends PageElement {
       }
 
       if (e.code.match(/Alt/)) {
-        this.alt()
+        this.alt();
       }
 
       this.keyboard.offMark(e);
@@ -120,154 +73,80 @@ export default class Application extends PageElement {
       if (this.pressKey) {
         if (this.pressKey.getSymbol) {
           const symbol = this.pressKey.getSymbol();
-          this.keyboard.onMark(this.pressKey);
           this.printSymbol(symbol);
-
-          if (this.isShift) {
-            this.shift();
-            this.keyboard.offMark(this.pressShift);
-          }
-
-          if (this.isCtrl) {
-            this.ctrl();
-            this.keyboard.offMark(this.pressCtrl);
-          }
-
-          if (this.isAlt) {
-            this.alt();
-            this.keyboard.offMark(this.pressAlt);
-          }
-          return
+          this.resetPress({ isAlt: this.isAlt, isShift: this.isShift, isCtrl: this.isCtrl });
+          return;
         }
 
         if (this.pressKey.code.match(/Shift/)) {
           if (this.isShift) {
             this.keyboard.offMark(this.pressShift);
-            this.shift();
           } else {
-            this.pressShift = this.pressKey;
-            this.keyboard.onMark(this.pressKey);
             this.shift();
           }
 
-          if (this.isCtrl) {
-            this.ctrl();
-            this.keyboard.offMark(this.pressCtrl);
-          }
-
-          if (this.isAlt) {
-            this.alt();
-            this.keyboard.offMark(this.pressAlt);
-          }
-
-          return
+          this.pressShift = this.pressKey;
+          this.keyboard.onMark(this.pressKey);
+          this.resetPress({ isAlt: this.isAlt, isShift: false, isCtrl: this.isCtrl });
+          return;
         }
 
         if (this.pressKey.code.match(/Control/)) {
           if (this.isCtrl) {
             this.keyboard.offMark(this.pressCtrl);
-            this.ctrl();
           } else {
-            this.pressCtrl = this.pressKey;
-            this.keyboard.onMark(this.pressKey);
             this.ctrl();
           }
+
+          this.pressCtrl = this.pressKey;
+          this.keyboard.onMark(this.pressKey);
 
           if (this.isAlt) {
             this.keyboard.switchLang();
-
-            if (this.isCtrl) {
-              this.ctrl();
-              this.keyboard.offMark(this.pressCtrl);
-            }
+            setTimeout(() => {
+              this.resetPress({ isAlt: false, isShift: false, isCtrl: this.isCtrl });
+            }, 66)
           }
-  
-
-          if (this.isShift) {
-            this.shift();
-            this.keyboard.offMark(this.pressShift);
-          }
-
-          if (this.isAlt) {
-            this.alt();
-            this.keyboard.offMark(this.pressAlt);
-          }
-          return
+          this.resetPress({ isAlt: this.isAlt, isShift: this.isShift, isCtrl: false });
+          return;
         }
 
         if (this.pressKey.code.match(/Alt/)) {
+
           if (this.isAlt) {
             this.keyboard.offMark(this.pressAlt);
-            this.alt();
           } else {
-            this.pressAlt = this.pressKey;
-            this.keyboard.onMark(this.pressKey);
             this.alt();
           }
+
+          this.pressAlt = this.pressKey;
+          this.keyboard.onMark(this.pressKey);
 
           if (this.isCtrl) {
             this.keyboard.switchLang();
-
-            if (this.isAlt) {
-              this.alt();
-              this.keyboard.offMark(this.pressAlt);
-            }
-          }  
-
-          if (this.isShift) {
-            this.shift();
-            this.keyboard.offMark(this.pressShift);
+            setTimeout(() => {
+              this.resetPress({ isAlt: this.isAlt, isShift: false, isCtrl: false });
+            }, 66)
           }
 
-          if (this.isCtrl) {
-            this.ctrl();
-            this.keyboard.offMark(this.pressCtrl);
-          }
-          return
+          this.resetPress({ isAlt: false, isShift: this.isShift, isCtrl: this.isCtrl });
+          return;
         }
 
         if (this.pressKey.code.match(/Caps/)) {
           if (this.isCaps) {
             this.keyboard.offMark(this.pressKey);
-            this.caps();
           } else {
             this.keyboard.onMark(this.pressKey);
-            this.caps();
           }
 
-          if (this.isAlt) {
-            this.alt();
-            this.keyboard.offMark(this.pressAlt);
-          }
-
-          if (this.isShift) {
-            this.shift();
-            this.keyboard.offMark(this.pressShift);
-          }
-
-          if (this.isCtrl) {
-            this.ctrl();
-            this.keyboard.offMark(this.pressCtrl);
-          }
-          return
+          this.caps();
+          return;
         }
 
-        if (this.isCtrl) {
-          this.ctrl();
-          this.keyboard.offMark(this.pressCtrl);
-        }
-
-        if (this.isAlt) {
-          this.alt();
-          this.keyboard.offMark(this.pressAlt);
-        }
-
-        if (this.isShift) {
-          this.shift();
-          this.keyboard.offMark(this.pressShift);
-        }
-        
+        this.keyboard.onMark(this.pressKey);
         this.defineFunction();
+        this.resetPress({ isAlt: this.isAlt, isShift: this.isShift, isCtrl: this.isCtrl });
       }
     };
 
@@ -276,24 +155,23 @@ export default class Application extends PageElement {
 
       if (this.pressKey) {
         if (this.pressKey.code.match(/Shift/)) {
-          return
+          return;
         }
-  
+
         if (this.pressKey.code.match(/Caps/)) {
-          return
+          return;
         }
-  
+
         if (this.pressKey.code.match(/Control/)) {
-          return
+          return;
         }
 
         if (this.pressKey.code.match(/Alt/)) {
-          return
+          return;
         }
 
         this.keyboard.offMark(this.pressKey);
       }
-
     };
   }
 
@@ -339,7 +217,7 @@ export default class Application extends PageElement {
   }
 
   resetPress(needReset) {
-    const {isAlt, isShift, isCtrl} = needReset
+    const { isAlt, isShift, isCtrl } = needReset;
 
     if (isAlt) {
       this.alt();
