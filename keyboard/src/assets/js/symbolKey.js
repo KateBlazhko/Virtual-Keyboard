@@ -6,7 +6,12 @@ export default class SymbolKey extends Key {
     this.defaultValue = defaultValue;
     this.shiftValue = shiftValue;
     this.lang = lang;
-    this.node.textContent = this.defaultValue[`${this.lang}`];
+
+    if (this.defaultValue[`${this.lang}`]) {
+      this.node.textContent = this.defaultValue[`${this.lang}`];
+    } else {
+      this.node.textContent = this.defaultValue.en;
+    }
   }
 
   getSymbol() {
@@ -41,9 +46,15 @@ export default class SymbolKey extends Key {
         this.node.textContent = this.defaultValue.en.toUpperCase();
       }
     } else if (this.isCaps) {
-      this.node.textContent = this.defaultValue[`${this.lang}`].toUpperCase() || this.defaultValue.en.toUpperCase();
+      if (this.defaultValue[`${this.lang}`]) {
+        this.node.textContent = this.defaultValue[`${this.lang}`].toUpperCase();
+      } else {
+        this.node.textContent = this.defaultValue.en.toUpperCase();
+      }
+    } else if (this.defaultValue[`${this.lang}`]) {
+      this.node.textContent = this.defaultValue[`${this.lang}`];
     } else {
-      this.node.textContent = this.defaultValue[`${this.lang}`] || this.defaultValue.en;
+      this.node.textContent = this.defaultValue.en;
     }
   }
 

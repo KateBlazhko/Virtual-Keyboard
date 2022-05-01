@@ -3,7 +3,9 @@ html {
 }
 
 body {
-  @include font()
+  @include font();
+
+  background: #ebf5fc;
 }
 
 *,

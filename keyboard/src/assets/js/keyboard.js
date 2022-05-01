@@ -53,6 +53,11 @@ export default class Keybord extends PageElement {
     });
   }
 
+  setPressKey(e) {
+    this.pressKey = this.keyList.find((key) => key.code === e.code);
+    this.isPress = true;
+  }
+
   getPressKey() {
     return this.isPress ? this.pressKey : null;
   }
@@ -103,6 +108,14 @@ export default class Keybord extends PageElement {
     this.keyList.forEach((key) => {
       if (key.switchLang) {
         key.switchLang(this.lang);
+      }
+    });
+  }
+
+  resetKeyboard() {
+    this.keyList.forEach((key) => {
+      if (!key.code.match(/Caps/)) {
+        this.offMark(key);
       }
     });
   }
