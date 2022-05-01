@@ -35,7 +35,8 @@ export default class Application extends PageElement {
         if (e.code.match(/Control/)) {
           this.isCtrl = true;
           if (this.isAlt) {
-            this.keyboard.switchLang();
+            this.switchLang();
+            this.rename();
           }
           this.resetKeys({ isAlt: this.isAlt, isShift: this.isShift, isCtrl: false });
           this.keyboard.onMark(e);
@@ -45,7 +46,8 @@ export default class Application extends PageElement {
         if (e.code.match(/Alt/)) {
           this.isAlt = true;
           if (this.isCtrl) {
-            this.keyboard.switchLang();
+            this.switchLang();
+            this.rename();
           }
           this.resetKeys({ isAlt: false, isShift: this.isShift, isCtrl: this.isCtrl });
           this.keyboard.onMark(e);
@@ -174,13 +176,24 @@ export default class Application extends PageElement {
     this.renderKeyboard();
   }
 
+
+
   renderKeyboard() {
     const container = new PageElement(this.node, 'div', 'container');
-    const title = new PageElement(container.node, 'h1', 'title');
-    title.node.textContent = 'RSS Виртуальная клавиатура';
+    this.title = new PageElement(container.node, 'h1', 'title');
+
+    if (this.lang === 'en') {
+      this.title.node.textContent = 'RSS Virtual Keyboard';
+    } else {
+      this.title.node.textContent = 'RSS Виртуальная клавиатура';
+    }
 
     this.textArea = new TextArea(container.node, 'textarea');
     this.keyboard = new Keybord(container.node, 'keyboard-wrap', this.lang);
+
+    const subtitle= new PageElement(container.node, 'h4', 'subtitle');
+    subtitle.node.textContent = 'OS Linux, switch lang: ctrl+alt or alt+ctrl';
+
 
     window.onblur = () => {
       this.resetKeyboard();
@@ -244,7 +257,8 @@ export default class Application extends PageElement {
     this.keyboard.onMark(this.pressKey);
 
     if (this.isAlt) {
-      this.keyboard.switchLang();
+      this.switchLang();
+      this.rename();
       setTimeout(() => {
         this.resetKeys({ isAlt: false, isShift: false, isCtrl: this.isCtrl });
       }, 66);
@@ -267,7 +281,8 @@ export default class Application extends PageElement {
     this.keyboard.onMark(this.pressKey);
 
     if (this.isCtrl) {
-      this.keyboard.switchLang();
+      this.switchLang();
+      this.rename();
       setTimeout(() => {
         this.resetKeys({ isAlt: this.isAlt, isShift: false, isCtrl: false });
       }, 66);
@@ -312,5 +327,25 @@ export default class Application extends PageElement {
 
   enter() {
     this.textArea.enter();
+  }
+
+  switchLang() {
+    if (this.lang === 'en') {
+      this.lang = 'ru';
+    } else {
+      this.lang = 'en';
+    }
+
+    localStorage.setItem('lang', this.lang);
+    this.keyboard.switchLang(this.lang)
+  }
+
+  rename() {
+    console.log('aa')
+    if (this.lang === 'en') {
+      this.title.node.textContent = 'RSS Virtual Keyboard';
+    } else {
+      this.title.node.textContent = 'RSS Виртуальная клавиатура';
+    }
   }
 }

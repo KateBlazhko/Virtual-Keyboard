@@ -96,18 +96,10 @@ export default class Keybord extends PageElement {
     }
   }
 
-  switchLang() {
-    if (this.lang === 'en') {
-      this.lang = 'ru';
-    } else {
-      this.lang = 'en';
-    }
-
-    localStorage.setItem('lang', this.lang);
-
+  switchLang(lang) {
     this.keyList.forEach((key) => {
       if (key.switchLang) {
-        key.switchLang(this.lang);
+        key.switchLang(lang);
       }
     });
   }
