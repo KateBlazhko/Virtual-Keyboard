@@ -97,7 +97,6 @@ export default class Application extends PageElement {
       this.keyboard.isPress = false;
 
       if (this.pressKey) {
-
         if (this.pressKey.getSymbol) {
           this.checkCombs();
           return;
@@ -110,7 +109,7 @@ export default class Application extends PageElement {
 
         if (this.pressKey.code.match(/Control/)) {
           this.ctrl();
-          return; 
+          return;
         }
 
         if (this.pressKey.code.match(/Alt/)) {
@@ -145,7 +144,7 @@ export default class Application extends PageElement {
 
         if (this.pressKey.code.match(/Arrow/)) {
           this.arrow();
-          return
+          return;
         }
 
         this.keyboard.onMark(this.pressKey);
@@ -321,7 +320,7 @@ export default class Application extends PageElement {
 
       if (this.pressKey.code.match(/KeyC/)) {
         if (e) {
-          e.preventDefault()
+          e.preventDefault();
         }
         this.buffer = this.textArea.copy();
         this.keyboard.onMark(this.pressKey);
@@ -331,7 +330,7 @@ export default class Application extends PageElement {
 
       if (this.pressKey.code.match(/KeyX/)) {
         if (e) {
-          e.preventDefault()
+          e.preventDefault();
         }
         this.textArea.node.focus();
         this.buffer = this.textArea.cut();
@@ -379,10 +378,9 @@ export default class Application extends PageElement {
   }
 
   arrow() {
-
     if (this.pressKey.code.match(/Right/)) {
       if (this.isShift) {
-        this.isRightDirection = true
+        this.isRightDirection = true;
         this.textArea.select(this.isRightDirection);
       } else {
         this.textArea.arrowRight();
@@ -392,10 +390,10 @@ export default class Application extends PageElement {
 
     if (this.pressKey.code.match(/Left/)) {
       if (this.isShift) {
-        this.isRightDirection = false
+        this.isRightDirection = false;
         this.textArea.select(this.isRightDirection);
       } else {
-        this.textArea.arrowRight();
+        this.textArea.arrowLeft();
       }
       return;
     }
