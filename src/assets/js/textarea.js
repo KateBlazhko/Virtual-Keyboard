@@ -138,17 +138,45 @@ export default class TextArea extends PageElement {
     this.node.select()
   }
 
-  // copy() {
-  //   let { cursorStart, cursorEnd } = this.getCursorData();
+  copy() {
+    const { cursorStart, cursorEnd } = this.getCursorData();
 
-  //   if (cursorStart === cursorEnd) {
-  //     return null
-  //   } 
+    if (cursorStart === cursorEnd) {
+      return null
+    } 
 
-  //   const { value } = this.node;
-  //   console.log(cursorStart)
+    const { value } = this.node;
+    const selectField = value.slice(cursorStart, cursorEnd)
 
-  //   console.log(cursorEnd)
-  //   return value.slice(cursorStart, cursorEnd)
-  // }
+    return selectField
+  }
+
+  cut() {
+    let { cursorStart } = this.getCursorData();
+    const { cursorEnd, beforeCursor, afterCursor } = this.getCursorData();
+
+    if (cursorStart === cursorEnd) {
+      return null
+    } 
+
+    const { value } = this.node;
+    const selectField = value.slice(cursorStart, cursorEnd)
+
+    this.node.value = beforeCursor + afterCursor;
+
+    this.node.setSelectionRange(cursorStart, cursorStart);
+
+    return selectField
+  }
+
+  paste(buffer) {
+    const { beforeCursor, afterCursor } = this.getCursorData();
+    let { cursorStart } = this.getCursorData();
+
+    if (buffer) {
+      this.node.value = beforeCursor + buffer + afterCursor;
+      cursorStart += buffer.length;
+      this.node.setSelectionRange(cursorStart, cursorStart);
+    }
+  }
 }
