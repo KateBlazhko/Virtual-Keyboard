@@ -138,6 +138,10 @@ export default class Application extends PageElement {
           this.space();
         }
 
+        if (this.pressKey.code.match(/Arrow/)) {
+          this.arrow();
+        }
+
         this.keyboard.onMark(this.pressKey);
         this.resetKeys({ isAlt: this.isAlt, isShift: this.isShift, isCtrl: this.isCtrl });
       }
@@ -327,6 +331,28 @@ export default class Application extends PageElement {
 
   enter() {
     this.textArea.enter();
+  }
+
+  arrow() {
+    if (this.pressKey.code.match(/Right/)) {
+      this.textArea.arrowRight();
+      return;
+    }
+
+    if (this.pressKey.code.match(/Left/)) {
+      this.textArea.arrowLeft();
+      return;
+    }
+
+    if (this.pressKey.code.match(/Up/)) {
+      this.textArea.arrowUp();
+      return;
+    }
+
+    if (this.pressKey.code.match(/Down/)) {
+      this.textArea.arrowDown();
+      return;
+    }
   }
 
   switchLang() {

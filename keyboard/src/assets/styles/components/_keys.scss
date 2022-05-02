@@ -1,5 +1,6 @@
 .key {
   @include size(60px, 60px);
+  border-radius: 10px;
 
   text-align: center;
   font-weight: bold;
@@ -8,7 +9,9 @@
 
   background: #ebf5fc;
   box-shadow: -2px -2px 5px #ffffff, 3px 3px 5px rgb(0 0 0 / 20%);
-  border-radius: 10px;
+
+  cursor: pointer;
+
 
   &.key_backspace,
   &.key_tab,
