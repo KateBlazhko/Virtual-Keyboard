@@ -7,97 +7,114 @@ export default class TextArea extends PageElement {
     this.node.value = '';
   }
 
-  getCursorPosition() {
-    const cursorPosition = this.node.selectionStart;
-    const beforeCursor = this.node.value.slice(0, cursorPosition);
-    const afterCursor = this.node.value.slice(cursorPosition);
-    return { cursorPosition, beforeCursor, afterCursor };
+  getCursorData() {
+    const cursorStart = this.node.selectionStart;
+    const cursorEnd = this.node.selectionEnd;
+    const beforeCursor = this.node.value.slice(0, cursorStart);
+    const afterCursor = this.node.value.slice(cursorEnd);
+    return { cursorStart, beforeCursor, afterCursor };
   }
 
   printSymbol(symbol) {
-    const { beforeCursor, afterCursor } = this.getCursorPosition();
-    let { cursorPosition } = this.getCursorPosition();
+    const { beforeCursor, afterCursor } = this.getCursorData();
+    let { cursorStart } = this.getCursorData();
 
     this.node.value = beforeCursor + symbol + afterCursor;
-    cursorPosition += 1;
-    this.node.setSelectionRange(cursorPosition, cursorPosition);
+    cursorStart += 1;
+    this.node.setSelectionRange(cursorStart, cursorStart);
   }
 
   backspace() {
-    const { beforeCursor, afterCursor } = this.getCursorPosition();
-    let { cursorPosition } = this.getCursorPosition();
+    const { beforeCursor, afterCursor } = this.getCursorData();
+    let { cursorStart } = this.getCursorData();
 
-    if (cursorPosition > 0) {
+    if (cursorStart > 0) {
       this.node.value = beforeCursor.slice(0, beforeCursor.length - 1) + afterCursor;
-      cursorPosition -= 1;
-      this.node.setSelectionRange(cursorPosition, cursorPosition);
+      cursorStart -= 1;
+      this.node.setSelectionRange(cursorStart, cursorStart);
     }
   }
 
   delete() {
-    const { cursorPosition, beforeCursor, afterCursor } = this.getCursorPosition();
+    const { cursorStart, beforeCursor, afterCursor } = this.getCursorData();
 
     this.node.value = beforeCursor + afterCursor.slice(1);
-    this.node.setSelectionRange(cursorPosition, cursorPosition);
+    this.node.setSelectionRange(cursorStart, cursorStart);
   }
 
   tab() {
-    const { beforeCursor, afterCursor } = this.getCursorPosition();
-    let { cursorPosition } = this.getCursorPosition();
+    const { beforeCursor, afterCursor } = this.getCursorData();
+    let { cursorStart } = this.getCursorData();
 
     this.node.value = `${beforeCursor}\t${afterCursor}`;
-    cursorPosition += 1;
-    this.node.setSelectionRange(cursorPosition, cursorPosition);
+    cursorStart += 1;
+    this.node.setSelectionRange(cursorStart, cursorStart);
   }
 
   space() {
-    const { beforeCursor, afterCursor } = this.getCursorPosition();
-    let { cursorPosition } = this.getCursorPosition();
+    const { beforeCursor, afterCursor } = this.getCursorData();
+    let { cursorStart } = this.getCursorData();
 
     this.node.value = `${beforeCursor} ${afterCursor}`;
-    cursorPosition += 1;
-    this.node.setSelectionRange(cursorPosition, cursorPosition);
+    cursorStart += 1;
+    this.node.setSelectionRange(cursorStart, cursorStart);
   }
 
   enter() {
-    const { beforeCursor, afterCursor } = this.getCursorPosition();
-    let { cursorPosition } = this.getCursorPosition();
+    const { beforeCursor, afterCursor } = this.getCursorData();
+    let { cursorStart } = this.getCursorData();
 
     this.node.value = `${beforeCursor}\n${afterCursor}`;
-    cursorPosition += 1;
-    this.node.setSelectionRange(cursorPosition, cursorPosition);
+    cursorStart += 1;
+    this.node.setSelectionRange(cursorStart, cursorStart);
   }
 
 
   arrowRight() {
-    let { cursorPosition } = this.getCursorPosition();
+    let { cursorStart } = this.getCursorData();
 
-    cursorPosition += 1;
-    this.node.setSelectionRange(cursorPosition, cursorPosition);
+    cursorStart += 1;
+    this.node.setSelectionRange(cursorStart, cursorStart);
   }
 
   arrowLeft() {
-    let { cursorPosition } = this.getCursorPosition();
+    let { cursorStart } = this.getCursorData();
 
-    cursorPosition -= 1;
-    this.node.setSelectionRange(cursorPosition, cursorPosition);
+    cursorStart -= 1;
+    this.node.setSelectionRange(cursorStart, cursorStart);
   }
 
   arrowUp() {
-    const { beforeCursor, afterCursor } = this.getCursorPosition();
-    let { cursorPosition } = this.getCursorPosition();
+    const { beforeCursor, afterCursor } = this.getCursorData();
+    let { cursorStart } = this.getCursorData();
 
     this.node.value = `${beforeCursor}↑${afterCursor}`;
-    cursorPosition += 1;
-    this.node.setSelectionRange(cursorPosition, cursorPosition);
+    cursorStart += 1;
+    this.node.setSelectionRange(cursorStart, cursorStart);
   }
 
   arrowDown() {
-    const { beforeCursor, afterCursor } = this.getCursorPosition();
-    let { cursorPosition } = this.getCursorPosition();
+    const { beforeCursor, afterCursor } = this.getCursorData();
+    let { cursorStart } = this.getCursorData();
 
     this.node.value = `${beforeCursor}↓${afterCursor}`;
-    cursorPosition += 1;
-    this.node.setSelectionRange(cursorPosition, cursorPosition);
+    cursorStart += 1;
+    this.node.setSelectionRange(cursorStart, cursorStart);
+  }
+
+  select(direction) {
+    let { cursorStart,  cursorEnd} = this.getCursorData();
+
+    if (direction === 'right') {
+      this.node.setSelectionRange(cursorStart, cursorEnd++);
+    } else {
+      this.node.setSelectionRange(cursorStart--, cursorEnd);
+    }
+
+  }
+
+  selectAll() {
+    const value = this.node.value
+    this.node.setSelectionRange(0, value.length);
   }
 }

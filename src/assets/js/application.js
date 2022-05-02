@@ -55,7 +55,7 @@ export default class Application extends PageElement {
         }
 
         if (this.pressKey.getSymbol) {
-          this.symbol();
+          this.checkCombs();
           e.preventDefault();
           return;
         }
@@ -94,7 +94,8 @@ export default class Application extends PageElement {
 
       if (this.pressKey) {
         if (this.pressKey.getSymbol) {
-          this.symbol();
+
+          this.checkCombs();
           return;
         }
 
@@ -306,6 +307,20 @@ export default class Application extends PageElement {
     this.keyboard.onCapsLock(this.isCaps);
   }
 
+  checkCombs() {
+
+    if (this.isCtrl) {
+      if (this.pressKey.code.match(/KeyA/)) {
+        this.textArea.node.focus()
+        this.textArea.selectAll();
+        this.resetKeys({ isAlt: this.isAlt, isShift: this.isShift, isCtrl: this.isCtrl });
+      return;
+      }
+    } 
+
+    this.symbol()
+  }
+
   symbol() {
     const symbol = this.pressKey.getSymbol();
     this.textArea.printSymbol(symbol);
@@ -335,12 +350,20 @@ export default class Application extends PageElement {
 
   arrow() {
     if (this.pressKey.code.match(/Right/)) {
-      this.textArea.arrowRight();
+      if (this.isShift) {
+        this.textArea.select();
+      } else {
+        this.textArea.arrowRight('right');
+      }
       return;
     }
 
     if (this.pressKey.code.match(/Left/)) {
-      this.textArea.arrowLeft();
+      if (this.isShift) {
+        this.textArea.select();
+      } else {
+        this.textArea.arrowRight('right');
+      }
       return;
     }
 
