@@ -94,7 +94,6 @@ export default class Application extends PageElement {
 
       if (this.pressKey) {
         if (this.pressKey.getSymbol) {
-
           this.checkCombs();
           return;
         }
@@ -181,8 +180,6 @@ export default class Application extends PageElement {
     this.renderKeyboard();
   }
 
-
-
   renderKeyboard() {
     const container = new PageElement(this.node, 'div', 'container');
     this.title = new PageElement(container.node, 'h1', 'title');
@@ -196,9 +193,8 @@ export default class Application extends PageElement {
     this.textArea = new TextArea(container.node, 'textarea');
     this.keyboard = new Keybord(container.node, 'keyboard-wrap', this.lang);
 
-    const subtitle= new PageElement(container.node, 'h4', 'subtitle');
+    const subtitle = new PageElement(container.node, 'h4', 'subtitle');
     subtitle.node.textContent = 'OS Linux, switch lang: ctrl+alt or alt+ctrl';
-
 
     window.onblur = () => {
       this.resetKeyboard();
@@ -308,17 +304,16 @@ export default class Application extends PageElement {
   }
 
   checkCombs() {
-
     if (this.isCtrl) {
       if (this.pressKey.code.match(/KeyA/)) {
-        this.textArea.node.focus()
+        this.textArea.node.focus();
         this.textArea.selectAll();
         this.resetKeys({ isAlt: this.isAlt, isShift: this.isShift, isCtrl: this.isCtrl });
-      return;
+        return;
       }
-    } 
+    }
 
-    this.symbol()
+    this.symbol();
   }
 
   symbol() {
@@ -374,7 +369,6 @@ export default class Application extends PageElement {
 
     if (this.pressKey.code.match(/Down/)) {
       this.textArea.arrowDown();
-      return;
     }
   }
 
@@ -386,11 +380,10 @@ export default class Application extends PageElement {
     }
 
     localStorage.setItem('lang', this.lang);
-    this.keyboard.switchLang(this.lang)
+    this.keyboard.switchLang(this.lang);
   }
 
   rename() {
-    console.log('aa')
     if (this.lang === 'en') {
       this.title.node.textContent = 'RSS Virtual Keyboard';
     } else {

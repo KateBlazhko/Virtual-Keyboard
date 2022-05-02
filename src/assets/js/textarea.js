@@ -69,7 +69,6 @@ export default class TextArea extends PageElement {
     this.node.setSelectionRange(cursorStart, cursorStart);
   }
 
-
   arrowRight() {
     let { cursorStart } = this.getCursorData();
 
@@ -103,18 +102,19 @@ export default class TextArea extends PageElement {
   }
 
   select(direction) {
-    let { cursorStart,  cursorEnd} = this.getCursorData();
+    let { cursorStart, cursorEnd } = this.getCursorData();
 
     if (direction === 'right') {
-      this.node.setSelectionRange(cursorStart, cursorEnd++);
+      cursorEnd += 1;
+      this.node.setSelectionRange(cursorStart, cursorEnd);
     } else {
-      this.node.setSelectionRange(cursorStart--, cursorEnd);
+      cursorStart -= 1;
+      this.node.setSelectionRange(cursorStart, cursorEnd);
     }
-
   }
 
   selectAll() {
-    const value = this.node.value
+    const { value } = this.node;
     this.node.setSelectionRange(0, value.length);
   }
 }
