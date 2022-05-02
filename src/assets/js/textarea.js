@@ -12,7 +12,7 @@ export default class TextArea extends PageElement {
     const cursorEnd = this.node.selectionEnd;
     const beforeCursor = this.node.value.slice(0, cursorStart);
     const afterCursor = this.node.value.slice(cursorEnd);
-    return { cursorStart, beforeCursor, afterCursor };
+    return { cursorStart, cursorEnd, beforeCursor, afterCursor };
   }
 
   printSymbol(symbol) {
@@ -101,20 +101,54 @@ export default class TextArea extends PageElement {
     this.node.setSelectionRange(cursorStart, cursorStart);
   }
 
-  select(direction) {
+  select(isRightDirection) {
     let { cursorStart, cursorEnd } = this.getCursorData();
 
-    if (direction === 'right') {
-      cursorEnd += 1;
-      this.node.setSelectionRange(cursorStart, cursorEnd);
+    if (cursorEnd === cursorStart) {
+      this.selectDirection = isRightDirection
+    }
+
+    if (this.selectDirection === isRightDirection) {
+      if (isRightDirection) {
+        cursorEnd += 1;
+        this.node.setSelectionRange(cursorStart, cursorEnd);
+      } else {
+        console.log(cursorStart, 'start')
+        if (cursorStart > 0) {
+          cursorStart -= 1;
+          this.node.setSelectionRange(cursorStart, cursorEnd);
+        }
+      }
     } else {
-      cursorStart -= 1;
-      this.node.setSelectionRange(cursorStart, cursorEnd);
+      if (cursorEnd > cursorStart) {
+        if (isRightDirection) {
+          cursorStart += 1;
+          this.node.setSelectionRange(cursorStart, cursorEnd);
+        } else {
+          cursorEnd -= 1;
+          this.node.setSelectionRange(cursorStart, cursorEnd);
+        }
+      }
+
     }
   }
 
   selectAll() {
     const { value } = this.node;
-    this.node.setSelectionRange(0, value.length);
+    this.node.select()
   }
+
+  // copy() {
+  //   let { cursorStart, cursorEnd } = this.getCursorData();
+
+  //   if (cursorStart === cursorEnd) {
+  //     return null
+  //   } 
+
+  //   const { value } = this.node;
+  //   console.log(cursorStart)
+
+  //   console.log(cursorEnd)
+  //   return value.slice(cursorStart, cursorEnd)
+  // }
 }

@@ -140,6 +140,7 @@ export default class Application extends PageElement {
 
         if (this.pressKey.code.match(/Arrow/)) {
           this.arrow();
+          return
         }
 
         this.keyboard.onMark(this.pressKey);
@@ -311,6 +312,14 @@ export default class Application extends PageElement {
         this.resetKeys({ isAlt: this.isAlt, isShift: this.isShift, isCtrl: this.isCtrl });
         return;
       }
+
+      // if (this.pressKey.code.match(/KeyC/)) {
+      //   this.textArea.node.focus();
+      //   this.buffer = this.textArea.copy();
+      //   console.log(this.buffer)
+      //   this.resetKeys({ isAlt: this.isAlt, isShift: this.isShift, isCtrl: this.isCtrl });
+      //   return;
+      // }
     }
 
     this.symbol();
@@ -344,20 +353,23 @@ export default class Application extends PageElement {
   }
 
   arrow() {
+
     if (this.pressKey.code.match(/Right/)) {
       if (this.isShift) {
-        this.textArea.select();
+        this.isRightDirection = true
+        this.textArea.select(this.isRightDirection);
       } else {
-        this.textArea.arrowRight('right');
+        this.textArea.arrowRight();
       }
       return;
     }
 
     if (this.pressKey.code.match(/Left/)) {
       if (this.isShift) {
-        this.textArea.select();
+        this.isRightDirection = false
+        this.textArea.select(this.isRightDirection);
       } else {
-        this.textArea.arrowRight('right');
+        this.textArea.arrowRight();
       }
       return;
     }
