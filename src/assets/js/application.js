@@ -152,7 +152,7 @@ export default class Application extends PageElement {
       }
     };
 
-    this.node.onmouseup = () => {
+    window.onmouseup = () => {
       if (this.pressKey) {
         if (this.pressKey.code.match(/Shift/)) {
           return;
