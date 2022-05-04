@@ -71,8 +71,9 @@ export default class Application extends PageElement {
 
       if (e.code.match(/Shift/)) {
         if (this.isShift) {
-          this.isShift = !this.isShift;
-          this.keyboard.onShift(this.isShift);
+          // this.isShift = !this.isShift;
+          // this.keyboard.onShift(this.isShift);
+          this.resetKeys({ isAlt: false, isShift: this.isShift, isCtrl: false });
         }
       }
 

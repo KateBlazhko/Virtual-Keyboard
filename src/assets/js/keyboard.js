@@ -59,7 +59,7 @@ export default class Keybord extends PageElement {
   }
 
   getPressKey() {
-    let pressKey = this.isPress ? this.pressKey : null
+    const pressKey = this.isPress ? this.pressKey : null;
     this.isPress = false;
     return pressKey;
   }
