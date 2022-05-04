@@ -59,7 +59,9 @@ export default class Keybord extends PageElement {
   }
 
   getPressKey() {
-    return this.isPress ? this.pressKey : null;
+    let pressKey = this.isPress ? this.pressKey : null
+    this.isPress = false;
+    return pressKey;
   }
 
   onCapsLock(isCaps) {

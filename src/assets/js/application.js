@@ -17,7 +17,6 @@ export default class Application extends PageElement {
     this.node.onkeydown = (e) => {
       this.keyboard.setPressKey(e);
       this.pressKey = this.keyboard.getPressKey();
-      this.keyboard.isPress = false;
 
       if (this.pressKey) {
         if (this.pressKey.code.match(/Caps/)) {
@@ -94,7 +93,6 @@ export default class Application extends PageElement {
 
     this.node.onmousedown = () => {
       this.pressKey = this.keyboard.getPressKey();
-      this.keyboard.isPress = false;
 
       if (this.pressKey) {
         if (this.pressKey.getSymbol) {
