@@ -80,11 +80,13 @@ export default class Keybord extends PageElement {
     });
   }
 
-  onMark(e) {
-    if (e) {
-      this.markKey = this.keyList.find((key) => key.code === e.code) || null;
+  onMark(pressKey) {
+    if (pressKey) {
+
+      this.markKey = this.keyList.find((key) => key.code === pressKey.code) || null;
       if (this.markKey) {
-        this.markKey.node.classList.toggle('mark');
+
+        this.markKey.node.classList.add('mark');
       }
     }
   }
