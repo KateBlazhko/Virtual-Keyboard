@@ -24,6 +24,12 @@ export default class Application extends PageElement {
           return;
         }
 
+        if (this.pressKey.code.match(/Tab/)) {
+          this.tab();
+          e.preventDefault();
+          return;
+        }
+
         if (e.code.match(/Shift/)) {
           this.isShift = false;
           this.resetKeys({ isAlt: this.isAlt, isShift: true, isCtrl: this.isCtrl });
