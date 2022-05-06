@@ -10,7 +10,7 @@ export default class Application extends PageElement {
     this.isShift = false;
     this.isCtrl = false;
     this.isAlt = false;
-    this.pressedKeys = new Set
+    this.pressedKeys = new Set();
   }
 
   getLang() {
@@ -48,18 +48,18 @@ export default class Application extends PageElement {
     this.node.onkeydown = (e) => {
       this.keyboard.setPressKey(e);
 
-      this.handlePressEvent(e)
+      this.handlePressEvent(e);
     };
 
     this.node.onkeyup = (e) => {
-      let unpressKey
-      
-      this.pressedKeys.forEach((key) =>{
+      let unpressKey;
+
+      this.pressedKeys.forEach((key) => {
         if (key.code === e.code) {
-          unpressKey = key
-          this.pressedKeys.delete(key)
+          unpressKey = key;
+          this.pressedKeys.delete(key);
         }
-      })
+      });
 
       if (e.code.match(/Caps/)) {
         return;
@@ -69,40 +69,40 @@ export default class Application extends PageElement {
         this.isShift = false;
         this.keyboard.offMark(unpressKey);
 
-        this.pressedKeys.forEach((key) =>{
+        this.pressedKeys.forEach((key) => {
           if (key.code.match(/Shift/)) {
-            this.isShift = true
+            this.isShift = true;
           }
-        })
+        });
 
         if (!this.isShift) {
           this.keyboard.onShift(this.isShift);
-        }  
-        return      
+        }
+        return;
       }
 
       if (e.code.match(/Control/)) {
         this.isCtrl = false;
         this.keyboard.offMark(unpressKey);
 
-        this.pressedKeys.forEach((key) =>{
+        this.pressedKeys.forEach((key) => {
           if (key.code.match(/Control/)) {
-            this.isCtrl = true
+            this.isCtrl = true;
           }
-        })
-        return
+        });
+        return;
       }
 
       if (e.code.match(/Alt/)) {
         this.isAlt = false;
         this.keyboard.offMark(unpressKey);
 
-        this.pressedKeys.forEach((key) =>{
+        this.pressedKeys.forEach((key) => {
           if (key.code.match(/Alt/)) {
-            this.isAlt = true
+            this.isAlt = true;
           }
-        })
-        return
+        });
+        return;
       }
 
       if (unpressKey) {
@@ -111,12 +111,11 @@ export default class Application extends PageElement {
     };
 
     this.node.onmousedown = (e) => {
-      this.handlePressEvent(e)
+      this.handlePressEvent(e);
     };
 
     window.onmouseup = () => {
       if (this.pressKey) {
-
         if (this.pressKey.code.match(/Shift/)) {
           return;
         }
@@ -133,7 +132,7 @@ export default class Application extends PageElement {
           return;
         }
 
-        this.pressedKeys.delete(this.pressKey)
+        this.pressedKeys.delete(this.pressKey);
         this.textArea.node.focus();
         this.keyboard.offMark(this.pressKey);
       }
@@ -141,20 +140,10 @@ export default class Application extends PageElement {
   }
 
   handlePressEvent(e) {
-
     this.pressKey = this.keyboard.getPressKey();
 
     if (this.pressKey) {
       e.preventDefault();
-
-      let isCombs = this.checkCombs(e)
-      if (isCombs) {
-        return
-      }
- 
-      if (this.pressKey.getSymbol) {
-        this.symbol();
-      }
 
       if (this.pressKey.code.match(/Shift/)) {
         this.shift();
@@ -167,13 +156,23 @@ export default class Application extends PageElement {
       }
 
       if (this.pressKey.code.match(/Alt/)) {
-        this.alt();
+        const isCombs = this.alt();
+        if (isCombs) this.checkCombs(e);
         return;
       }
 
       if (this.pressKey.code.match(/Caps/)) {
         this.caps();
         return;
+      }
+
+      const isCombs = this.checkCombs(e);
+      if (isCombs) {
+        return;
+      }
+
+      if (this.pressKey.getSymbol) {
+        this.symbol();
       }
 
       if (this.pressKey.code.match(/Backspace/)) {
@@ -207,93 +206,87 @@ export default class Application extends PageElement {
 
   handleUnpressEvent(e) {
     if (e.type.match(/mouse/)) {
-
-      this.pressedKeys.delete(this.pressKey)
+      this.pressedKeys.delete(this.pressKey);
       setTimeout(() => {
         this.keyboard.offMark(this.pressKey);
-      }, 100)
-
+      }, 100);
     }
   }
 
   checkCombs(e) {
     if (this.isCtrl) {
       if (this.pressKey.code.match(/Alt/)) {
-        this.alt()
-
         this.switchLang();
-        this.rename();  
+        this.rename();
 
-        this.handleUnpressEvent(e) 
-      return true
+        this.handleUnpressEvent(e);
+        return true;
       }
 
       if (this.pressKey.code.match(/KeyA/)) {
         this.textArea.node.focus();
         this.textArea.selectAll();
-        this.pressedKeys.add(this.pressKey)
+        this.pressedKeys.add(this.pressKey);
         this.keyboard.onMark(this.pressKey);
 
-        this.handleUnpressEvent(e) 
+        this.handleUnpressEvent(e);
         return true;
       }
 
       if (this.pressKey.code.match(/KeyC/)) {
         this.buffer = this.textArea.copy();
-        this.pressedKeys.add(this.pressKey)
+        this.pressedKeys.add(this.pressKey);
         this.keyboard.onMark(this.pressKey);
 
-        this.handleUnpressEvent(e) 
+        this.handleUnpressEvent(e);
         return true;
       }
 
       if (this.pressKey.code.match(/KeyX/)) {
         this.textArea.node.focus();
         this.buffer = this.textArea.cut();
-        this.pressedKeys.add(this.pressKey)
+        this.pressedKeys.add(this.pressKey);
         this.keyboard.onMark(this.pressKey);
 
-        this.handleUnpressEvent(e) 
+        this.handleUnpressEvent(e);
         return true;
       }
 
       if (this.pressKey.code.match(/KeyV/)) {
         this.textArea.paste(this.buffer);
-        this.pressedKeys.add(this.pressKey)
+        this.pressedKeys.add(this.pressKey);
         this.keyboard.onMark(this.pressKey);
 
-        this.handleUnpressEvent(e) 
+        this.handleUnpressEvent(e);
         return true;
       }
     }
-  return false
+    return false;
   }
 
   shift() {
     if (this.isShift) {
       if (this.pressedKeys.has(this.pressKey)) {
-        this.pressedKeys.delete(this.pressKey)
+        this.pressedKeys.delete(this.pressKey);
         this.keyboard.offMark(this.pressKey);
-        this.isShift = false
+        this.isShift = false;
 
-        this.pressedKeys.forEach((key) =>{
+        this.pressedKeys.forEach((key) => {
           if (key.code.match(/Shift/)) {
-            this.isShift = true
+            this.isShift = true;
           }
-        }) 
+        });
 
         if (!this.isShift) {
           this.keyboard.onShift(this.isShift);
-        } 
-
+        }
       } else {
-        this.pressedKeys.add(this.pressKey)
+        this.pressedKeys.add(this.pressKey);
         this.keyboard.onMark(this.pressKey);
       }
- 
     } else {
       this.isShift = !this.isShift;
-      this.pressedKeys.add(this.pressKey)
+      this.pressedKeys.add(this.pressKey);
       this.keyboard.onShift(this.isShift);
       this.keyboard.onMark(this.pressKey);
     }
@@ -302,24 +295,23 @@ export default class Application extends PageElement {
   ctrl() {
     if (this.isCtrl) {
       if (this.pressedKeys.has(this.pressKey)) {
-        this.pressedKeys.delete(this.pressKey)
+        this.pressedKeys.delete(this.pressKey);
         this.keyboard.offMark(this.pressKey);
 
-        this.isCtrl = false
+        this.isCtrl = false;
 
-        this.pressedKeys.forEach((key) =>{
+        this.pressedKeys.forEach((key) => {
           if (key.code.match(/Control/)) {
-            this.isCtrl = true
+            this.isCtrl = true;
           }
-        }) 
-
+        });
       } else {
-        this.pressedKeys.add(this.pressKey)
+        this.pressedKeys.add(this.pressKey);
         this.keyboard.onMark(this.pressKey);
       }
     } else {
       this.isCtrl = !this.isCtrl;
-      this.pressedKeys.add(this.pressKey)
+      this.pressedKeys.add(this.pressKey);
       this.keyboard.onMark(this.pressKey);
     }
   }
@@ -327,34 +319,34 @@ export default class Application extends PageElement {
   alt() {
     if (this.isAlt) {
       if (this.pressedKeys.has(this.pressKey)) {
-        this.pressedKeys.delete(this.pressKey)
+        this.pressedKeys.delete(this.pressKey);
         this.keyboard.offMark(this.pressKey);
 
-        this.isAlt = false
+        this.isAlt = false;
 
-        this.pressedKeys.forEach((key) =>{
+        this.pressedKeys.forEach((key) => {
           if (key.code.match(/Alt/)) {
-            this.isAlt = true
+            this.isAlt = true;
           }
-        }) 
-
-      } else {
-        this.pressedKeys.add(this.pressKey)
-        this.keyboard.onMark(this.pressKey);
+        });
+        return false;
       }
+      this.pressedKeys.add(this.pressKey);
+      this.keyboard.onMark(this.pressKey);
     } else {
       this.isAlt = !this.isAlt;
-      this.pressedKeys.add(this.pressKey)
+      this.pressedKeys.add(this.pressKey);
       this.keyboard.onMark(this.pressKey);
     }
+    return true;
   }
 
   caps() {
     if (this.isCaps) {
-      this.pressedKeys.delete(this.pressKey)
+      this.pressedKeys.delete(this.pressKey);
       this.keyboard.offMark(this.pressKey);
     } else {
-      this.pressedKeys.add(this.pressKey)
+      this.pressedKeys.add(this.pressKey);
       this.keyboard.onMark(this.pressKey);
     }
 
@@ -443,8 +435,8 @@ export default class Application extends PageElement {
   }
 
   resetKeys() {
-    this.pressedKeys.forEach(key => {
-      this.pressedKeys.delete(key)
+    this.pressedKeys.forEach((key) => {
+      this.pressedKeys.delete(key);
     });
 
     if (this.isAlt) {
@@ -460,5 +452,4 @@ export default class Application extends PageElement {
       this.isCtrl = false;
     }
   }
-
 }

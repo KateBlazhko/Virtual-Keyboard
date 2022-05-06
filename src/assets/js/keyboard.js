@@ -82,10 +82,8 @@ export default class Keybord extends PageElement {
 
   onMark(pressKey) {
     if (pressKey) {
-
       this.markKey = this.keyList.find((key) => key.code === pressKey.code) || null;
       if (this.markKey) {
-
         this.markKey.node.classList.add('mark');
       }
     }
