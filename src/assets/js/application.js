@@ -448,6 +448,11 @@ export default class Application extends PageElement {
       this.keyboard.onShift(this.isShift);
     }
 
+    if (this.isCaps) {
+      this.isCaps = false;
+      this.keyboard.onCapsLock(this.isShift);
+    }
+
     if (this.isCtrl) {
       this.isCtrl = false;
     }

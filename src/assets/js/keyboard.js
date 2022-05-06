@@ -108,9 +108,7 @@ export default class Keybord extends PageElement {
 
   resetKeyboard() {
     this.keyList.forEach((key) => {
-      if (!key.code.match(/Caps/)) {
-        this.offMark(key);
-      }
+      this.offMark(key);
     });
   }
 }
