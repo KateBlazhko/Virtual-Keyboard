@@ -99,21 +99,11 @@ export default class TextArea extends PageElement {
   }
 
   arrowUp() {
-    const { beforeCursor, afterCursor } = this.getCursorData();
-    let { cursorStart } = this.getCursorData();
-
-    this.node.value = `${beforeCursor}↑${afterCursor}`;
-    cursorStart += 1;
-    this.node.setSelectionRange(cursorStart, cursorStart);
+    this.node.setSelectionRange(0, 0);
   }
 
   arrowDown() {
-    const { beforeCursor, afterCursor } = this.getCursorData();
-    let { cursorStart } = this.getCursorData();
-
-    this.node.value = `${beforeCursor}↓${afterCursor}`;
-    cursorStart += 1;
-    this.node.setSelectionRange(cursorStart, cursorStart);
+    this.node.setSelectionRange(this.node.value.length, this.node.value.length);
   }
 
   select(isRightDirection) {
