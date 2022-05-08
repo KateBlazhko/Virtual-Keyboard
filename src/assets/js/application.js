@@ -13,6 +13,10 @@ export default class Application extends PageElement {
     this.pressedKeys = new Set();
   }
 
+  getOS() {
+    this.OS = window.navigator.userAgent;
+  }
+
   getLang() {
     if (localStorage.getItem('lang')) {
       this.lang = localStorage.getItem('lang');
@@ -20,10 +24,10 @@ export default class Application extends PageElement {
       this.lang = 'en';
     }
 
-    this.renderKeyboard();
+    this.createKeyboard();
   }
 
-  renderKeyboard() {
+  createKeyboard() {
     const container = new PageElement(this.node, 'div', 'container');
     this.title = new PageElement(container.node, 'h1', 'title');
 
@@ -40,6 +44,7 @@ export default class Application extends PageElement {
     subtitle.node.textContent = 'OS Linux, switch lang: ctrl+alt';
 
     this.node.focus();
+    this.getOS();
 
     window.onblur = () => {
       this.resetKeyboard();
@@ -47,99 +52,23 @@ export default class Application extends PageElement {
 
     this.node.onkeydown = (e) => {
       this.keyboard.setPressKey(e);
-
-      this.handlePressEvent(e);
+      this.handlerPressEvent(e);
     };
 
     this.node.onkeyup = (e) => {
-      let unpressKey;
-
-      this.pressedKeys.forEach((key) => {
-        if (key.code === e.code) {
-          unpressKey = key;
-          this.pressedKeys.delete(key);
-        }
-      });
-
-      if (e.code.match(/Caps/)) {
-        return;
-      }
-
-      if (e.code.match(/Shift/)) {
-        this.isShift = false;
-        this.keyboard.offMark(unpressKey);
-
-        this.pressedKeys.forEach((key) => {
-          if (key.code.match(/Shift/)) {
-            this.isShift = true;
-          }
-        });
-
-        if (!this.isShift) {
-          this.keyboard.onShift(this.isShift);
-        }
-        return;
-      }
-
-      if (e.code.match(/Control/)) {
-        this.isCtrl = false;
-        this.keyboard.offMark(unpressKey);
-
-        this.pressedKeys.forEach((key) => {
-          if (key.code.match(/Control/)) {
-            this.isCtrl = true;
-          }
-        });
-        return;
-      }
-
-      if (e.code.match(/Alt/)) {
-        this.isAlt = false;
-        this.keyboard.offMark(unpressKey);
-
-        this.pressedKeys.forEach((key) => {
-          if (key.code.match(/Alt/)) {
-            this.isAlt = true;
-          }
-        });
-        return;
-      }
-
-      if (unpressKey) {
-        this.keyboard.offMark(unpressKey);
-      }
+      this.handlerKeyupEvent(e);
     };
 
     this.node.onmousedown = (e) => {
-      this.handlePressEvent(e);
+      this.handlerPressEvent(e);
     };
 
     window.onmouseup = () => {
-      if (this.pressKey) {
-        if (this.pressKey.code.match(/Shift/)) {
-          return;
-        }
-
-        if (this.pressKey.code.match(/Caps/)) {
-          return;
-        }
-
-        if (this.pressKey.code.match(/Control/)) {
-          return;
-        }
-
-        if (this.pressKey.code.match(/Alt/)) {
-          return;
-        }
-
-        this.pressedKeys.delete(this.pressKey);
-        this.textArea.node.focus();
-        this.keyboard.offMark(this.pressKey);
-      }
+      this.handlerMouseupEvent();
     };
   }
 
-  handlePressEvent(e) {
+  handlerPressEvent(e) {
     this.pressKey = this.keyboard.getPressKey();
 
     if (this.pressKey) {
@@ -204,7 +133,93 @@ export default class Application extends PageElement {
     }
   }
 
-  handleUnpressEvent(e) {
+  handlerKeyupEvent(e) {
+    let unpressKey;
+
+    this.pressedKeys.forEach((key) => {
+      if (key.code === e.code) {
+        unpressKey = key;
+        this.pressedKeys.delete(key);
+      }
+    });
+
+    if (e.code.match(/Caps/)) {
+      if (this.OS.includes('Mac')) {
+        this.caps();
+      }
+      return;
+    }
+
+    if (e.code.match(/Shift/)) {
+      this.isShift = false;
+      this.keyboard.offMark(unpressKey);
+
+      this.pressedKeys.forEach((key) => {
+        if (key.code.match(/Shift/)) {
+          this.isShift = true;
+        }
+      });
+
+      if (!this.isShift) {
+        this.keyboard.onShift(this.isShift);
+      }
+      return;
+    }
+
+    if (e.code.match(/Control/)) {
+      this.isCtrl = false;
+      this.keyboard.offMark(unpressKey);
+
+      this.pressedKeys.forEach((key) => {
+        if (key.code.match(/Control/)) {
+          this.isCtrl = true;
+        }
+      });
+      return;
+    }
+
+    if (e.code.match(/Alt/)) {
+      this.isAlt = false;
+      this.keyboard.offMark(unpressKey);
+
+      this.pressedKeys.forEach((key) => {
+        if (key.code.match(/Alt/)) {
+          this.isAlt = true;
+        }
+      });
+      return;
+    }
+
+    if (unpressKey) {
+      this.keyboard.offMark(unpressKey);
+    }
+  }
+
+  handlerMouseupEvent() {
+    if (this.pressKey) {
+      if (this.pressKey.code.match(/Shift/)) {
+        return;
+      }
+
+      if (this.pressKey.code.match(/Caps/)) {
+        return;
+      }
+
+      if (this.pressKey.code.match(/Control/)) {
+        return;
+      }
+
+      if (this.pressKey.code.match(/Alt/)) {
+        return;
+      }
+
+      this.pressedKeys.delete(this.pressKey);
+      this.textArea.node.focus();
+      this.keyboard.offMark(this.pressKey);
+    }
+  }
+
+  forcedUnpressKey(e) {
     if (e.type.match(/mouse/)) {
       this.pressedKeys.delete(this.pressKey);
       setTimeout(() => {
@@ -219,7 +234,7 @@ export default class Application extends PageElement {
         this.switchLang();
         this.rename();
 
-        this.handleUnpressEvent(e);
+        this.forcedUnpressKey(e);
         return true;
       }
 
@@ -229,7 +244,7 @@ export default class Application extends PageElement {
         this.pressedKeys.add(this.pressKey);
         this.keyboard.onMark(this.pressKey);
 
-        this.handleUnpressEvent(e);
+        this.forcedUnpressKey(e);
         return true;
       }
 
@@ -238,7 +253,7 @@ export default class Application extends PageElement {
         this.pressedKeys.add(this.pressKey);
         this.keyboard.onMark(this.pressKey);
 
-        this.handleUnpressEvent(e);
+        this.forcedUnpressKey(e);
         return true;
       }
 
@@ -248,7 +263,7 @@ export default class Application extends PageElement {
         this.pressedKeys.add(this.pressKey);
         this.keyboard.onMark(this.pressKey);
 
-        this.handleUnpressEvent(e);
+        this.forcedUnpressKey(e);
         return true;
       }
 
@@ -257,7 +272,7 @@ export default class Application extends PageElement {
         this.pressedKeys.add(this.pressKey);
         this.keyboard.onMark(this.pressKey);
 
-        this.handleUnpressEvent(e);
+        this.forcedUnpressKey(e);
         return true;
       }
     }
