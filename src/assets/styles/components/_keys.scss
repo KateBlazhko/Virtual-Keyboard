@@ -1,0 +1,36 @@
+.key {
+  @include size(60px, 60px);
+  border-radius: 10px;
+
+  text-align: center;
+  font-weight: bold;
+  line-height: 60px;
+  color: #4185d9;
+
+  background: #ebf5fc;
+  box-shadow: -2px -2px 5px #ffffff, 3px 3px 5px rgb(0 0 0 / 20%);
+
+  cursor: pointer;
+
+
+  &.key_backspace,
+  &.key_tab,
+  &.key_capslock,
+  &.key_enter,
+  &.key_shift {
+    flex-grow: 2;
+  }
+
+  &.key_ {
+    flex-grow: 2;
+  }
+
+  &.mark {
+    box-shadow: inset -2px -2px 5px white, inset 3px 3px 5px rgb(0 0 0 / 20%);
+  }
+
+  &:not(.mark):hover {
+
+    background: #dbf0fe;
+  }
+}
